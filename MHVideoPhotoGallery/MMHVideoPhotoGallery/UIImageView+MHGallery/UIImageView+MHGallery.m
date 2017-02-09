@@ -55,16 +55,32 @@
         [self setImageForImageView:item.image successBlock:succeedBlock];
     }else{
         
-        NSString *placeholderURL = item.thumbnailURL;
-        NSString *toLoadURL = item.URLString;
+        NSString *placeholderURLstring = item.thumbnailURL;
+        NSString *toLoadURLstring = item.URLString;
         
         if (imageType == MHImageTypeThumb) {
-            toLoadURL = item.thumbnailURL;
-            placeholderURL = item.URLString;
+            toLoadURLstring = item.thumbnailURL;
+            placeholderURLstring = item.URLString;
         }
         
-        [self sd_setImageWithURL:[NSURL URLWithString:toLoadURL]
-                placeholderImage:[SDImageCache.sharedImageCache imageFromDiskCacheForKey:placeholderURL]
+        NSURL *imageURL = nil;
+        if (item.objectURL) {
+            imageURL = item.objectURL;
+        }
+        else {
+            imageURL = [NSURL URLWithString:toLoadURLstring];
+        }
+        
+        NSURL *placeholderImageURL = nil;
+        if (item.thumbnailImageURL) {
+            placeholderImageURL = item.thumbnailImageURL;
+        }
+        else {
+            placeholderImageURL = [SDImageCache.sharedImageCache imageFromDiskCacheForKey:placeholderURLstring];
+        }
+        
+        [self sd_setImageWithURL:imageURL
+                placeholderImage:placeholderImageURL
                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                            if (succeedBlock) {
                                succeedBlock (image,error);
