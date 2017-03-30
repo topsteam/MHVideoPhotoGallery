@@ -17,6 +17,7 @@
 #import "MHOverviewController.h"
 #import "MHTransitionShowOverView.h"
 #import "MHGalleryImageViewerViewController.h"
+#import "MHImageViewController.h"
 
 #ifdef COCOAPODS
 #import <TTTAttributedLabel/TTTAttributedLabel.h>

@@ -11,7 +11,7 @@
 
 typedef NS_ENUM(NSUInteger, MHBarButtonItemType) {
     MHBarButtonItemTypeLeft,
-    MHBarButtonItemTypeRigth,
+    MHBarButtonItemTypeRight,
     MHBarButtonItemTypePlayPause,
     MHBarButtonItemTypeShare,
     MHBarButtonItemTypeFlexible,
@@ -20,5 +20,18 @@ typedef NS_ENUM(NSUInteger, MHBarButtonItemType) {
 };
 
 @interface MHBarButtonItem : UIBarButtonItem
+
 @property (nonatomic) MHBarButtonItemType type;
+
+- (instancetype)initWithBarButtonSystemItem:(UIBarButtonSystemItem)systemItem
+                                     target:(id)target
+                                       type:(MHBarButtonItemType)type
+                                     action:(SEL)action;
+
+- (instancetype)initWithImage:(UIImage *)image
+                        style:(UIBarButtonItemStyle)style
+                       target:(id)target
+                         type:(MHBarButtonItemType)type
+                       action:(SEL)action;
+
 @end

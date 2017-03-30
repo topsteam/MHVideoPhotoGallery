@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CCE50708F0B1B954A1D43543 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BEA0714A525E3C516EBDBD /* libPods.a */; };
+		45EFCACF3706C993AB7453AA /* libPods-MHVideoPhotoGallery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF27555478C5FF6225D0F675 /* libPods-MHVideoPhotoGallery.a */; };
+		C91C69951E8C4BD600FFEBC5 /* MHImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C69941E8C4BD600FFEBC5 /* MHImageViewController.m */; };
+		C95A29EE1E8D19F4009C15B7 /* MHPinchGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C95A29ED1E8D19F4009C15B7 /* MHPinchGestureRecognizer.m */; };
 		F514263518911D8E0091E3DF /* 707-albums-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F514263318911D8E0091E3DF /* 707-albums-selected.png */; };
 		F514263618911D8E0091E3DF /* 707-albums-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F514263418911D8E0091E3DF /* 707-albums-selected@2x.png */; };
 		F514263918911D920091E3DF /* 705-photos-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F514263718911D920091E3DF /* 705-photos-selected.png */; };
@@ -108,9 +110,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		48BEA0714A525E3C516EBDBD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7034C256C78A0FAB4D812A2B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		A1831E23B84EF67E23139C0E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		B4D401582EB5EEC787455A36 /* Pods-MHVideoPhotoGallery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MHVideoPhotoGallery.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MHVideoPhotoGallery/Pods-MHVideoPhotoGallery.debug.xcconfig"; sourceTree = "<group>"; };
+		BAF8A1BFE44D3A76BC317EC6 /* Pods-MHVideoPhotoGallery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MHVideoPhotoGallery.release.xcconfig"; path = "Pods/Target Support Files/Pods-MHVideoPhotoGallery/Pods-MHVideoPhotoGallery.release.xcconfig"; sourceTree = "<group>"; };
+		C91C69931E8C4BD600FFEBC5 /* MHImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHImageViewController.h; sourceTree = "<group>"; };
+		C91C69941E8C4BD600FFEBC5 /* MHImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHImageViewController.m; sourceTree = "<group>"; };
+		C95A29EC1E8D19F4009C15B7 /* MHPinchGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPinchGestureRecognizer.h; sourceTree = "<group>"; };
+		C95A29ED1E8D19F4009C15B7 /* MHPinchGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPinchGestureRecognizer.m; sourceTree = "<group>"; };
+		EF27555478C5FF6225D0F675 /* libPods-MHVideoPhotoGallery.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MHVideoPhotoGallery.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F514263318911D8E0091E3DF /* 707-albums-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "707-albums-selected.png"; sourceTree = "<group>"; };
 		F514263418911D8E0091E3DF /* 707-albums-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "707-albums-selected@2x.png"; sourceTree = "<group>"; };
 		F514263718911D920091E3DF /* 705-photos-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "705-photos-selected.png"; sourceTree = "<group>"; };
@@ -248,7 +254,7 @@
 				F53F924617EB008100A9FE6A /* CoreGraphics.framework in Frameworks */,
 				F53F924817EB008100A9FE6A /* UIKit.framework in Frameworks */,
 				F53F924417EB008100A9FE6A /* Foundation.framework in Frameworks */,
-				CCE50708F0B1B954A1D43543 /* libPods.a in Frameworks */,
+				45EFCACF3706C993AB7453AA /* libPods-MHVideoPhotoGallery.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,13 +271,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		64EBA583430CC00734798E3D /* Pods */ = {
+		C1A13E61AD0D91B69DCC9D63 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7034C256C78A0FAB4D812A2B /* Pods.debug.xcconfig */,
-				A1831E23B84EF67E23139C0E /* Pods.release.xcconfig */,
+				B4D401582EB5EEC787455A36 /* Pods-MHVideoPhotoGallery.debug.xcconfig */,
+				BAF8A1BFE44D3A76BC317EC6 /* Pods-MHVideoPhotoGallery.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C91C69921E8C483D00FFEBC5 /* MHImageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C91C69931E8C4BD600FFEBC5 /* MHImageViewController.h */,
+				C91C69941E8C4BD600FFEBC5 /* MHImageViewController.m */,
+			);
+			name = MHImageViewController;
+			path = MMHVideoPhotoGallery/MHImageViewController;
+			sourceTree = "<group>";
+		};
+		C95A29EB1E8D19B2009C15B7 /* MHPinchGestureRecognizer */ = {
+			isa = PBXGroup;
+			children = (
+				C95A29EC1E8D19F4009C15B7 /* MHPinchGestureRecognizer.h */,
+				C95A29ED1E8D19F4009C15B7 /* MHPinchGestureRecognizer.m */,
+			);
+			name = MHPinchGestureRecognizer;
+			path = MMHVideoPhotoGallery/MHPinchGestureRecognizer;
 			sourceTree = "<group>";
 		};
 		F53F923717EB008100A9FE6A = {
@@ -281,7 +307,7 @@
 				F53F926817EB008100A9FE6A /* MHVideoPhotoGalleryTests */,
 				F53F924217EB008100A9FE6A /* Frameworks */,
 				F53F924117EB008100A9FE6A /* Products */,
-				64EBA583430CC00734798E3D /* Pods */,
+				C1A13E61AD0D91B69DCC9D63 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -303,7 +329,7 @@
 				F53F924517EB008100A9FE6A /* CoreGraphics.framework */,
 				F53F924717EB008100A9FE6A /* UIKit.framework */,
 				F53F926217EB008100A9FE6A /* XCTest.framework */,
-				48BEA0714A525E3C516EBDBD /* libPods.a */,
+				EF27555478C5FF6225D0F675 /* libPods-MHVideoPhotoGallery.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -524,6 +550,8 @@
 		F5C52E9418C08700001E431E /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
+				C95A29EB1E8D19B2009C15B7 /* MHPinchGestureRecognizer */,
+				C91C69921E8C483D00FFEBC5 /* MHImageViewController */,
 				F58C761D1BC7EDAE006F8DEE /* MHBarButtonItem */,
 				F58C76191BC7C9EA006F8DEE /* MHScrollViewLabel */,
 				F554003F1BBEC4F600146923 /* MHGradientView */,
@@ -608,12 +636,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F53F927217EB008100A9FE6A /* Build configuration list for PBXNativeTarget "MHVideoPhotoGallery" */;
 			buildPhases = (
-				75DDE8B2C1B33F486A5B8488 /* Check Pods Manifest.lock */,
+				DA3A6A81A5219D30EEFC0E72 /* [CP] Check Pods Manifest.lock */,
 				F53F923C17EB008100A9FE6A /* Sources */,
 				F53F923D17EB008100A9FE6A /* Frameworks */,
 				F53F923E17EB008100A9FE6A /* Resources */,
-				0C519C9D844EB0B45067DB4C /* Embed Pods Frameworks */,
-				87746AA85625C06CC49A954C /* Copy Pods Resources */,
+				0624DF42688E48BB78621B90 /* [CP] Embed Pods Frameworks */,
+				B2E6AF4B21D580F6CE56053D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -748,49 +776,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0C519C9D844EB0B45067DB4C /* Embed Pods Frameworks */ = {
+		0624DF42688E48BB78621B90 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MHVideoPhotoGallery/Pods-MHVideoPhotoGallery-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		75DDE8B2C1B33F486A5B8488 /* Check Pods Manifest.lock */ = {
+		B2E6AF4B21D580F6CE56053D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MHVideoPhotoGallery/Pods-MHVideoPhotoGallery-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		87746AA85625C06CC49A954C /* Copy Pods Resources */ = {
+		DA3A6A81A5219D30EEFC0E72 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -805,11 +833,13 @@
 				F5D24FFD1885CDDD004D97CA /* ExampleViewControllerTableView.m in Sources */,
 				F52A4A441901A47F00E4E2BB /* InstagramViewController.m in Sources */,
 				F5C52E8F18C0828E001E431E /* MHTransitionShowOverView.m in Sources */,
+				C91C69951E8C4BD600FFEBC5 /* MHImageViewController.m in Sources */,
 				F5C52E9018C0828E001E431E /* MHTransitionShowShareView.m in Sources */,
 				F543E50318EAAF3C008D7590 /* MHGalleryItem.m in Sources */,
 				F543E50E18EACB23008D7590 /* MHOverviewController.m in Sources */,
 				F53F925417EB008100A9FE6A /* AppDelegate.m in Sources */,
 				F5C52E9318C086E4001E431E /* MHGallery.m in Sources */,
+				C95A29EE1E8D19F4009C15B7 /* MHPinchGestureRecognizer.m in Sources */,
 				F59A9C7D1BDA3EB500433A30 /* MHScrollViewLabel.m in Sources */,
 				F59A9C861BDA3ED700433A30 /* MHGradientView.m in Sources */,
 				F5B1AA8A18ED82CE00FE4682 /* SubclassMHImageviewerViewController.m in Sources */,
@@ -949,7 +979,7 @@
 		};
 		F53F927317EB008100A9FE6A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7034C256C78A0FAB4D812A2B /* Pods.debug.xcconfig */;
+			baseConfigurationReference = B4D401582EB5EEC787455A36 /* Pods-MHVideoPhotoGallery.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -969,7 +999,7 @@
 		};
 		F53F927417EB008100A9FE6A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1831E23B84EF67E23139C0E /* Pods.release.xcconfig */;
+			baseConfigurationReference = BAF8A1BFE44D3A76BC317EC6 /* Pods-MHVideoPhotoGallery.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

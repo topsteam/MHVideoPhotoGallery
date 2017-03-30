@@ -17,69 +17,95 @@
 @class MHBarButtonItem;
 
 @protocol MHGalleryDelegate<NSObject>
+
 @optional
--(void)galleryController:(MHGalleryController*)galleryController didShowIndex:(NSInteger)index;
--(BOOL)galleryController:(MHGalleryController*)galleryController shouldHandleURL:(NSURL *)URL;
--(NSArray<MHBarButtonItem *>*)customizeableToolBarItems:(NSArray<MHBarButtonItem *>*)toolBarItems forGalleryItem:(MHGalleryItem*)galleryItem;
+
+- (void)galleryController:(MHGalleryController*)galleryController
+             didShowIndex:(NSInteger)index;
+
+- (BOOL)galleryController:(MHGalleryController*)galleryController
+          shouldHandleURL:(NSURL *)URL;
+
+- (NSArray<MHBarButtonItem *> *)customizeableToolBarItems:(NSArray<MHBarButtonItem *> *)toolBarItems
+                                           forGalleryItem:(MHGalleryItem *)galleryItem;
+
 @end
 
 @protocol MHGalleryDataSource<NSObject>
 
-
-
 @required
+
 /**
  *  @param index which is currently needed
- *
  *  @return MHGalleryItem
  */
 - (MHGalleryItem*)itemForIndex:(NSInteger)index;
+
 /**
  *  @param galleryController
- *
  *  @return the number of Items you want to Display
  */
 - (NSInteger)numberOfItemsInGallery:(MHGalleryController*)galleryController;
+
 @end
+
+typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode);
 
 @interface MHGalleryController : UINavigationController <MHGalleryDataSource>
 
-@property (nonatomic,assign) id<MHGalleryDelegate>              galleryDelegate;
-@property (nonatomic,assign) id<MHGalleryDataSource>            dataSource;
-@property (nonatomic,assign) BOOL                               autoplayVideos; //Default NO
-@property (nonatomic,assign) NSInteger                          presentationIndex; //From which index you want to present the Gallery.
-@property (nonatomic,strong) UIImageView                        *presentingFromImageView;
-@property (nonatomic,strong) MHGalleryImageViewerViewController *imageViewerViewController;
-@property (nonatomic,strong) MHOverviewController               *overViewViewController;
-@property (nonatomic,strong) NSArray<MHGalleryItem *>           *galleryItems; //You can set an Array of GalleryItems or you can use the dataSource.
-@property (nonatomic,strong) MHTransitionCustomization          *transitionCustomization; //Use transitionCustomization to Customize the GalleryControllers transitions
-@property (nonatomic,strong) MHUICustomization                  *UICustomization; //Use UICustomization to Customize the GalleryControllers UI
-@property (nonatomic,strong) MHTransitionPresentMHGallery       *interactivePresentationTransition;
-@property (nonatomic,assign) MHGalleryViewMode                  presentationStyle;
-@property (nonatomic,assign) UIStatusBarStyle                   preferredStatusBarStyleMH;
+@property (nonatomic, assign) id<MHGalleryDelegate> galleryDelegate;
+@property (nonatomic, assign) id<MHGalleryDataSource> dataSource;
+@property (nonatomic) UIImageView *presentingFromImageView;
+@property (nonatomic) MHGalleryImageViewerViewController *imageViewerViewController;
+@property (nonatomic) MHOverviewController *overViewViewController;
+@property (nonatomic) MHTransitionPresentMHGallery *interactivePresentationTransition;
+@property (nonatomic, assign) MHGalleryViewMode presentationStyle;
+@property (nonatomic, assign) UIStatusBarStyle preferredStatusBarStyleMH;
+@property (nonatomic, copy) MHGalleryFinishedCallback finishedCallback;
 
 /**
- *  There are 3 types to present MHGallery. 
- *
- *  @param presentationStyle description of all 3 Types:  
- *
- *       MHGalleryViewModeImageViewerNavigationBarHidden: the NaviagtionBar and the Toolbar is hidden you can also set the backgroundcolor for this state in the UICustomization
- *
- *       MHGalleryViewModeImageViewerNavigationBarShown: the NavigationBar and the Toolbar is shown you can also set the backgroundcolor for this state in the UICustomization
- *
- *       MHGalleryViewModeOverView: presents the GalleryOverView.
- *
- *  @return MHGalleryController
+ Default NO
+ */
+@property (nonatomic,assign) BOOL autoplayVideos;
+
+/**
+ From which index you want to present the Gallery.
+ */
+@property (nonatomic,assign) NSInteger presentationIndex;
+
+/**
+ You can set an Array of GalleryItems or you can use the dataSource.
+ */
+@property (nonatomic) NSArray<MHGalleryItem *> *galleryItems;
+
+/**
+ Use transitionCustomization to Customize the GalleryControllers transitions
+ */
+@property (nonatomic) MHTransitionCustomization *transitionCustomization;
+
+/**
+ Use UICustomization to Customize the GalleryControllers UI
+ */
+@property (nonatomic) MHUICustomization *UICustomization;
+
+/**
+ There are 3 types to present MHGallery.
+ @param presentationStyle description of all 3 Types:
+     MHGalleryViewModeImageViewerNavigationBarHidden: the NaviagtionBar and the Toolbar is hidden.
+     You can also set the backgroundcolor for this state in the UICustomization
+     MHGalleryViewModeImageViewerNavigationBarShown: the NavigationBar and the Toolbar is shown.
+     You can also set the backgroundcolor for this state in the UICustomization
+     MHGalleryViewModeOverView: presents the GalleryOverView.
+ @return MHGalleryController
  */
 - (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
-+(instancetype)galleryWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
 
-@property (nonatomic, copy) void (^finishedCallback)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode);
++ (instancetype)galleryWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
 
 /**
  *  Reloads the View from the Datasource.
  */
--(void)reloadData;
+- (void)reloadData;
 
 @end
 

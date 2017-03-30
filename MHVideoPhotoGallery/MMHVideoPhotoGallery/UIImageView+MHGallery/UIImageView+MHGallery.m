@@ -14,14 +14,11 @@
 
 -(void)setThumbWithURL:(NSString*)URL
           successBlock:(void (^)(UIImage *image,NSUInteger videoDuration,NSError *error))succeedBlock{
-    
     __weak typeof(self) weakSelf = self;
-    
     [MHGallerySharedManager.sharedManager startDownloadingThumbImage:URL
                                                         successBlock:^(UIImage *image, NSUInteger videoDuration, NSError *error) {
-                                                            
                                                             if (!weakSelf) return;
-                                                            dispatch_main_sync_safe(^{
+                                                            dispatch_sync(dispatch_get_main_queue(),^{
                                                                 if (!weakSelf) return;
                                                                 if (image){
                                                                     weakSelf.image = image;
@@ -51,9 +48,12 @@
                                                           successBlock:^(UIImage *image, NSError *error) {
                                                               [weakSelf setImageForImageView:image successBlock:succeedBlock];
                                                           }];
-    }else if(item.image){
-        [self setImageForImageView:item.image successBlock:succeedBlock];
-    }else{
+    }
+    else if(item.image) {
+        [self setImageForImageView:item.image
+                      successBlock:succeedBlock];
+    }
+    else {
         
         NSString *placeholderURLstring = item.thumbnailURL;
         NSString *toLoadURLstring = item.URLString;
@@ -76,8 +76,11 @@
             placeholderImageURL = item.thumbnailImageURL;
         }
         else {
+//            placeholderImageURL = [SDImageCache sharedImageCache] pat
             placeholderImageURL = [SDImageCache.sharedImageCache imageFromDiskCacheForKey:placeholderURLstring];
         }
+        
+        
         
         [self sd_setImageWithURL:imageURL
                 placeholderImage:placeholderImageURL
@@ -96,7 +99,7 @@
     __weak typeof(self) weakSelf = self;
     
     if (!weakSelf) return;
-    dispatch_main_sync_safe(^{
+    dispatch_sync(dispatch_get_main_queue(),^{
         weakSelf.image = image;
         [weakSelf setNeedsLayout];
         if (succeedBlock) {

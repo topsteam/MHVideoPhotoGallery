@@ -4,6 +4,12 @@ platform :ios, "7.0"
 
 inhibit_all_warnings!
 
-pod 'SDWebImage'
-pod 'TTTAttributedLabel', '1.13.3'
-pod 'Masonry'
+def commonTargets
+	pod 'SDWebImage'
+	pod 'TTTAttributedLabel', '1.13.3'
+	pod 'Masonry'
+end
+
+target :"MHVideoPhotoGallery" do
+	commonTargets
+end
