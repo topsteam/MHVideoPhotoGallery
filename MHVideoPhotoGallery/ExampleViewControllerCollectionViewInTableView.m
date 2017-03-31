@@ -180,6 +180,7 @@
     customization.barButtonsTintColor = [UIColor whiteColor];
     customization.showOverView = NO;
     customization.hideShare = NO;
+    customization.showArrows = NO;
     customization.barStyle = UIBarStyleBlackOpaque;
     customization.showMHShareViewInsteadOfActivityViewController = NO;
     return customization;
