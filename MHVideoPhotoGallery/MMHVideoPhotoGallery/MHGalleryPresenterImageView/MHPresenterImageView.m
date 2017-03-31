@@ -76,17 +76,15 @@
     return YES;
 }
 
-
--(void)userDidRoate:(UIRotationGestureRecognizer*)recognizer{
+- (void)userDidRoate:(UIRotationGestureRecognizer*)recognizer {
     if (self.presenter) {
         CGFloat angle = recognizer.rotation;
         self.presenter.angle = angle;
     }
 }
 
--(void)didTapOnImage{
-    
-    MHGalleryController *gallery = [MHGalleryController.alloc initWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown];
+- (void)didTapOnImage {
+    MHGalleryController *gallery = [MHGalleryController galleryWithPresentationStyle: MHGalleryViewModeImageViewerNavigationBarShown];
     gallery.galleryItems = self.galleryItems;
     gallery.presentingFromImageView = self;
     gallery.presentationIndex =  self.currentImageIndex;
@@ -97,7 +95,8 @@
     [self.viewController presentMHGalleryController:gallery animated:YES completion:nil];
 
 }
--(void)presentMHGallery{
+
+- (void)presentMHGallery {
     
     self.presenter = MHTransitionPresentMHGallery.new;
     self.presenter.presentingImageView = self;

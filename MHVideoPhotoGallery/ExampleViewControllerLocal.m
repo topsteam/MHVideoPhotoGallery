@@ -11,9 +11,7 @@
 #import "MHGallery.h"
 #import "ExampleViewControllerTableView.h"
 
-
 @implementation MHGallerySectionItem
-
 
 - (id)initWithSectionName:(NSString*)sectionName
                     items:(NSArray*)galleryItems{
@@ -92,18 +90,18 @@
     return cell;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.allData.count;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     dispatch_async(dispatch_get_main_queue(), ^{
         MHGallerySectionItem *section = self.allData[indexPath.row];
         NSArray *galleryData = section.galleryItems;
-        if (galleryData.count >0) {
+        if (galleryData.count > 0) {
             
-            MHGalleryController *gallery = [[MHGalleryController alloc]initWithPresentationStyle:MHGalleryViewModeOverView];
+            MHGalleryController *gallery = [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeOverView];
             gallery.galleryItems = galleryData;
             gallery.presentationIndex = indexPath.row;
             
@@ -115,7 +113,8 @@
             
             [self presentMHGalleryController:gallery animated:YES completion:nil];
 
-        }else{
+        }
+        else {
             UIAlertView *alterView = [[UIAlertView alloc]initWithTitle:@"Hint"
                                                                message:@"You don't have images on your Simulator"
                                                               delegate:nil

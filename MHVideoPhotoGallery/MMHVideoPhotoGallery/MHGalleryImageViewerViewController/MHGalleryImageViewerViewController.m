@@ -348,23 +348,37 @@
                                                           action:@selector(rightPressed:)];
     MHBarButtonItemType shareButtonType;
     UIBarButtonSystemItem systemItem;
-    CGFloat shareButtonWidth = 0.0;
     SEL selector = nil;
     if (self.UICustomization.hideShare) {
         shareButtonType = MHBarButtonItemTypeFlexible;
         systemItem = UIBarButtonSystemItemFixedSpace;
-        shareButtonWidth = 30.0;
     }
     else {
         selector = @selector(sharePressed);
         shareButtonType = MHBarButtonItemTypeShare;
         systemItem = UIBarButtonSystemItemAction;
     }
-    self.shareBarButton = [[MHBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+    self.shareBarButton = [[MHBarButtonItem alloc] initWithBarButtonSystemItem:systemItem
                                                                         target:self
                                                                           type:shareButtonType
                                                                         action:selector];
-    self.shareBarButton.width = shareButtonWidth;
+    if (self.UICustomization.hideShare) {
+        self.shareBarButton.width = 30.0;
+    }
+//    old code
+//    {
+//        self.shareBarButton = [MHBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+//                                                                          target:self
+//                                                                          action:@selector(sharePressed)];
+//        self.shareBarButton.type = MHBarButtonItemTypeShare;
+//        if (self.UICustomization.hideShare) {
+//            self.shareBarButton = [MHBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+//                                                                              target:self
+//                                                                              action:nil];
+//            self.shareBarButton.type = MHBarButtonItemTypeFlexible;
+//            self.shareBarButton.width = 30;
+//        }
+//    }
 }
 
 - (void)setupTopSuperView {
@@ -546,17 +560,17 @@
     fixed.width = 30;
     NSArray *toolBarButtons;
     if (withPlayButton) {
-        toolBarButtons = @[self.shareBarButton, flex,
+        toolBarButtons = @[fixed, flex,
                            self.leftBarButton, flex,
                            self.playStopBarButton, flex,
                            self.rightBarButton, flex,
-                           fixed];
+                           self.shareBarButton];
     }
     else {
-        toolBarButtons = @[self.shareBarButton, flex,
+        toolBarButtons = @[fixed, flex,
                            self.leftBarButton, flex,
                            self.rightBarButton, flex,
-                           fixed];
+                           self.shareBarButton];
     }
     return toolBarButtons;
 }

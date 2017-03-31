@@ -8,16 +8,21 @@
 
 #import "MHGalleryController.h"
 
-
 @implementation MHGalleryController
 
-- (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle{
+#pragma mark - MHGalleryController
+
++ (instancetype)galleryWithPresentationStyle:(MHGalleryViewMode)presentationStyle {
+    return [self.class.alloc initWithPresentationStyle:presentationStyle];
+}
+
+- (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle {
     self = [super initWithNibName:nil bundle:nil];
     if (!self)
         return nil;
     
     self.autoplayVideos = NO;
-
+    
     self.preferredStatusBarStyleMH = UIStatusBarStyleDefault;
     self.presentationStyle = presentationStyle;
     self.transitionCustomization = MHTransitionCustomization.new;
@@ -34,43 +39,45 @@
     return self;
 }
 
-+(instancetype)galleryWithPresentationStyle:(MHGalleryViewMode)presentationStyle{
-    return [self.class.alloc initWithPresentationStyle:presentationStyle];
+- (void)reloadData {
+    [self.imageViewerViewController reloadData];
+    [self.overViewViewController.collectionView reloadData];
 }
 
--(void)setGalleryItems:(NSArray *)galleryItems{
+#pragma mark - Private methods
+
+- (void)setGalleryItems:(NSArray *)galleryItems{
     self.overViewViewController.galleryItems = galleryItems;
     self.imageViewerViewController.galleryItems = galleryItems;
     _galleryItems = galleryItems;
 }
 
--(void)setPresentationIndex:(NSInteger)presentationIndex{
+- (void)setPresentationIndex:(NSInteger)presentationIndex {
     self.imageViewerViewController.pageIndex = presentationIndex;
     _presentationIndex = presentationIndex;
 }
 
--(void)setPresentingFromImageView:(UIImageView *)presentingFromImageView{
+- (void)setPresentingFromImageView:(UIImageView *)presentingFromImageView {
     self.imageViewerViewController.presentingFromImageView = presentingFromImageView;
     _presentingFromImageView = presentingFromImageView;
 }
--(void)setInteractivePresentationTransition:(MHTransitionPresentMHGallery *)interactivePresentationTranstion{
+
+- (void)setInteractivePresentationTransition:(MHTransitionPresentMHGallery *)interactivePresentationTranstion {
     self.imageViewerViewController.interactivePresentationTranstion = interactivePresentationTranstion;
     _interactivePresentationTransition = interactivePresentationTranstion;
 }
 
--(MHGalleryItem *)itemForIndex:(NSInteger)index{
+#pragma mark - MHGalleryDataSource
+
+- (MHGalleryItem *)itemForIndex:(NSInteger)index {
     if (index < 0 || index >= [self numberOfItemsInGallery:self]) {
         return nil;
     }
     return self.galleryItems[index];
 }
--(NSInteger)numberOfItemsInGallery:(MHGalleryController *)galleryController{
-    return self.galleryItems.count;
-}
 
--(void)reloadData {
-    [self.imageViewerViewController reloadData];
-    [self.overViewViewController.collectionView reloadData];
+- (NSInteger)numberOfItemsInGallery:(MHGalleryController *)galleryController {
+    return self.galleryItems.count;
 }
 
 @end
@@ -78,10 +85,10 @@
 
 @implementation UIViewController(MHGalleryViewController)
 
--(void)presentMHGalleryController:(MHGalleryController *)galleryController
-                         animated:(BOOL)animated
-                       completion:(void (^)(void))completion{
-
+- (void)presentMHGalleryController:(MHGalleryController *)galleryController
+                          animated:(BOOL)animated
+                        completion:(void (^)(void))completion {
+    
     if(galleryController.UICustomization.useCustomBackButtonImageOnImageViewer){
         UIBarButtonItem *backBarButton = [UIBarButtonItem.alloc initWithImage:MHTemplateImage(@"ic_square")
                                                                         style:UIBarButtonItemStylePlain
@@ -110,8 +117,9 @@
     [self presentViewController:galleryController animated:animated completion:completion];
 }
 
-
-- (void)dismissViewControllerAnimated:(BOOL)flag dismissImageView:(UIImageView*)dismissImageView completion:(void (^)(void))completion{
+- (void)dismissViewControllerAnimated:(BOOL)flag
+                     dismissImageView:(UIImageView*)dismissImageView
+                           completion:(void (^)(void))completion {
     if ([self isKindOfClass:[UINavigationController class]] && [[(UINavigationController*)self viewControllers].lastObject isKindOfClass:MHGalleryImageViewerViewController.class]) {
         MHGalleryImageViewerViewController *imageViewer = [(UINavigationController*)self viewControllers].lastObject;
         imageViewer.dismissFromImageView = dismissImageView;
@@ -119,8 +127,7 @@
     [self dismissViewControllerAnimated:flag completion:completion];
 }
 
-
--(id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator{
+- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator{
     if ([animator isKindOfClass:MHTransitionPresentMHGallery.class]) {
         MHTransitionPresentMHGallery *animatorPresent = (MHTransitionPresentMHGallery*)animator;
         if (animatorPresent.interactive) {
@@ -132,7 +139,7 @@
     }
 }
 
--(id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator{
+- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator {
     if ([animator isKindOfClass:MHTransitionDismissMHGallery.class]) {
         MHTransitionDismissMHGallery *animatorDismiss = (MHTransitionDismissMHGallery*)animator;
         if (animatorDismiss.interactive) {
@@ -144,8 +151,7 @@
     }
 }
 
-
--(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
     if ([dismissed isKindOfClass:[UINavigationController class]] && [[(UINavigationController*)dismissed  viewControllers].lastObject isKindOfClass:MHGalleryImageViewerViewController.class]) {
         MHGalleryImageViewerViewController *imageViewer = [(UINavigationController*)dismissed  viewControllers].lastObject;
         MHImageViewController *viewer = imageViewer.pageViewController.viewControllers.firstObject;

@@ -20,10 +20,10 @@
 
 @optional
 
-- (void)galleryController:(MHGalleryController*)galleryController
+- (void)galleryController:(MHGalleryController *)galleryController
              didShowIndex:(NSInteger)index;
 
-- (BOOL)galleryController:(MHGalleryController*)galleryController
+- (BOOL)galleryController:(MHGalleryController *)galleryController
           shouldHandleURL:(NSURL *)URL;
 
 - (NSArray<MHBarButtonItem *> *)customizeableToolBarItems:(NSArray<MHBarButtonItem *> *)toolBarItems
@@ -39,13 +39,13 @@
  *  @param index which is currently needed
  *  @return MHGalleryItem
  */
-- (MHGalleryItem*)itemForIndex:(NSInteger)index;
+- (MHGalleryItem *)itemForIndex:(NSInteger)index;
 
 /**
  *  @param galleryController
  *  @return the number of Items you want to Display
  */
-- (NSInteger)numberOfItemsInGallery:(MHGalleryController*)galleryController;
+- (NSInteger)numberOfItemsInGallery:(MHGalleryController *)galleryController;
 
 @end
 
@@ -91,16 +91,16 @@ typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,
 /**
  There are 3 types to present MHGallery.
  @param presentationStyle description of all 3 Types:
-     MHGalleryViewModeImageViewerNavigationBarHidden: the NaviagtionBar and the Toolbar is hidden.
-     You can also set the backgroundcolor for this state in the UICustomization
-     MHGalleryViewModeImageViewerNavigationBarShown: the NavigationBar and the Toolbar is shown.
-     You can also set the backgroundcolor for this state in the UICustomization
-     MHGalleryViewModeOverView: presents the GalleryOverView.
+ MHGalleryViewModeImageViewerNavigationBarHidden: the NaviagtionBar and the Toolbar is hidden.
+ You can also set the backgroundcolor for this state in the UICustomization
+ MHGalleryViewModeImageViewerNavigationBarShown: the NavigationBar and the Toolbar is shown.
+ You can also set the backgroundcolor for this state in the UICustomization
+ MHGalleryViewModeOverView: presents the GalleryOverView.
  @return MHGalleryController
  */
-- (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
-
 + (instancetype)galleryWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
+
+//- (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
 
 /**
  *  Reloads the View from the Datasource.
@@ -112,24 +112,23 @@ typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,
 @interface UIViewController(MHGalleryViewController)<UIViewControllerTransitioningDelegate>
 
 /**
- *  For presenting MHGalleryController.
- *
- *  @param galleryController your created GalleryController
- *  @param animated          animated or nonanimated
- *  @param completion        complitionBlock
+ For presenting MHGalleryController.
+ @param galleryController your created GalleryController
+ @param animated          animated or nonanimated
+ @param completion        complitionBlock
  */
--(void)presentMHGalleryController:(MHGalleryController*)galleryController
-                         animated:(BOOL)animated
-                       completion:(void (^)(void))completion;
+- (void)presentMHGalleryController:(MHGalleryController *)galleryController
+                          animated:(BOOL)animated
+                        completion:(void (^)(void))completion;
+
 /**
- *  For dismissing MHGalleryController
- *
- *  @param flag             animated
- *  @param dismissImageView if you use Custom transitions set your imageView for the Transition. For example if you use a tableView with imageViews in your cells. If you present MHGallery with an imageView on the first Index and dismiss it on the 4 Index, you have to return the imageView from your cell on the 4 index.
- *  @param completion       complitionBlock
+ For dismissing MHGalleryController
+ @param flag             animated
+ @param dismissImageView if you use Custom transitions set your imageView for the Transition. For example if you use a tableView with imageViews in your cells. If you present MHGallery with an imageView on the first Index and dismiss it on the 4 Index, you have to return the imageView from your cell on the 4 index.
+ @param completion       completionBlock
  */
 - (void)dismissViewControllerAnimated:(BOOL)animated
-                     dismissImageView:(UIImageView*)dismissImageView
+                     dismissImageView:(UIImageView *)dismissImageView
                            completion:(void (^)(void))completion;
 
 @end

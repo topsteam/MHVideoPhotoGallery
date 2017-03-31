@@ -15,19 +15,17 @@
 @end
 
 @interface ExampleViewControllerTableView ()
-@property(nonatomic,strong) NSArray *galleryDataSource;
+
+@property (nonatomic,strong) NSArray *galleryDataSource;
+
 @end
+
 
 @implementation ExampleViewControllerTableView
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.title = @"TableView";
-    
-
-    
     MHGalleryItem *tailored = [[MHGalleryItem alloc]initWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"
                                                        galleryType:MHGalleryTypeImage];
     
@@ -57,14 +55,13 @@
     
     return cell;
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
     UIImageView *imageView = [(ImageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath] iv];
-    
     NSArray *galleryData = self.galleryDataSource;
     
-    
-    MHGalleryController *gallery = [[MHGalleryController alloc]initWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown];
+    MHGalleryController *gallery = [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown];
     gallery.galleryItems = galleryData;
     gallery.presentingFromImageView = imageView;
     gallery.presentationIndex = indexPath.row;
