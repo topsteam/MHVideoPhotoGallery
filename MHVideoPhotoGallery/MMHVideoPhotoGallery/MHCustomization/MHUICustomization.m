@@ -1,27 +1,14 @@
 //
-//  MHCustomization.m
+//  MHUICustomization.m
 //  MHVideoPhotoGallery
 //
 //  Created by Mario Hahn on 04.03.14.
 //  Copyright (c) 2014 Mario Hahn. All rights reserved.
 //
 
-#import "MHCustomization.h"
+#import "MHUICustomization.h"
 #import "MHGallery.h"
 
-@implementation MHTransitionCustomization
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.interactiveDismiss = YES;
-        self.dismissWithScrollGestureOnFirstAndLastImage = YES;
-        self.fixXValueForDismiss = NO;
-    }
-    return self;
-}
-
-@end
 
 @interface MHUICustomization()
 

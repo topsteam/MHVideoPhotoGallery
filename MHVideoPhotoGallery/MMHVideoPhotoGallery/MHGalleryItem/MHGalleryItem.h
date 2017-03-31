@@ -16,37 +16,36 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
 
 @interface MHGalleryItem : NSObject
 
-@property (nonatomic,strong) UIImage            *image;
-@property (nonatomic,strong) NSString           *URLString;
-@property (nonatomic,strong) NSURL              *objectURL;
-@property (nonatomic,strong) NSURL              *thumbnailImageURL;
+@property (nonatomic,strong) UIImage *image;
+@property (nonatomic,strong) NSString *URLString;
+@property (nonatomic,strong) NSURL *objectURL;
+@property (nonatomic,strong) NSURL *thumbnailImageURL;
 /**
- *  Thumbs are automatically generated for Videos. But you can set Thumb Images for GalleryTypeImage.
+ * Thumbs are automatically generated for Videos.
+ * But you can set Thumb Images for GalleryTypeImage.
  */
-@property (nonatomic,strong) NSString           *thumbnailURL;
-@property (nonatomic,strong) NSString           *titleString;
+@property (nonatomic,strong) NSString *thumbnailURL;
+@property (nonatomic,strong) NSString *titleString;
 @property (nonatomic,strong) NSAttributedString *attributedTitle;
-@property (nonatomic,strong) NSString           *descriptionString;
+@property (nonatomic,strong) NSString *descriptionString;
 @property (nonatomic,strong) NSAttributedString *attributedString;
-@property (nonatomic,assign) MHGalleryType       galleryType;
+@property (nonatomic,assign) MHGalleryType galleryType;
+
 /**
  *  MHGalleryItem initWithURL:galleryType
- *
  *  @param urlString   the URL of the image or Video as a String
  *  @param galleryType select to Type, video or image
- *
  */
-
-- (instancetype)initWithURL:(NSString*)URLString
-               thumbnailURL:(NSString*)thumbnailURL;
+- (instancetype)initWithURL:(NSString *)URLString
+               thumbnailURL:(NSString *)thumbnailURL;
 
 + (instancetype)itemWithURL:(NSString *)URLString
-               thumbnailURL:(NSString*)thumbnailURL;
+               thumbnailURL:(NSString *)thumbnailURL;
 
-- (instancetype)initWithURL:(NSString*)URLString
+- (instancetype)initWithURL:(NSString *)URLString
                 galleryType:(MHGalleryType)galleryType;
 
-+ (instancetype)itemWithURL:(NSString*)URLString
++ (instancetype)itemWithURL:(NSString *)URLString
                 galleryType:(MHGalleryType)galleryType;
 
 /**
@@ -55,14 +54,15 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
  *  @param ID  Example: http://www.youtube.com/watch?v=YSdJtNen-EA - YSdJtNen-EA is the ID
  *
  */
-+ (instancetype)itemWithYoutubeVideoID:(NSString*)ID;
++ (instancetype)itemWithYoutubeVideoID:(NSString *)ID;
+
 /**
  *  MHGalleryItem itemWithVimeoVideoID:
  *
  *  @param ID Example: http://vimeo.com/35515926 - 35515926 is the ID
  *
  */
-+ (instancetype)itemWithVimeoVideoID:(NSString*)ID;
++ (instancetype)itemWithVimeoVideoID:(NSString *)ID;
 
 /**
  *  MHGalleryItem initWithImage
@@ -70,7 +70,8 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
  *  @param image to Display
  *
  */
-- (instancetype)initWithImage:(UIImage*)image;
-+ (instancetype)itemWithImage:(UIImage*)image;
+- (instancetype)initWithImage:(UIImage *)image;
+
++ (instancetype)itemWithImage:(UIImage *)image;
 
 @end

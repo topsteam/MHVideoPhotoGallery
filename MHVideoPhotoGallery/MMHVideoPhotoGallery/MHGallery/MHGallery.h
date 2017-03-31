@@ -10,7 +10,8 @@
 #import "MHTransitionDismissMHGallery.h"
 #import "MHTransitionPresentMHGallery.h"
 #import "MHPresenterImageView.h"
-#import "MHCustomization.h"
+#import "MHUICustomization.h"
+#import "MHTransitionCustomization.h"
 #import "MHGalleryItem.h"
 #import "MHGallerySharedManager.h"
 #import "MHGalleryController.h"
@@ -48,10 +49,10 @@ extern NSDictionary *MHDictionaryForQueryString(NSString *string);
 extern UIImage *MHImageFromView(UIView *view);
 extern UIImage *MHTemplateImage(NSString *imageName);
 extern UIImage *MHDefaultImageForFrame(CGRect frame);
-extern UIImage  *MHGalleryImage(NSString *imageName);
+extern UIImage *MHGalleryImage(NSString *imageName);
 
-extern UIView  *MHStatusBar(void);
-extern BOOL     MHShouldShowStatusBar(void);
+extern UIView *MHStatusBar(void);
+extern BOOL MHShouldShowStatusBar(void);
 
 extern NSString *const MHYoutubeChannel;
 extern NSString *const MHGalleryViewModeShare;

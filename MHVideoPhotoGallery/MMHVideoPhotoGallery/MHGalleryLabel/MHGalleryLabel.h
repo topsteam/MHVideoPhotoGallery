@@ -7,18 +7,23 @@
 //
 
 #import <TTTAttributedLabel/TTTAttributedLabel.h>
-#import "MHCustomization.h"
+#import "MHUICustomization.h"
 
 @class MHGalleryLabel;
 
 @protocol MHGalleryLabelDelegate<NSObject>
+
 @optional
--(void)galleryLabel:(MHGalleryLabel*)label wholeTextDidChange:(BOOL)wholeText;
+
+- (void)galleryLabel:(MHGalleryLabel *)label
+  wholeTextDidChange:(BOOL)wholeText;
+
 @end
 
 @interface MHGalleryLabel : TTTAttributedLabel
 
-@property (nonatomic,strong) MHUICustomization *UICustomization;
+@property (nonatomic) MHUICustomization *UICustomization;
 @property (nonatomic) BOOL wholeText;
-@property (nonatomic,assign) id<MHGalleryLabelDelegate>  labelDelegate;
+@property (nonatomic, assign) id<MHGalleryLabelDelegate> labelDelegate;
+
 @end

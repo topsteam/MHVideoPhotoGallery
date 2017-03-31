@@ -67,8 +67,6 @@
     shadow.shadowBlurRadius = 0.0;
     shadow.shadowOffset = CGSizeMake(0.0, 2.0);
     
-    
-    
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc]initWithString:@"Lorem https://github.com/mariohahn/MHVideoPhotoGallery ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."];
     
     [string setAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15],
@@ -89,10 +87,10 @@
                            NSForegroundColorAttributeName : UIColor.whiteColor,
                            NSShadowAttributeName : shadow}
                    range:NSMakeRange(0, title.length)];
-    
-    tailored.attributedString = string;
-    tailored.attributedTitle = title;
-    tailored2.attributedString = string2;
+//    uncomment to add strings and shadows to imageViewer
+//    tailored.attributedString = string;
+//    tailored.attributedTitle = title;
+//    tailored2.attributedString = string2;
     
     self.galleryDataSource = @[@[tailored, tailored2],@[tailored3]];
     self.tableView.backgroundColor = [UIColor colorWithRed:0.83 green:0.84 blue:0.86 alpha:1];
@@ -176,12 +174,13 @@
     UIColor *blackColor = [UIColor blackColor];
     [customization setMHGalleryBackgroundColor:blackColor forViewMode:MHGalleryViewModeImageViewerNavigationBarShown];
     [customization setMHGalleryBackgroundColor:blackColor forViewMode:MHGalleryViewModeImageViewerNavigationBarHidden];
-    customization.barTintColor = blackColor;
     customization.barButtonsTintColor = [UIColor whiteColor];
     customization.showOverView = NO;
     customization.hideShare = NO;
     customization.showArrows = NO;
-    customization.barStyle = UIBarStyleBlackOpaque;
+//    customization.backButtonState;
+    customization.barTintColor = [UIColor colorWithRed:0.055 green:0.059 blue:0.063 alpha:0.4];
+    customization.barStyle = UIBarStyleBlack;
     customization.showMHShareViewInsteadOfActivityViewController = NO;
     return customization;
 }
@@ -189,6 +188,7 @@
 - (MHGalleryController *)galleryViewController {
     MHGalleryController *galleryViewController = [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarShown];
     galleryViewController.UICustomization = [self galleryViewControllerUICustomization];
+    galleryViewController.preferredStatusBarStyleMH = UIStatusBarStyleLightContent;
     return galleryViewController;
 }
 

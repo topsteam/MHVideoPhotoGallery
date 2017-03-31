@@ -18,6 +18,12 @@
 #import "MHBarButtonItem.h"
 #import "MHImageViewController.h"
 
+@interface UIImage(ImageWithColor)
+
++ (UIImage *)imageWithColor:(UIColor *)color;
+
+@end
+
 @interface MHGalleryImageViewerViewController() <MHGalleryLabelDelegate,TTTAttributedLabelDelegate>
 
 @property (nonatomic, readwrite) MHGradientView *bottomSuperView;
@@ -62,6 +68,7 @@
     self.transitionCustomization = self.galleryViewController.transitionCustomization;
     self.view.backgroundColor = [self.UICustomization MHGalleryBackgroundColorForViewMode:MHGalleryViewModeImageViewerNavigationBarShown];
     
+    [self setupNavigationBar];
     [self setupNavigationBarItems];
     [self setupPageViewController];
     [self setupToolBar];
@@ -231,65 +238,42 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pvc
        viewControllerAfterViewController:(MHImageViewController *)vc {
-    NSInteger indexPage = vc.pageIndex;
-    if (self.numberOfGalleryItems != 1 && indexPage != 0) {
-        self.leftBarButton.enabled = YES;
-        self.rightBarButton.enabled = YES;
-    }
-    [self removeVideoPlayerForVC:vc];
-    if (indexPage == self.numberOfGalleryItems - 1) {
-        self.rightBarButton.enabled = NO;
-        MHImageViewController *imageViewController = [MHImageViewController imageViewControllerForMHMediaItem:nil viewController:self];
-        imageViewController.pageIndex = self.numberOfGalleryItems-1;
-        return imageViewController;
-    }
-    MHImageViewController *imageViewController = [MHImageViewController imageViewControllerForMHMediaItem:[self itemForIndex:indexPage+1] viewController:self];
-    imageViewController.pageIndex = indexPage + 1;
+    NSInteger currentPageIndex = vc.pageIndex;
+    MHGalleryItem *galleryItem = [self nextGalleryItem];
+    MHImageViewController *imageViewController = [MHImageViewController imageViewControllerForMHMediaItem:galleryItem
+                                                                                           viewController:self];
+    imageViewController.pageIndex = currentPageIndex + 1;
     return imageViewController;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pvc
       viewControllerBeforeViewController:(MHImageViewController *)vc {
-    NSInteger indexPage = vc.pageIndex;
-    if (self.numberOfGalleryItems != 1 && self.numberOfGalleryItems - 1 != indexPage) {
-        self.leftBarButton.enabled = YES;
-        self.rightBarButton.enabled = YES;
-    }
-    [self removeVideoPlayerForVC:vc];
-    if (indexPage == 0) {
-        self.leftBarButton.enabled = NO;
-        MHImageViewController *imageViewController = [MHImageViewController imageViewControllerForMHMediaItem:nil
-                                                                                               viewController:self];
-        imageViewController.pageIndex = 0;
-        return imageViewController;
-    }
-    MHGalleryItem *previousGalleryItem = [self itemForIndex:indexPage-1];
-    MHImageViewController *imageViewController = [MHImageViewController imageViewControllerForMHMediaItem:previousGalleryItem
-                                                                                           viewController:self];
-    imageViewController.pageIndex = indexPage - 1;
+    MHGalleryItem *prevGalleryItem = [self previousGalleryItem];
+    MHImageViewController *imageViewController = [MHImageViewController imageViewControllerForMHMediaItem:prevGalleryItem
+                                                                    viewController:self];
+    NSInteger currentPageIndex = vc.pageIndex;
+    imageViewController.pageIndex = currentPageIndex - 1;
     return imageViewController;
 }
 
 #pragma mark - Setup methods
 
+- (void)setupNavigationBar {
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    navBar.translucent = YES;
+    UIImage *coloredImage = [UIImage imageWithColor:self.UICustomization.barTintColor];
+    [navBar setBackgroundImage:coloredImage forBarMetrics:UIBarMetricsDefault];
+    navBar.shadowImage = [UIImage new];
+    navBar.barStyle = self.UICustomization.barStyle;
+}
+
 - (void)setupNavigationBarItems {
-    if (self.UICustomization.showOverView) {
-        if (self.galleryViewController.UICustomization.backButtonState == MHBackButtonStateWithoutBackArrow) {
-            UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithImage:MHTemplateImage(@"ic_square")
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(backButtonAction)];
-            self.navigationItem.hidesBackButton = YES;
-            self.navigationItem.leftBarButtonItem = backBarButton;
-        }
-    }
-    else {
-        self.navigationItem.hidesBackButton = YES;
-    }
-    UIBarButtonItem *doneBarButton =  [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                                  target:self
-                                                                                  action:@selector(donePressed)];
-    self.navigationItem.rightBarButtonItem = doneBarButton;
+    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithImage:MHTemplateImage(@"ic_square")
+                                                                      style:UIBarButtonItemStylePlain
+                                                                     target:self
+                                                                     action:@selector(backButtonAction)];
+    self.navigationItem.hidesBackButton = NO;
+    self.navigationItem.leftBarButtonItem = backBarButton;
 }
 
 - (void)setupPageViewController {
@@ -299,8 +283,12 @@
                                                                                              options:pageViewControllerOptions];
     pageViewController.delegate = self;
     pageViewController.dataSource = self;
-    pageViewController.automaticallyAdjustsScrollViewInsets =NO;
+    pageViewController.automaticallyAdjustsScrollViewInsets = NO;
     self.pageViewController = pageViewController;
+    UIScrollView *pageViewControllerScrollView = (UIScrollView *)[self.pageViewController.view.subviews firstObject];
+    [pageViewControllerScrollView setDelegate:self];
+    UIGestureRecognizer *gesturRecognizer = [[pageViewControllerScrollView gestureRecognizers] firstObject];
+    [gesturRecognizer setDelegate:self];
     
     [self addChildViewController:self.pageViewController];
     [self.pageViewController didMoveToParentViewController:self];
@@ -308,14 +296,19 @@
     [self.pageViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.view);
     }];
-    [(UIScrollView*)self.pageViewController.view.subviews[0] setDelegate:self];
-    [(UIGestureRecognizer*)[[self.pageViewController.view.subviews[0] gestureRecognizers] firstObject] setDelegate:self];
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)setupToolBar {
     UIToolbar *toolBar = [[UIToolbar alloc] init];
+    toolBar.translucent = YES;
+    UIImage *coloredImage = [UIImage imageWithColor:self.UICustomization.barTintColor];
+    [toolBar setBackgroundImage:coloredImage
+             forToolbarPosition:UIBarPositionBottom
+                     barMetrics:UIBarMetricsDefault];
+    [toolBar setShadowImage:[UIImage new] forToolbarPosition:UIBarPositionBottom];
     toolBar.tintColor = self.UICustomization.barButtonsTintColor;
+    toolBar.barStyle = self.UICustomization.barStyle;
     toolBar.tag = 307;
     self.toolbar = toolBar;
     [self.view addSubview:self.toolbar];
@@ -324,8 +317,6 @@
         make.right.mas_equalTo(self.view.mas_right);
         make.bottom.mas_equalTo(self.view.mas_bottom);
     }];
-    self.toolbar.barTintColor = self.UICustomization.barTintColor;
-    self.toolbar.barStyle = self.UICustomization.barStyle;
 }
 
 - (void)setupToolBarItems {
@@ -626,6 +617,28 @@
     return [self.galleryViewController.dataSource numberOfItemsInGallery:self.galleryViewController];
 }
 
+- (MHGalleryItem *)nextGalleryItem {
+    NSInteger currentPageIndex = self.currentImageVC.pageIndex;
+    BOOL currentPageIsLast = currentPageIndex == self.numberOfGalleryItems - 1;
+    MHGalleryItem *galleryItem;
+    if (!currentPageIsLast) {
+        NSUInteger nextPageIndex = currentPageIndex + 1;
+        galleryItem = [self itemForIndex:nextPageIndex];
+    }
+    return galleryItem;
+}
+
+- (MHGalleryItem *)previousGalleryItem {
+    NSInteger currentPageIndex = self.currentImageVC.pageIndex;
+    BOOL currentPageIsFirst = currentPageIndex == 0;
+    MHGalleryItem *galleryItem;
+    if (!currentPageIsFirst) {
+        NSUInteger previousPageIndex = currentPageIndex - 1;
+        galleryItem = [self itemForIndex:previousPageIndex];
+    }
+    return galleryItem;
+}
+
 - (MHGalleryItem *)itemForIndex:(NSInteger)index {
     return [self.galleryViewController.dataSource itemForIndex:index];
 }
@@ -704,7 +717,7 @@
                 if (vc.isPlayingVideo) {
                     [vc stopMovie];
                 }
-                vc.currentTimeMovie =0;
+                vc.currentTimeMovie = 0;
             }
         }
     }
@@ -746,3 +759,21 @@
 }
 
 @end
+
+@implementation UIImage(ImageWithColor)
+
++ (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+@end
+

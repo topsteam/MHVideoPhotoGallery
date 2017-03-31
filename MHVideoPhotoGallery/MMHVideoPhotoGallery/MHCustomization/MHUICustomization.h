@@ -1,5 +1,5 @@
 //
-//  MHCustomization.h
+//  MHUICustomization.h
 //  MHVideoPhotoGallery
 //
 //  Created by Mario Hahn on 04.03.14.
@@ -18,14 +18,6 @@ typedef NS_ENUM(NSUInteger, MHBackButtonState) {
     MHBackButtonStateWithBackArrow,
     MHBackButtonStateWithoutBackArrow
 };
-
-@interface MHTransitionCustomization : NSObject
-
-@property (nonatomic) BOOL interactiveDismiss; //Default YES
-@property (nonatomic) BOOL dismissWithScrollGestureOnFirstAndLastImage;//Default YES
-@property (nonatomic) BOOL fixXValueForDismiss; //Default NO
-
-@end
 
 @interface MHUICustomization : NSObject
 
@@ -77,7 +69,7 @@ typedef NS_ENUM(NSUInteger, MHBackButtonState) {
 /**
  Optional UIBarButtonItem displayed in the lower right corner. Default nil
  */
-@property (nonatomic,strong) UIBarButtonItem *customBarButtonItem;
+@property (nonatomic) UIBarButtonItem *customBarButtonItem;
 
 
 - (void)setMHGradients:(NSArray<UIColor *> *)colors

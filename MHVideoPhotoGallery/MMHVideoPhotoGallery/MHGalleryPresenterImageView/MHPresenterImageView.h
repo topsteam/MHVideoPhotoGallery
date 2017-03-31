@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MHTransitionPresentMHGallery.h"
 #import "MHTransitionDismissMHGallery.h"
-#import "MHCustomization.h"
+#import "MHUICustomization.h"
+#import "MHTransitionCustomization.h"
 
 @class MHTransitionPresentMHGallery;
 @class MHTransitionDismissMHGallery;

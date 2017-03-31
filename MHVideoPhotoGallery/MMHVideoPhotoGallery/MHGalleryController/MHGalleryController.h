@@ -100,8 +100,6 @@ typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,
  */
 + (instancetype)galleryWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
 
-//- (id)initWithPresentationStyle:(MHGalleryViewMode)presentationStyle;
-
 /**
  *  Reloads the View from the Datasource.
  */

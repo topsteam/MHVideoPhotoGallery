@@ -20,7 +20,6 @@
     self = [super initWithNibName:nil bundle:nil];
     if (!self)
         return nil;
-    
     self.autoplayVideos = NO;
     
     self.preferredStatusBarStyleMH = UIStatusBarStyleDefault;
@@ -105,7 +104,7 @@
         galleryController.transitionCustomization.interactiveDismiss = NO;
         galleryController.transitionCustomization.dismissWithScrollGestureOnFirstAndLastImage = NO;
     }
-    galleryController.navigationBar.barStyle = galleryController.UICustomization.barStyle;
+//    galleryController.navigationBar.barStyle = galleryController.UICustomization.barStyle;
     galleryController.navigationBar.barTintColor = galleryController.UICustomization.barTintColor;
     
     if (!galleryController.dataSource) {

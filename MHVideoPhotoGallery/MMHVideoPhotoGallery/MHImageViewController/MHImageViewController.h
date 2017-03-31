@@ -17,7 +17,7 @@
 @class MHPinchGestureRecognizer;
 @class MHGalleryImageViewerViewController;
 
-@interface MHImageViewController : UIViewController<UIScrollViewDelegate,UIGestureRecognizerDelegate>
+@interface MHImageViewController : UIViewController <UIScrollViewDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic) MHTransitionDismissMHGallery *interactiveTransition;
 @property (nonatomic) MHTransitionShowOverView *interactiveOverView;

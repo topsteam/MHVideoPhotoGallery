@@ -56,7 +56,7 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         
-        __weak typeof(self) weakSelf = self;
+        
         self.viewController = viewController;
         
         self.view.backgroundColor = [UIColor blackColor];
@@ -74,7 +74,6 @@
         self.scrollView.userInteractionEnabled = YES;
         [self.view addSubview:self.scrollView];
         
-        
         self.imageView = [UIImageView.alloc initWithFrame:self.view.bounds];
         self.imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleBottomMargin;
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -82,7 +81,8 @@
         self.imageView.tag = 506;
         [self.scrollView addSubview:self.imageView];
         
-        self.pinch = [MHPinchGestureRecognizer.alloc initWithTarget:self action:@selector(userDidPinch:)];
+        self.pinch = [MHPinchGestureRecognizer.alloc initWithTarget:self
+                                                             action:@selector(userDidPinch:)];
         self.pinch.delegate = self;
         
         self.pan = [UIPanGestureRecognizer.alloc initWithTarget:self action:@selector(userDidPan:)];
@@ -161,13 +161,10 @@
             self.scrollView.maximumZoomScale = 1;
             self.scrollView.minimumZoomScale =1;
         }
-        
         self.imageView.userInteractionEnabled = YES;
-        
         [imageTap requireGestureRecognizerToFail: doubleTap];
         
-        
-        
+        __weak typeof(self) weakSelf = self;
         if (self.item.galleryType == MHGalleryTypeImage) {
             [self.imageView setImageForMHGalleryItem:self.item imageType:MHImageTypeFull successBlock:^(UIImage *image, NSError *error) {
                 if (!image) {
@@ -180,11 +177,13 @@
         }else{
             [MHGallerySharedManager.sharedManager startDownloadingThumbImage:self.item.URLString
                                                                 successBlock:^(UIImage *image,NSUInteger videoDuration,NSError *error) {
-                                                                    if (!error) {
+                                                                    BOOL success = error == nil;
+                                                                    if (success) {
                                                                         [weakSelf handleGeneratedThumb:image
                                                                                          videoDuration:videoDuration
                                                                                              urlString:self.item.URLString];
-                                                                    }else{
+                                                                    }
+                                                                    else {
                                                                         [weakSelf changeToErrorImage];
                                                                     }
                                                                     [weakSelf.act stopAnimating];
@@ -196,12 +195,12 @@
 }
 
 - (CGFloat)checkProgressValue:(CGFloat)progress {
-    CGFloat progressChecked =progress;
-    if (progressChecked <0) {
+    CGFloat progressChecked = progress;
+    if (progressChecked < 0) {
         progressChecked = -progressChecked;
     }
-    if (progressChecked >=1) {
-        progressChecked =0.99;
+    if (progressChecked >= 1) {
+        progressChecked = 0.99;
     }
     return progressChecked;
 }
@@ -209,32 +208,33 @@
 - (void)userDidPinch:(UIPinchGestureRecognizer*)recognizer {
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
-        if (recognizer.scale <1) {
+        if (recognizer.scale < 1) {
             self.imageView.frame = self.scrollView.frame;
             
             self.lastPointPop = [recognizer locationInView:self.view];
             self.interactiveOverView = [MHTransitionShowOverView new];
             [self.navigationController popViewControllerAnimated:YES];
-        }else{
+        }
+        else {
             recognizer.cancelsTouchesInView = YES;
         }
-        
-    }else if (recognizer.state == UIGestureRecognizerStateChanged) {
-        
-        if (recognizer.numberOfTouches <2) {
-            recognizer.enabled =NO;
-            recognizer.enabled =YES;
+    }
+    else if (recognizer.state == UIGestureRecognizerStateChanged) {
+        if (recognizer.numberOfTouches < 2) {
+            recognizer.enabled = NO;
+            recognizer.enabled = YES;
         }
-        
         CGPoint point = [recognizer locationInView:self.view];
         self.interactiveOverView.scale = recognizer.scale;
         self.interactiveOverView.changedPoint = CGPointMake(self.lastPointPop.x - point.x, self.lastPointPop.y - point.y) ;
         [self.interactiveOverView updateInteractiveTransition:1-recognizer.scale];
         self.lastPointPop = point;
-    }else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         if (recognizer.scale < 0.65) {
             [self.interactiveOverView finishInteractiveTransition];
-        }else{
+        }
+        else {
             [self.interactiveOverView cancelInteractiveTransition];
         }
         self.interactiveOverView = nil;
@@ -242,36 +242,39 @@
 }
 
 - (void)userDidPan:(UIPanGestureRecognizer*)recognizer {
-    
     BOOL userScrolls = self.viewController.userScrolls;
     if (self.viewController.transitionCustomization.dismissWithScrollGestureOnFirstAndLastImage) {
         if (!self.interactiveTransition) {
-            if (self.viewController.numberOfGalleryItems ==1) {
+            if (self.viewController.numberOfGalleryItems == 1) {
                 userScrolls = NO;
                 self.viewController.userScrolls = NO;
-            }else{
-                if (self.pageIndex ==0) {
-                    if ([recognizer translationInView:self.view].x >=0) {
-                        userScrolls =NO;
+            }
+            else {
+                if (self.pageIndex == 0) {
+                    if ([recognizer translationInView:self.view].x >= 0) {
+                        userScrolls = NO;
                         self.viewController.userScrolls = NO;
-                    }else{
+                    }
+                    else {
                         recognizer.cancelsTouchesInView = YES;
                         recognizer.enabled =NO;
                         recognizer.enabled =YES;
                     }
                 }
-                if ((self.pageIndex == self.viewController.numberOfGalleryItems-1)) {
-                    if ([recognizer translationInView:self.view].x <=0) {
-                        userScrolls =NO;
+                if ((self.pageIndex == self.viewController.numberOfGalleryItems - 1)) {
+                    if ([recognizer translationInView:self.view].x <= 0) {
+                        userScrolls = NO;
                         self.viewController.userScrolls = NO;
-                    }else{
+                    }
+                    else {
                         recognizer.cancelsTouchesInView = YES;
-                        recognizer.enabled =NO;
-                        recognizer.enabled =YES;
+                        recognizer.enabled = NO;
+                        recognizer.enabled = YES;
                     }
                 }
             }
-        }else{
+        }
+        else {
             userScrolls = NO;
         }
     }
@@ -304,12 +307,14 @@
                 if (galleryViewController.finishedCallback) {
                     galleryViewController.finishedCallback(self.pageIndex,self.imageView.image,self.interactiveTransition,self.viewController.viewModeForBarStyle);
                 }
-            }else{
+            }
+            else {
                 CGPoint currentPoint = [recognizer translationInView:self.view];
                 
                 if (self.viewController.transitionCustomization.fixXValueForDismiss) {
                     self.interactiveTransition.changedPoint = CGPointMake(self.startPoint.x, self.lastPoint.y-currentPoint.y);
-                }else{
+                }
+                else {
                     self.interactiveTransition.changedPoint = CGPointMake(self.lastPoint.x-currentPoint.x, self.lastPoint.y-currentPoint.y);
                 }
                 progressY = [self checkProgressValue:progressY];
@@ -325,22 +330,24 @@
                 self.lastPoint = [recognizer translationInView:self.view];
             }
             
-        }else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+        }
+        else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
             if (self.interactiveTransition) {
                 CGFloat velocityY = [recognizer velocityInView:self.view].y;
-                if (velocityY <0) {
+                if (velocityY < 0) {
                     velocityY = -velocityY;
                 }
                 if (!self.viewController.transitionCustomization.fixXValueForDismiss) {
-                    if (progressX> progressY) {
+                    if (progressX > progressY) {
                         progressY = progressX;
                     }
                 }
                 
-                if (progressY > 0.35 || velocityY >700) {
+                if (progressY > 0.35 || velocityY > 700) {
                     MHStatusBar().alpha = MHShouldShowStatusBar() ? 1 : 0;
                     [self.interactiveTransition finishInteractiveTransition];
-                }else {
+                }
+                else {
                     [self setNeedsStatusBarAppearanceUpdate];
                     [self.interactiveTransition cancelInteractiveTransition];
                 }
@@ -355,7 +362,8 @@
     if (!image) {
         self.scrollView.maximumZoomScale  =1;
         [self changeToErrorImage];
-    }else{
+    }
+    else {
         self.imageView.image = image;
     }
     [self.act stopAnimating];
@@ -373,21 +381,22 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    __weak typeof(self) weakSelf = self;
-    
     if (self.item.galleryType == MHGalleryTypeVideo) {
         if (self.moviePlayer) {
-            [weakSelf autoPlayVideo];
+            [self autoPlayVideo];
             return;
         }
-        [[MHGallerySharedManager sharedManager] getURLForMediaPlayer:self.item.URLString successBlock:^(NSURL *URL, NSError *error) {
-            if (error || URL == nil) {
-                [weakSelf changePlayButtonToUnPlay];
-            }else{
-                [weakSelf addMoviePlayerToViewWithURL:URL];
-                [weakSelf autoPlayVideo];
-            }
-        }];
+        __weak typeof(self) weakSelf = self;
+        [[MHGallerySharedManager sharedManager] getURLForMediaPlayer:self.item.URLString
+                                                        successBlock:^(NSURL *URL, NSError *error) {
+                                                            if (error || URL == nil) {
+                                                                [weakSelf changePlayButtonToUnPlay];
+                                                            }
+                                                            else {
+                                                                [weakSelf addMoviePlayerToViewWithURL:URL];
+                                                                [weakSelf autoPlayVideo];
+                                                            }
+                                                        }];
     }
     
 }
