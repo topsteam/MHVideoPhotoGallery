@@ -113,7 +113,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
-    numberOfItemsInSection:(NSInteger)section {
+     numberOfItemsInSection:(NSInteger)section {
     return [self.galleryDataSource[collectionView.tag] count];
 }
 
@@ -193,42 +193,43 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UIImageView *imageView = [(MHMediaPreviewCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath] thumbnail];
-    NSArray *galleryData = self.galleryDataSource[collectionView.tag];
+    
     MHGalleryController *galleryViewController = [self galleryViewController];
+    NSArray *galleryData = self.galleryDataSource[collectionView.tag];
     galleryViewController.galleryItems = galleryData;
+    MHMediaPreviewCollectionViewCell *cell = (MHMediaPreviewCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    UIImageView *imageView = [cell thumbnail];
     galleryViewController.presentingFromImageView = imageView;
     galleryViewController.presentationIndex = indexPath.row;
-//    gallery.galleryDelegate = self;
-//    gallery.dataSource = self;
+    
     __weak MHGalleryController *blockGallery = galleryViewController;
     [galleryViewController setFinishedCallback:^(NSInteger currentIndex,
                                                  UIImage *image,
                                                  MHTransitionDismissMHGallery *interactiveTransition,
                                                  MHGalleryViewMode viewMode) {
         if (viewMode == MHGalleryViewModeOverView) {
-            [blockGallery dismissViewControllerAnimated:YES completion:^{
-                [self setNeedsStatusBarAppearanceUpdate];
-            }];
+            [blockGallery dismissViewControllerAnimated:YES
+                                             completion:^{
+                                                 [self setNeedsStatusBarAppearanceUpdate];
+                                             }];
         }
         else {
             NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:currentIndex inSection:0];
-            CGRect cellFrame  = [[collectionView collectionViewLayout] layoutAttributesForItemAtIndexPath:newIndexPath].frame;
+            CGRect cellFrame = [[collectionView collectionViewLayout] layoutAttributesForItemAtIndexPath:newIndexPath].frame;
             [collectionView scrollRectToVisible:cellFrame
                                        animated:NO];
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [collectionView reloadItemsAtIndexPaths:@[newIndexPath]];
                 [collectionView scrollToItemAtIndexPath:newIndexPath
                                        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-                MHMediaPreviewCollectionViewCell *cell = (MHMediaPreviewCollectionViewCell *)[collectionView cellForItemAtIndexPath:newIndexPath];
+                MHMediaPreviewCollectionViewCell *newCell = (MHMediaPreviewCollectionViewCell *)[collectionView cellForItemAtIndexPath:newIndexPath];
                 [blockGallery dismissViewControllerAnimated:YES
-                                           dismissImageView:cell.thumbnail
+                                           dismissImageView:newCell.thumbnail
                                                  completion:^{
                                                      [self setNeedsStatusBarAppearanceUpdate];
                                                      MPMoviePlayerController *player = interactiveTransition.moviePlayer;
                                                      player.controlStyle = MPMovieControlStyleEmbedded;
-                                                     player.view.frame = cell.bounds;
+                                                     player.view.frame = newCell.bounds;
                                                      player.scalingMode = MPMovieScalingModeAspectFill;
                                                      [cell.contentView addSubview:player.view];
                                                  }];
@@ -243,13 +244,13 @@
 }
 
 - (BOOL)galleryController:(MHGalleryController *)galleryController
-         shouldHandleURL:(NSURL *)URL {
+          shouldHandleURL:(NSURL *)URL {
     return YES;
 }
 
 - (MHGalleryItem *)itemForIndex:(NSInteger)index {
     // You also have to set the image in the Testcell to get the correct Animation
-    //    return [MHGalleryItem.alloc initWithImage:nil];
+    // return [MHGalleryItem.alloc initWithImage:nil];
     return [MHGalleryItem itemWithImage:MHGalleryImage(@"twitterMH")];
 }
 
