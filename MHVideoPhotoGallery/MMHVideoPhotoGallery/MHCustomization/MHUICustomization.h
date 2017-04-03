@@ -24,8 +24,12 @@ typedef NS_ENUM(NSUInteger, MHBackButtonState) {
 @property (nonatomic) NSDictionary *descriptionLinkAttributes;
 @property (nonatomic) NSDictionary *descriptionActiveLinkAttributes;
 @property (nonatomic) NSAttributedString *descriptionTruncationString;
-@property (nonatomic,strong) UICollectionViewFlowLayout *overViewCollectionViewLayoutLandscape;
-@property (nonatomic,strong) UICollectionViewFlowLayout *overViewCollectionViewLayoutPortrait;
+@property (nonatomic, strong) UICollectionViewFlowLayout *overViewCollectionViewLayoutLandscape;
+@property (nonatomic, strong) UICollectionViewFlowLayout *overViewCollectionViewLayoutPortrait;
+/**
+ Default nil
+ */
+@property (nonatomic) NSString *backButtonTitle;
 /**
  Default UIBarStyleDefault
  */

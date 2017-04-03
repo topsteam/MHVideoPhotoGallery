@@ -91,12 +91,12 @@
 }
 
 - (void)setupNavigationBarItems {
-    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
-                                                                      style:UIBarButtonItemStylePlain
-                                                                     target:self
-                                                                     action:@selector(donePressed)];
-    backBarButton.image = MHGalleryImage(@"back_arrow_icon");
-    self.navigationItem.leftBarButtonItem = backBarButton;
+    UIButton *barButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
+    [barButton setImage:MHGalleryImage(@"back_arrow_icon") forState:UIControlStateNormal];
+    [barButton setTitle:self.UICustomization.backButtonTitle forState:UIControlStateNormal];
+    [barButton addTarget:self action:@selector(donePressed) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backBarButtonItem =  [[UIBarButtonItem alloc]initWithCustomView:barButton];
+    self.navigationItem.leftBarButtonItem = backBarButtonItem;
 }
 
 - (void)setupPageViewController {
