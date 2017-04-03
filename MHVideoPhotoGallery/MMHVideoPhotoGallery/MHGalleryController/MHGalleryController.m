@@ -29,11 +29,12 @@
     
     self.overViewViewController= MHOverviewController.new;
     self.imageViewerViewController = MHGalleryImageViewerViewController.new;
-    
-    if (presentationStyle != MHGalleryViewModeOverView) {
-        self.viewControllers = @[self.overViewViewController,self.imageViewerViewController];
-    }else{
+
+    if (presentationStyle == MHGalleryViewModeOverView) {
         self.viewControllers = @[self.overViewViewController];
+    }
+    else {
+        self.viewControllers = @[self.imageViewerViewController];
     }
     return self;
 }
@@ -104,7 +105,7 @@
         galleryController.transitionCustomization.interactiveDismiss = NO;
         galleryController.transitionCustomization.dismissWithScrollGestureOnFirstAndLastImage = NO;
     }
-//    galleryController.navigationBar.barStyle = galleryController.UICustomization.barStyle;
+    //    galleryController.navigationBar.barStyle = galleryController.UICustomization.barStyle;
     galleryController.navigationBar.barTintColor = galleryController.UICustomization.barTintColor;
     
     if (!galleryController.dataSource) {

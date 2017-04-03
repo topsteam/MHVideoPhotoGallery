@@ -74,7 +74,6 @@
 		F553D32918967E5300BA4283 /* ic_square@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F553D32718967E5300BA4283 /* ic_square@2x.png */; };
 		F55CB5BC18C5FE2E0039941E /* MHUICustomization.m in Sources */ = {isa = PBXBuildFile; fileRef = F55CB5BB18C5FE2E0039941E /* MHUICustomization.m */; };
 		F5779F711BBE812100FDB268 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5779F701BBE812100FDB268 /* Launch Screen.storyboard */; };
-		F577F33D18D73D3100880B72 /* Sydney-iPhone.m4v in Resources */ = {isa = PBXBuildFile; fileRef = F577F33B18D73C1100880B72 /* Sydney-iPhone.m4v */; };
 		F58F65051880899200D3A8F9 /* MHShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F58F65041880899200D3A8F9 /* MHShareViewController.m */; };
 		F58F65281882F97600D3A8F9 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F58F65271882F97600D3A8F9 /* Social.framework */; };
 		F58F652A1882F97B00D3A8F9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F58F65291882F97B00D3A8F9 /* MessageUI.framework */; };
@@ -196,7 +195,6 @@
 		F55CB5BA18C5FE2E0039941E /* MHUICustomization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHUICustomization.h; sourceTree = "<group>"; };
 		F55CB5BB18C5FE2E0039941E /* MHUICustomization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHUICustomization.m; sourceTree = "<group>"; };
 		F5779F701BBE812100FDB268 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		F577F33B18D73C1100880B72 /* Sydney-iPhone.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sydney-iPhone.m4v"; sourceTree = "<group>"; };
 		F58F65031880899200D3A8F9 /* MHShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHShareViewController.h; path = MMHVideoPhotoGallery/MHShareViewController/MHShareViewController.h; sourceTree = "<group>"; };
 		F58F65041880899200D3A8F9 /* MHShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHShareViewController.m; path = MMHVideoPhotoGallery/MHShareViewController/MHShareViewController.m; sourceTree = "<group>"; };
 		F58F65271882F97600D3A8F9 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -366,7 +364,6 @@
 				F5D24FFE1885D3D7004D97CA /* ExampleViewControllerImageView.h */,
 				F5D24FFF1885D3D7004D97CA /* ExampleViewControllerImageView.m */,
 				F5779F701BBE812100FDB268 /* Launch Screen.storyboard */,
-				F577F33B18D73C1100880B72 /* Sydney-iPhone.m4v */,
 				F5B2EC8117F9D70C000ADC51 /* Storyboard.storyboard */,
 				F53F925B17EB008100A9FE6A /* Images.xcassets */,
 				F53F924A17EB008100A9FE6A /* Supporting Files */,
@@ -746,7 +743,6 @@
 				F553D3011892B58800BA4283 /* EditControlSelected@2x.png in Resources */,
 				F514263618911D8E0091E3DF /* 707-albums-selected@2x.png in Resources */,
 				F514263518911D8E0091E3DF /* 707-albums-selected.png in Resources */,
-				F577F33D18D73D3100880B72 /* Sydney-iPhone.m4v in Resources */,
 				F553D30C1892B58800BA4283 /* pause.png in Resources */,
 				F553D30E1892B58800BA4283 /* play.png in Resources */,
 				F553D3031892B58800BA4283 /* error@2x.png in Resources */,

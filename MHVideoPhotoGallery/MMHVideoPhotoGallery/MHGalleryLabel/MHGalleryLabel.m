@@ -15,7 +15,7 @@
 
 @implementation MHGalleryLabel
 
--(instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self configureLabel];
@@ -24,7 +24,7 @@
     return self;
 }
 
-- (instancetype)init{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self configureLabel];
@@ -32,7 +32,8 @@
     return self;
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+- (void)touchesBegan:(NSSet<UITouch *> *)touches
+           withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
     
     if (!self.activeLink) {
@@ -40,21 +41,21 @@
     }
 }
 
--(void)configureLabel{
+- (void)configureLabel {
     self.enabledTextCheckingTypes = NSTextCheckingTypeLink;
    
     self.wholeText = NO;
     self.userInteractionEnabled = YES;
 }
--(void)setUICustomization:(MHUICustomization *)UICustomization{
+
+- (void)setUICustomization:(MHUICustomization *)UICustomization {
     _UICustomization = UICustomization;
-    
     self.attributedTruncationToken = [UICustomization descriptionTruncationString];
     self.linkAttributes = [UICustomization descriptionLinkAttributes];
     self.activeLinkAttributes = [UICustomization descriptionActiveLinkAttributes];
 }
 
--(void)tappedLabel{
+- (void)tappedLabel {
     self.wholeText = !self.wholeText;
     
     if ([self.labelDelegate respondsToSelector:@selector(galleryLabel:wholeTextDidChange:)]) {
@@ -66,13 +67,13 @@
     }
 }
 
--(void)setWholeText:(BOOL)wholeText{
+- (void)setWholeText:(BOOL)wholeText {
     self.numberOfLines = wholeText ? 0 : 4;
     
     _wholeText = wholeText;
 }
 
-- (void) layoutSubviews{
+- (void)layoutSubviews {
     [super layoutSubviews];
     
     if (self.numberOfLines == 0 ){

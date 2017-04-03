@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MHGallery.h"
-#import "MHGalleryLabel.h"
 #import "MHScrollViewLabel.h"
 
 @class MHTransitionShowOverView;

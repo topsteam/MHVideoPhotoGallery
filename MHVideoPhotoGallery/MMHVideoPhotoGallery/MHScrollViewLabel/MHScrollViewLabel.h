@@ -10,7 +10,9 @@
 #import "MHGalleryLabel.h"
 
 @interface MHScrollViewLabel : UIScrollView
+
 @property (nonatomic,strong) MHGalleryLabel *textLabel;
 
 -(void)setHeightConstraint;
+
 @end
