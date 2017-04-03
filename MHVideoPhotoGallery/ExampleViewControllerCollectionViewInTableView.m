@@ -178,7 +178,6 @@
     customization.showOverView = NO;
     customization.hideShare = NO;
     customization.showArrows = NO;
-//    customization.backButtonState;
     customization.barTintColor = [UIColor colorWithRed:0.055 green:0.059 blue:0.063 alpha:0.4];
     customization.barStyle = UIBarStyleBlack;
     customization.showMHShareViewInsteadOfActivityViewController = NO;
