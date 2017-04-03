@@ -10,6 +10,7 @@
 #import "MHOverviewController.h"
 
 @implementation UITabBarController (autoRotate)
+
 - (BOOL)shouldAutorotate {
     return [self.selectedViewController shouldAutorotate];
 }
@@ -17,24 +18,25 @@
     return [self.selectedViewController supportedInterfaceOrientations];
 }
 
-
 @end
 
 
 @implementation UINavigationController (autoRotate)
 
--(UIStatusBarStyle)preferredStatusBarStyle{
+- (UIStatusBarStyle)preferredStatusBarStyle {
     return [self.viewControllers.lastObject preferredStatusBarStyle];
 }
 
 - (BOOL)shouldAutorotate {
     return [self.viewControllers.lastObject shouldAutorotate];
 }
+
 - (NSUInteger)supportedInterfaceOrientations {
     return [self.viewControllers.lastObject supportedInterfaceOrientations];
 }
 
 @end
+
 
 @implementation TestCell
 
@@ -43,7 +45,7 @@
 
 @interface ExampleViewControllerCollectionViewInTableView ()
 
-@property(nonatomic,strong) NSArray *galleryDataSource;
+@property(nonatomic) NSArray *galleryDataSource;
 
 @end
 
@@ -87,10 +89,10 @@
                            NSForegroundColorAttributeName : UIColor.whiteColor,
                            NSShadowAttributeName : shadow}
                    range:NSMakeRange(0, title.length)];
-//    uncomment to add strings and shadows to imageViewer
-//    tailored.attributedString = string;
-//    tailored.attributedTitle = title;
-//    tailored2.attributedString = string2;
+    //    uncomment to add strings and shadows to imageViewer
+    //    tailored.attributedString = string;
+    //    tailored.attributedTitle = title;
+    //    tailored2.attributedString = string2;
     
     self.galleryDataSource = @[@[tailored, tailored2],@[tailored3]];
     self.tableView.backgroundColor = [UIColor colorWithRed:0.83 green:0.84 blue:0.86 alpha:1];
@@ -178,7 +180,10 @@
     customization.showOverView = NO;
     customization.hideShare = NO;
     customization.showArrows = NO;
-    customization.backButtonTitle = @"FEED_TITLE";
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:13],
+                                 NSForegroundColorAttributeName:[UIColor whiteColor]};
+    customization.attributedBackButtonTitle = [[NSAttributedString alloc] initWithString:@"FEED"
+                                                                              attributes:attributes]; // ;
     customization.barTintColor = [UIColor colorWithRed:0.055 green:0.059 blue:0.063 alpha:0.4];
     customization.barStyle = UIBarStyleBlack;
     customization.showMHShareViewInsteadOfActivityViewController = NO;

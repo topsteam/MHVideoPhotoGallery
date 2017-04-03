@@ -29,6 +29,10 @@ typedef NS_ENUM(NSUInteger, MHBackButtonState) {
 /**
  Default nil
  */
+@property (nonatomic) NSAttributedString *attributedBackButtonTitle;
+/**
+ Default nil
+ */
 @property (nonatomic) NSString *backButtonTitle;
 /**
  Default UIBarStyleDefault
