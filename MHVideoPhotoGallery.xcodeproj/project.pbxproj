@@ -11,7 +11,7 @@
 		C91C69951E8C4BD600FFEBC5 /* MHImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C69941E8C4BD600FFEBC5 /* MHImageViewController.m */; };
 		C95A29EE1E8D19F4009C15B7 /* MHPinchGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C95A29ED1E8D19F4009C15B7 /* MHPinchGestureRecognizer.m */; };
 		C9A280C01E8ECD2600B9F9B4 /* MHTransitionCustomization.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A280BF1E8ECD2600B9F9B4 /* MHTransitionCustomization.m */; };
-		C9A280C41E92888500B9F9B4 /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9A280C31E92888500B9F9B4 /* Buttons.xcassets */; };
+		C9A280C61E928C1500B9F9B4 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9A280C51E928C1500B9F9B4 /* Media.xcassets */; };
 		F514263518911D8E0091E3DF /* 707-albums-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F514263318911D8E0091E3DF /* 707-albums-selected.png */; };
 		F514263618911D8E0091E3DF /* 707-albums-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F514263418911D8E0091E3DF /* 707-albums-selected@2x.png */; };
 		F514263918911D920091E3DF /* 705-photos-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F514263718911D920091E3DF /* 705-photos-selected.png */; };
@@ -84,7 +84,7 @@
 		C95A29ED1E8D19F4009C15B7 /* MHPinchGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPinchGestureRecognizer.m; sourceTree = "<group>"; };
 		C9A280BE1E8ECD2600B9F9B4 /* MHTransitionCustomization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHTransitionCustomization.h; sourceTree = "<group>"; };
 		C9A280BF1E8ECD2600B9F9B4 /* MHTransitionCustomization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHTransitionCustomization.m; sourceTree = "<group>"; };
-		C9A280C31E92888500B9F9B4 /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
+		C9A280C51E928C1500B9F9B4 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = MMHVideoPhotoGallery/Images/Media.xcassets; sourceTree = "<group>"; };
 		EF27555478C5FF6225D0F675 /* libPods-MHVideoPhotoGallery.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MHVideoPhotoGallery.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F514263318911D8E0091E3DF /* 707-albums-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "707-albums-selected.png"; sourceTree = "<group>"; };
 		F514263418911D8E0091E3DF /* 707-albums-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "707-albums-selected@2x.png"; sourceTree = "<group>"; };
@@ -396,7 +396,7 @@
 		F553D2DA1892B57E00BA4283 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				C9A280C31E92888500B9F9B4 /* Buttons.xcassets */,
+				C9A280C51E928C1500B9F9B4 /* Media.xcassets */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -626,13 +626,13 @@
 			files = (
 				F53F925C17EB008100A9FE6A /* Images.xcassets in Resources */,
 				F514263918911D920091E3DF /* 705-photos-selected.png in Resources */,
+				C9A280C61E928C1500B9F9B4 /* Media.xcassets in Resources */,
 				F514263D18911D950091E3DF /* 729-top-list-selected.png in Resources */,
 				F5B2EC8217F9D70C000ADC51 /* Storyboard.storyboard in Resources */,
 				F514263618911D8E0091E3DF /* 707-albums-selected@2x.png in Resources */,
 				F514263518911D8E0091E3DF /* 707-albums-selected.png in Resources */,
 				F53F924E17EB008100A9FE6A /* InfoPlist.strings in Resources */,
 				F5779F711BBE812100FDB268 /* Launch Screen.storyboard in Resources */,
-				C9A280C41E92888500B9F9B4 /* Buttons.xcassets in Resources */,
 				F5EE8DA61890393D002E5734 /* testIcon@2x.png in Resources */,
 				F5D9AB5118B665A80014AAC6 /* MHGallery.bundle in Resources */,
 				F514263E18911D950091E3DF /* 729-top-list-selected@2x.png in Resources */,
