@@ -92,7 +92,7 @@
 
 - (void)setupNavigationBarItems {
     UIButton *barButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-    barButton.contentEdgeInsets = UIEdgeInsetsMake(.0f, -8.0f, .0f, 8.0f);
+    barButton.contentEdgeInsets = UIEdgeInsetsMake(2.0f, -8.0f, -2.0f, 8.0f);
     barButton.imageEdgeInsets = UIEdgeInsetsMake(.0f, -4.0f, .0f, 4.0f);
     [barButton setImage:MHGalleryImage(@"back_arrow_icon") forState:UIControlStateNormal];
     if (self.UICustomization.attributedBackButtonTitle) {

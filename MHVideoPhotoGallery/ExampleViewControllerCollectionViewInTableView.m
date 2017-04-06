@@ -174,8 +174,10 @@
 - (MHUICustomization *)galleryViewControllerUICustomization {
     MHUICustomization *customization = [[MHUICustomization alloc] init];
     UIColor *blackColor = [UIColor blackColor];
-    [customization setMHGalleryBackgroundColor:blackColor forViewMode:MHGalleryViewModeImageViewerNavigationBarShown];
-    [customization setMHGalleryBackgroundColor:blackColor forViewMode:MHGalleryViewModeImageViewerNavigationBarHidden];
+    [customization setMHGalleryBackgroundColor:blackColor
+                                   forViewMode:MHGalleryViewModeImageViewerNavigationBarShown];
+    [customization setMHGalleryBackgroundColor:blackColor
+                                   forViewMode:MHGalleryViewModeImageViewerNavigationBarHidden];
     customization.barButtonsTintColor = [UIColor whiteColor];
     customization.showOverView = NO;
     customization.hideShare = NO;
