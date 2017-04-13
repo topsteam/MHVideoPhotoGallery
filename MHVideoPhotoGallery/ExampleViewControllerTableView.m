@@ -26,8 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"TableView";
-    MHGalleryItem *tailored = [[MHGalleryItem alloc]initWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"
-                                                       galleryType:MHGalleryTypeImage];
+    MHGalleryItem *tailored = [MHGalleryItem itemWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"
+                                             galleryType:MHGalleryTypeImage];
     
     self.galleryDataSource = @[tailored];
     
@@ -44,9 +44,10 @@
     MHGalleryItem *item = self.galleryDataSource[indexPath.row];
     if(item.galleryType == MHGalleryTypeImage){
         [cell.iv sd_setImageWithURL:[NSURL URLWithString:item.URLString]];
-    }else{
+    }
+    else {
         [[MHGallerySharedManager sharedManager] startDownloadingThumbImage:item.URLString
-                                                              successBlock:^(UIImage *image, NSUInteger videoDuration, NSError *error) {
+                                                              success:^(UIImage *image, NSUInteger videoDuration, NSError *error) {
                                                                   cell.iv.image = image;
                                                               }];
     }

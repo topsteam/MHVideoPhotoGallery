@@ -13,19 +13,44 @@
 #import "SDWebImageManager.h"
 
 @implementation MHIndexPinchGestureRecognizer
+
 @end
 
 @interface MHOverviewController ()
 
-@property (nonatomic, strong) MHTransitionShowDetail *interactivePushTransition;
-@property (nonatomic        ) CGPoint                lastPoint;
-@property (nonatomic        ) CGFloat                startScale;
-@end
+@property (nonatomic) MHTransitionShowDetail *interactivePushTransition;
+@property (nonatomic) CGPoint lastPoint;
+@property (nonatomic) CGFloat startScale;
 
+@end
 
 @implementation MHOverviewController
 
-- (void)viewDidLoad{
+#pragma mark - MHOverviewController interface
+
+- (UICollectionViewFlowLayout *)layoutForOrientation:(UIInterfaceOrientation)orientation {
+    if (orientation == UIInterfaceOrientationPortrait ) {
+        return self.galleryViewController.UICustomization.overViewCollectionViewLayoutPortrait;
+    }
+    return self.galleryViewController.UICustomization.overViewCollectionViewLayoutLandscape;
+}
+
+- (MHGalleryItem *)itemForIndex:(NSInteger)index {
+    return [self.galleryViewController.dataSource itemForIndex:index];
+}
+
+- (void)pushToImageViewerForIndexPath:(NSIndexPath *)indexPath {
+    MHGalleryImageViewerViewController *detail = MHGalleryImageViewerViewController.new;
+    detail.pageIndex = indexPath.row;
+    detail.galleryItems = self.galleryItems;
+    if ([self.navigationController isKindOfClass:MHGalleryController.class]) {
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+}
+
+#pragma mark - Lifecycle methods
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -63,110 +88,45 @@
     
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self setNeedsStatusBarAppearanceUpdate];
-    
     [UIApplication.sharedApplication setStatusBarStyle:self.galleryViewController.preferredStatusBarStyleMH
                                               animated:YES];
-    
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationController.delegate = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (self.navigationController.delegate == self) {
+        self.navigationController.delegate = nil;
+    }
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
     return self.galleryViewController.preferredStatusBarStyleMH;
 }
 
--(UICollectionViewFlowLayout*)layoutForOrientation:(UIInterfaceOrientation)orientation{
-    if (orientation == UIInterfaceOrientationPortrait ) {
-        return self.galleryViewController.UICustomization.overViewCollectionViewLayoutPortrait;
-    }
-    return self.galleryViewController.UICustomization.overViewCollectionViewLayoutLandscape;
-}
+#pragma mark - UIGestureRecognizerDelegate methods
 
--(MHGalleryController*)galleryViewController{
-    if ([self.navigationController isKindOfClass:MHGalleryController.class]) {
-        return (MHGalleryController*)self.navigationController;
-    }
-    return nil;
-}
-
--(MHGalleryItem*)itemForIndex:(NSInteger)index{
-    return [self.galleryViewController.dataSource itemForIndex:index];
-}
-
--(void)donePressed{
-    self.navigationController.transitioningDelegate = nil;
-    
-    MHGalleryController *galleryViewController = [self galleryViewController];
-    if (galleryViewController.finishedCallback) {
-        galleryViewController.finishedCallback(0,nil,nil,MHGalleryViewModeOverView);
-    }
-}
-
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return [self.galleryViewController.dataSource numberOfItemsInGallery:self.galleryViewController];
-}
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    UICollectionViewCell *cell = (MHMediaPreviewCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(MHMediaPreviewCollectionViewCell.class) forIndexPath:indexPath];
-    [self makeMHGalleryOverViewCell:(MHMediaPreviewCollectionViewCell*)cell
-                        atIndexPath:indexPath];
-    
-    return cell;
-}
-
-
-
--(void)makeMHGalleryOverViewCell:(MHMediaPreviewCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath{
-    
-    __weak typeof(self) weakSelf = self;
-    
-    MHGalleryItem *item =  [self itemForIndex:indexPath.row];
-    cell.thumbnail.image = nil;
-    
-    
-    cell.videoGradient.hidden = YES;
-    cell.videoIcon.hidden     = YES;
-    
-    
-    cell.saveImage = ^(BOOL shouldSave){
-        [weakSelf getImageForItem:item
-                   finishCallback:^(UIImage *image) {
-                       UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-                   }];
-    };
-    
-    cell.videoDurationLength.text = @"";
-    cell.thumbnail.backgroundColor = [UIColor lightGrayColor];
-    cell.galleryItem = item;
-    
-    cell.thumbnail.userInteractionEnabled =YES;
-    
-    MHIndexPinchGestureRecognizer *pinch = [MHIndexPinchGestureRecognizer.alloc initWithTarget:self
-                                                                                        action:@selector(userDidPinch:)];
-    pinch.indexPath = indexPath;
-    [cell.thumbnail addGestureRecognizer:pinch];
-    
-    UIRotationGestureRecognizer *rotate = [UIRotationGestureRecognizer.alloc initWithTarget:self
-                                                                                     action:@selector(userDidRoate:)];
-    rotate.delegate = self;
-    [cell.thumbnail addGestureRecognizer:rotate];
-    
-    
-}
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
 }
 
+#pragma mark - Gesture handlers
 
--(void)userDidRoate:(UIRotationGestureRecognizer*)recognizer{
+- (void)userDidRotate:(UIRotationGestureRecognizer *)recognizer {
     if (self.interactivePushTransition) {
         CGFloat angle = recognizer.rotation;
         self.interactivePushTransition.angle = angle;
     }
 }
--(void)userDidPinch:(MHIndexPinchGestureRecognizer*)recognizer{
+
+- (void)userDidPinch:(MHIndexPinchGestureRecognizer*)recognizer {
     
     CGFloat scale = recognizer.scale/5;
     
@@ -208,12 +168,14 @@
     
 }
 
+#pragma mark - UINavigationControllerDelegate methods
 
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
                          interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
     if ([animationController isKindOfClass:MHTransitionShowDetail.class]) {
         return self.interactivePushTransition;
-    }else {
+    }
+    else {
         return nil;
     }
 }
@@ -222,34 +184,32 @@
                                   animationControllerForOperation:(UINavigationControllerOperation)operation
                                                fromViewController:(UIViewController *)fromVC
                                                  toViewController:(UIViewController *)toVC {
-    
     if (fromVC == self && [toVC isKindOfClass:MHGalleryImageViewerViewController.class]) {
-        return MHTransitionShowDetail.new;
-    }else {
+        return [[MHTransitionShowDetail alloc] init];
+    }
+    else {
         return nil;
     }
 }
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    self.navigationController.delegate = self;
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+    return [self.galleryViewController.dataSource numberOfItemsInGallery:self.galleryViewController];
 }
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    if (self.navigationController.delegate == self) {
-        self.navigationController.delegate = nil;
-    }
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = (MHMediaPreviewCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(MHMediaPreviewCollectionViewCell.class) forIndexPath:indexPath];
+    [self makeMHGalleryOverViewCell:(MHMediaPreviewCollectionViewCell*)cell
+                        atIndexPath:indexPath];
+    return cell;
 }
--(void)pushToImageViewerForIndexPath:(NSIndexPath*)indexPath{
-    
-    MHGalleryImageViewerViewController *detail = MHGalleryImageViewerViewController.new;
-    detail.pageIndex = indexPath.row;
-    detail.galleryItems = self.galleryItems;
-    if ([self.navigationController isKindOfClass:MHGalleryController.class]) {
-        [self.navigationController pushViewController:detail animated:YES];
-    }
-}
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     __weak typeof(self) weakSelf = self;
     
@@ -260,15 +220,15 @@
     if (thumbImage) {
         cell.thumbnail.image = thumbImage;
     }
+    
     if ([item.URLString rangeOfString:MHAssetLibrary].location != NSNotFound && item.URLString) {
         
-        [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:item.URLString
-                                                             assetType:MHAssetImageTypeFull
-                                                          successBlock:^(UIImage *image, NSError *error) {
-                                                              cell.thumbnail.image = image;
-                                                              [weakSelf pushToImageViewerForIndexPath:indexPath];
-                                                          }];
-    }else{
+        [[MHGallerySharedManager sharedManager] getImageFromAssetLibrary:item.URLString assetType:MHAssetImageTypeFull success:^(UIImage *image, NSError *error) {
+            cell.thumbnail.image = image;
+            [weakSelf pushToImageViewerForIndexPath:indexPath];
+        }];
+    }
+    else{
         [self pushToImageViewerForIndexPath:indexPath];
     }
 }
@@ -277,7 +237,10 @@
     return YES;
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+- (BOOL)collectionView:(UICollectionView *)collectionView
+      canPerformAction:(SEL)action
+    forItemAtIndexPath:(NSIndexPath *)indexPath
+            withSender:(id)sender {
     MHGalleryItem *item =  [self itemForIndex:indexPath.row];
     if (item.galleryType == MHGalleryTypeImage) {
         if ([NSStringFromSelector(action) isEqualToString:@"copy:"] || [NSStringFromSelector(action) isEqualToString:@"saveImage:"]){
@@ -287,47 +250,102 @@
     return NO;
 }
 
--(void)getImageForItem:(MHGalleryItem*)item
-        finishCallback:(void(^)(UIImage *image))FinishBlock{
-    [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:item.URLString]
-                                                options:SDWebImageContinueInBackground
-                                               progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
-                                                   
-                                               }
-                                              completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-                                                  FinishBlock(image);
-                                              }];
-}
--(void)didReceiveMemoryWarning{
-    [super didReceiveMemoryWarning];
-    
-    
-}
 
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender{
+- (void)collectionView:(UICollectionView *)collectionView
+         performAction:(SEL)action
+    forItemAtIndexPath:(NSIndexPath *)indexPath
+            withSender:(id)sender {
     if ([NSStringFromSelector(action) isEqualToString:@"copy:"]) {
         UIPasteboard *pasteBoard = [UIPasteboard pasteboardWithName:UIPasteboardNameGeneral create:NO];
         pasteBoard.persistent = YES;
         MHGalleryItem *item =  [self itemForIndex:indexPath.row];
-        [self getImageForItem:item finishCallback:^(UIImage *image) {
+        [self getImageForItem:item completion:^(UIImage *image) {
             if (image) {
                 UIPasteboard *pasteboard = UIPasteboard.generalPasteboard;
                 if (image.images) {
                     NSData *data = [NSData dataWithContentsOfFile:[SDImageCache.sharedImageCache defaultCachePathForKey:item.URLString]];
                     [pasteboard setData:data forPasteboardType:(__bridge NSString *)kUTTypeGIF];
-                }else{
+                }
+                else {
                     NSData *data = UIImagePNGRepresentation(image);
                     [pasteboard setData:data forPasteboardType:(__bridge NSString *)kUTTypeImage];
-                    
                 }
             }
         }];
     }
 }
 
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+#pragma mark - UIViewControllerRotation methods
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     self.collectionView.collectionViewLayout = [self layoutForOrientation:toInterfaceOrientation];
     [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
+#pragma mark - Actions
+
+- (void)donePressed {
+    self.navigationController.transitioningDelegate = nil;
+    
+    MHGalleryController *galleryViewController = [self galleryViewController];
+    if (galleryViewController.finishedCallback) {
+        galleryViewController.finishedCallback(0,nil,nil,MHGalleryViewModeOverView);
+    }
+}
+
+#pragma mark - Private methods
+
+- (void)getImageForItem:(MHGalleryItem *)item
+             completion:(void(^)(UIImage *image))completion {
+    [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:item.URLString]
+                                                options:SDWebImageContinueInBackground
+                                               progress:nil
+                                              completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+                                                  if (completion) {
+                                                      completion(image);
+                                                  }
+                                              }];
+}
+
+- (void)makeMHGalleryOverViewCell:(MHMediaPreviewCollectionViewCell *)cell
+                      atIndexPath:(NSIndexPath *)indexPath {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    MHGalleryItem *item =  [self itemForIndex:indexPath.row];
+    cell.thumbnail.image = nil;
+    cell.videoGradient.hidden = YES;
+    cell.videoIcon.hidden = YES;
+    
+    cell.saveImageBlock = ^(BOOL shouldSave) {
+        [weakSelf getImageForItem:item
+                       completion:^(UIImage *image) {
+                           UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+                       }];
+    };
+    
+    cell.videoDurationLength.text = @"";
+    cell.thumbnail.backgroundColor = [UIColor lightGrayColor];
+    cell.galleryItem = item;
+    
+    cell.thumbnail.userInteractionEnabled =YES;
+    
+    MHIndexPinchGestureRecognizer *pinch = [MHIndexPinchGestureRecognizer.alloc initWithTarget:self
+                                                                                        action:@selector(userDidPinch:)];
+    pinch.indexPath = indexPath;
+    [cell.thumbnail addGestureRecognizer:pinch];
+    
+    UIRotationGestureRecognizer *rotate = [UIRotationGestureRecognizer.alloc initWithTarget:self
+                                                                                     action:@selector(userDidRotate:)];
+    rotate.delegate = self;
+    [cell.thumbnail addGestureRecognizer:rotate];
+}
+
+- (MHGalleryController *)galleryViewController {
+    if ([self.navigationController isKindOfClass:MHGalleryController.class]) {
+        return (MHGalleryController *)self.navigationController;
+    }
+    return nil;
 }
 
 @end

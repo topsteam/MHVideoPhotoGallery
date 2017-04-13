@@ -42,7 +42,7 @@
     if (!self)
         return nil;
     self.URLString = URLString;
-    self.thumbnailURL = URLString;
+    self.thumbnailURLString = URLString;
     self.titleString = nil;
     self.attributedTitle = nil;
     self.descriptionString = nil;
@@ -64,7 +64,7 @@
     if (!self)
         return nil;
     self.URLString = URLString;
-    self.thumbnailURL = thumbnailURL;
+    self.thumbnailURLString = thumbnailURL;
     self.attributedTitle = nil;
     self.descriptionString = nil;
     self.descriptionString = nil;

@@ -750,8 +750,8 @@
 
 - (MHImageViewController *)imageViewControllerWithItem:(MHGalleryItem *)item
                                              pageIndex:(NSInteger)pageIndex {
-    MHImageViewController *imageViewController =[MHImageViewController imageViewControllerForMHMediaItem:[self itemForIndex:pageIndex] viewController:self];
-    imageViewController.pageIndex  = pageIndex;
+    MHImageViewController *imageViewController = [MHImageViewController imageViewControllerForMHMediaItem:[self itemForIndex:pageIndex] viewController:self];
+    imageViewController.pageIndex = pageIndex;
     return imageViewController;
 }
 

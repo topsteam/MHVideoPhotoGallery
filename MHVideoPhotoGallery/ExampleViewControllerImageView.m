@@ -20,18 +20,16 @@
     
     self.title = @"ImageView";
     
+    MHGalleryItem *tailored = [MHGalleryItem itemWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"
+                                             galleryType:MHGalleryTypeImage];
     
-    MHGalleryItem *tailored = [[MHGalleryItem alloc]initWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"
-                                                        galleryType:MHGalleryTypeImage];
-    
-    MHGalleryItem *hannes = [[MHGalleryItem alloc]initWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/hannes.jpg"
-                                                    galleryType:MHGalleryTypeImage];
-
+    MHGalleryItem *hannes = [MHGalleryItem itemWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/hannes.jpg"
+                                           galleryType:MHGalleryTypeImage];
     
     NSArray *galleryItems = @[tailored,hannes];
     
     __weak ExampleViewControllerImageView *blockSelf = self;
-
+    
     [self.iv setInseractiveGalleryPresentionWithItems:galleryItems currentImageIndex:0 currentViewController:self finishCallback:^(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode) {
         if (viewMode == MHGalleryViewModeOverView) {
             [blockSelf dismissViewControllerAnimated:YES completion:nil];
@@ -47,10 +45,6 @@
     [self.iv setUserInteractionEnabled:YES];
     
     self.iv.shoudlUsePanGestureReconizer = YES;
-   
-    
 }
-
-
 
 @end

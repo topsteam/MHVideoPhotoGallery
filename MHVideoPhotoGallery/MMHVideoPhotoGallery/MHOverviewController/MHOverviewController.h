@@ -13,17 +13,22 @@
 #import "MHMediaPreviewCollectionViewCell.h"
 
 @interface MHIndexPinchGestureRecognizer : UIPinchGestureRecognizer
-@property (strong, nonatomic) NSIndexPath *indexPath;
+
+@property (nonatomic) NSIndexPath *indexPath;
+
 @end
 
 @interface MHOverviewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) UICollectionView      *collectionView;
-@property (strong,nonatomic ) MHMediaPreviewCollectionViewCell *clickedCell;
-@property (nonatomic)         NSInteger             currentPage;
-@property (nonatomic, strong) NSArray               *galleryItems;
+@property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic) MHMediaPreviewCollectionViewCell *clickedCell;
+@property (nonatomic) NSInteger currentPage;
+@property (nonatomic) NSArray *galleryItems;
 
--(UICollectionViewFlowLayout*)layoutForOrientation:(UIInterfaceOrientation)orientation;
--(MHGalleryItem*)itemForIndex:(NSInteger)index;
--(void)pushToImageViewerForIndexPath:(NSIndexPath*)indexPath;
+- (UICollectionViewFlowLayout *)layoutForOrientation:(UIInterfaceOrientation)orientation;
+
+- (MHGalleryItem*)itemForIndex:(NSInteger)index;
+
+- (void)pushToImageViewerForIndexPath:(NSIndexPath *)indexPath;
+
 @end

@@ -18,10 +18,13 @@
 
 @interface MHImageViewController : UIViewController <UIScrollViewDelegate,UIGestureRecognizerDelegate>
 
+@property (nonatomic) MHGalleryItem *item;
+
+@property (nonatomic, readonly, weak) MHGalleryImageViewerViewController *galleryViewerViewController;
+
 @property (nonatomic) MHTransitionDismissMHGallery *interactiveTransition;
 @property (nonatomic) MHTransitionShowOverView *interactiveOverView;
-@property (nonatomic, weak) MHGalleryImageViewerViewController *viewController;
-@property (nonatomic) MHGalleryItem *item;
+
 @property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) UIButton *playButton;
 @property (nonatomic) UIActivityIndicatorView *act;
@@ -29,6 +32,7 @@
 @property (nonatomic) MPMoviePlayerController *moviePlayer;
 @property (nonatomic) NSInteger pageIndex;
 @property (nonatomic) NSInteger currentTimeMovie;
+
 @property (nonatomic, getter = isPlayingVideo) BOOL playingVideo;
 @property (nonatomic, getter = isPausingVideo) BOOL pausingVideo;
 @property (nonatomic) BOOL videoWasPlayable;
@@ -43,6 +47,6 @@
 - (void)centerImageView;
 
 + (MHImageViewController *)imageViewControllerForMHMediaItem:(MHGalleryItem*)item
-                                              viewController:(MHGalleryImageViewerViewController*)viewController;
+                                              viewController:(MHGalleryImageViewerViewController*)galleryViewerViewController;
 
 @end

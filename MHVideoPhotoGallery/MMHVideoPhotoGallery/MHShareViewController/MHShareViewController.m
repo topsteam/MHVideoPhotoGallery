@@ -829,7 +829,7 @@
                 MHImageURL *imageURL = [MHImageURL.alloc initWithURL:item.URLString image:nil];
                 [weakSelf addDataToDownloadArray:imageURL];
             }else{
-                [MHGallerySharedManager.sharedManager getURLForMediaPlayer:item.URLString successBlock:^(NSURL *URL, NSError *error) {
+                [[MHGallerySharedManager sharedManager] getURLForMediaPlayer:item.URLString success:^(NSURL *URL, NSError *error) {
                     NSURLSession *session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
                     
                     [self.sessions addObject:session];
@@ -866,17 +866,16 @@
         if (item.galleryType == MHGalleryTypeImage) {
             
             if ([item.URLString rangeOfString:MHAssetLibrary].location != NSNotFound && item.URLString) {
-                [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:item.URLString
-                                                                     assetType:MHAssetImageTypeFull
-                                                                  successBlock:^(UIImage *image, NSError *error) {
-                                                                      MHImageURL *imageURL = [MHImageURL.alloc initWithURL:item.URLString
-                                                                                                                     image:image];
-                                                                      [weakSelf addDataToDownloadArray:imageURL];
-                                                                  }];
-            }else if (item.image) {
+                [MHGallerySharedManager.sharedManager getImageFromAssetLibrary:item.URLString assetType:MHAssetImageTypeFull success:^(UIImage *image, NSError *error) {
+                    MHImageURL *imageURL = [MHImageURL.alloc initWithURL:item.URLString
+                                                                   image:image];
+                    [weakSelf addDataToDownloadArray:imageURL];
+                }];
+            }
+            else if (item.image) {
                 [self addDataToDownloadArray:item.image];
-            }else{
-                
+            }
+            else {
                 [SDWebImageManager.sharedManager loadImageWithURL:[NSURL URLWithString:item.URLString] options:SDWebImageContinueInBackground progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
                     MHImageURL *imageURLMH = [MHImageURL.alloc initWithURL:item.URLString
                                                                      image:image];

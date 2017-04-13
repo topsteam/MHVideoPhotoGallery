@@ -10,16 +10,19 @@
 
 @class MHGalleryItem;
 
+typedef void (^MHMediaPreviewCollectionViewCellShouldSaveBlock)(BOOL shouldSave);
+
 @interface MHMediaPreviewCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, strong) UIImageView             *thumbnail;
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, strong) UIButton                *playButton;
-@property (nonatomic, strong) UILabel                 *videoDurationLength;
-@property (nonatomic, strong) UIImageView             *videoIcon;
-@property (nonatomic, strong) UIView                  *videoGradient;
-@property (nonatomic, strong) UIImageView             *selectionImageView;
-@property (nonatomic, strong) MHGalleryItem           *galleryItem;
+@property (nonatomic) UIImageView *thumbnail;
+@property (nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic) UIButton *playButton;
+@property (nonatomic) UILabel *videoDurationLength;
+@property (nonatomic) UIImageView *videoIcon;
+@property (nonatomic) UIView *videoGradient;
+@property (nonatomic) UIImageView *selectionImageView;
+@property (nonatomic) MHGalleryItem *galleryItem;
 
-@property (nonatomic, copy) void (^saveImage)(BOOL shouldSave);
+@property (nonatomic, copy) MHMediaPreviewCollectionViewCellShouldSaveBlock saveImageBlock;
+
 @end

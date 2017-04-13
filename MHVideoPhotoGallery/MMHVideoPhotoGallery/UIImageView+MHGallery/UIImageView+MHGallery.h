@@ -11,17 +11,19 @@
 @class MHGalleryItem;
 
 typedef NS_ENUM(NSUInteger, MHImageType) {
-    MHImageTypeThumb,
-    MHImageTypeFull
+    MHImageTypeThumb = 0,
+    MHImageTypeFull = 1,
 };
 
+typedef void (^MHVideoThumbnailCompletionBlock)(UIImage *image, NSUInteger videoDuration, NSError *error);
+typedef void (^MHImageSetupCompletionBlock)(UIImage *image, NSError *error);
 
 @interface UIImageView (MHGallery)
 
--(void)setThumbWithURL:(NSString*)URL
-          successBlock:(void (^)(UIImage *image,NSUInteger videoDuration,NSError *error))succeedBlock;
+- (void)setThumbWithURL:(NSString*)URL
+                success:(MHVideoThumbnailCompletionBlock)success;
 
--(void)setImageForMHGalleryItem:(MHGalleryItem*)item
-                      imageType:(MHImageType)imageType
-                   successBlock:(void (^)(UIImage *image,NSError *error))succeedBlock;
+- (void)setImageForMHGalleryItem:(MHGalleryItem *)item
+                       imageType:(MHImageType)imageType
+                         success:(MHImageSetupCompletionBlock)success;
 @end

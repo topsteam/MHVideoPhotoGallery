@@ -44,8 +44,8 @@
         NSMutableArray *items = [NSMutableArray new];
         [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop) {
             if (alAsset) {
-                MHGalleryItem *item = [[MHGalleryItem alloc]initWithURL:[alAsset.defaultRepresentation.url absoluteString]
-                                                            galleryType:MHGalleryTypeImage];
+                MHGalleryItem *item = [MHGalleryItem itemWithURL:[alAsset.defaultRepresentation.url absoluteString]
+                                                     galleryType:MHGalleryTypeImage];
                 [items addObject:item];
             }
         }];
@@ -61,7 +61,7 @@
     } failureBlock: ^(NSError *error) {
         
     }];
-
+    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -80,9 +80,7 @@
     
     MHGalleryItem *item = [section.galleryItems firstObject];
     
-    [[MHGallerySharedManager sharedManager] getImageFromAssetLibrary:item.URLString
-                                                           assetType:MHAssetImageTypeThumb
-                                                        successBlock:^(UIImage *image, NSError *error) {
+    [[MHGallerySharedManager sharedManager] getImageFromAssetLibrary:item.URLString assetType:MHAssetImageTypeThumb success:^(UIImage *image, NSError *error) {
         cell.iv.image = image;
     }];
     
@@ -95,7 +93,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         MHGallerySectionItem *section = self.allData[indexPath.row];
         NSArray *galleryData = section.galleryItems;
@@ -112,7 +110,7 @@
             };
             
             [self presentMHGalleryController:gallery animated:YES completion:nil];
-
+            
         }
         else {
             UIAlertView *alterView = [[UIAlertView alloc]initWithTitle:@"Hint"

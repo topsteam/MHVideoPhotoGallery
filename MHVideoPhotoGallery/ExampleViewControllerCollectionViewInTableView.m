@@ -57,12 +57,12 @@
     
     self.title = @"CollectionView";
     
-    MHGalleryItem *tailored = [MHGalleryItem.alloc initWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"
-                                                   galleryType:MHGalleryTypeImage];
-    MHGalleryItem *tailored2 = [MHGalleryItem.alloc initWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/hannes.jpg"
-                                                    galleryType:MHGalleryTypeImage];
-    MHGalleryItem *tailored3 = [MHGalleryItem.alloc initWithURL:@"https://instagram.fhen1-1.fna.fbcdn.net/t50.2886-16/17582534_211662269318529_2144443442514624512_n.mp4"
-                                                    galleryType:MHGalleryTypeVideo];
+    MHGalleryItem *tailored = [MHGalleryItem itemWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"
+                                             galleryType:MHGalleryTypeImage];
+    MHGalleryItem *tailored2 = [MHGalleryItem itemWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/hannes.jpg"
+                                              galleryType:MHGalleryTypeImage];
+    MHGalleryItem *tailored3 = [MHGalleryItem itemWithURL:@"https://instagram.fhen1-1.fna.fbcdn.net/t50.2886-16/17582534_211662269318529_2144443442514624512_n.mp4"
+                                              galleryType:MHGalleryTypeVideo];
     
     NSShadow *shadow = [[NSShadow alloc] init];
     shadow.shadowColor = [UIColor blackColor];
