@@ -102,10 +102,9 @@ typedef NS_ENUM(NSUInteger, MHYoutubeThumbQuality) {
                      success:(MHURLErrorCompletionBlock)success;
 
 /**
- *  To get the absolute URL for Youtube Videos. To change the Quality check youtubeVideoQuality
- *
- *  @param URL          The URL as a String
- *  @param succeedBlock you will get the absolute URL
+ To get the absolute URL for Youtube Videos. To change the Quality check youtubeVideoQuality
+ @param URL          The URL as a String
+ @param succeedBlock you will get the absolute URL
  */
 - (void)getYoutubeURLforMediaPlayer:(NSString*)URL
                             success:(MHURLErrorCompletionBlock)success;
@@ -114,11 +113,10 @@ typedef NS_ENUM(NSUInteger, MHYoutubeThumbQuality) {
                           success:(MHURLErrorCompletionBlock)success;
 
 /**
- *  Returns all MHGalleryObjects for a Youtube channel
- *
- *  @param channelName  set the name of the channel
- *  @param withTitle    if you want the title of the video set it to YES
- *  @param succeedBlock returns the Gallery items
+ Returns all MHGalleryObjects for a Youtube channel
+ @param channelName  set the name of the channel
+ @param withTitle    if you want the title of the video set it to YES
+ @param succeedBlock returns the Gallery items
  */
 - (void)getMHGalleryObjectsForYoutubeChannel:(NSString*)channelName
                                    withTitle:(BOOL)withTitle

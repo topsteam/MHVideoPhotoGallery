@@ -42,7 +42,7 @@
         }];
     }
     else {
-        UIImage *placeholderImage = [SDImageCache.sharedImageCache imageFromDiskCacheForKey:item.thumbnailURLString];
+        UIImage *placeholderImage = item.thumbnailImage ? : [SDImageCache.sharedImageCache imageFromDiskCacheForKey:item.thumbnailURLString];
         [self sd_setImageWithURL:[NSURL URLWithString:item.URLString] placeholderImage:placeholderImage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             if (success) {
                 success(image, error);
