@@ -44,7 +44,7 @@
         NSMutableArray *items = [NSMutableArray new];
         [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop) {
             if (alAsset) {
-                MHGalleryItem *item = [MHGalleryItem itemWithURL:[alAsset.defaultRepresentation.url absoluteString]
+                MHGalleryItem *item = [MHGalleryItem itemWithURL:alAsset.defaultRepresentation.url 
                                                      galleryType:MHGalleryTypeImage];
                 [items addObject:item];
             }
@@ -80,8 +80,8 @@
     
     MHGalleryItem *item = [section.galleryItems firstObject];
     
-    [[MHGallerySharedManager sharedManager] getImageFromAssetLibrary:item.URLString assetType:MHAssetImageTypeThumb success:^(UIImage *image, NSError *error) {
-        cell.iv.image = image;
+    [[MHGallerySharedManager sharedManager] getImageFromAssetLibraryWithURL:item.URL assetType:MHAssetImageTypeThumb success:^(UIImage *image, NSError *error) {
+        cell.cellImageView.image = image;
     }];
     
     cell.labelText.text = section.sectionName;

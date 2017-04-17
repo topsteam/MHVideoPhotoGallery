@@ -216,19 +216,19 @@
     MHMediaPreviewCollectionViewCell *cell = (MHMediaPreviewCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     MHGalleryItem *item =  [self itemForIndex:indexPath.row];
     
-    UIImage *thumbImage = [SDImageCache.sharedImageCache imageFromDiskCacheForKey:item.URLString];
+    UIImage *thumbImage = [SDImageCache.sharedImageCache imageFromDiskCacheForKey:item.URL.absoluteString];
     if (thumbImage) {
         cell.thumbnail.image = thumbImage;
     }
     
-    if ([item.URLString rangeOfString:MHAssetLibrary].location != NSNotFound && item.URLString) {
-        
-        [[MHGallerySharedManager sharedManager] getImageFromAssetLibrary:item.URLString assetType:MHAssetImageTypeFull success:^(UIImage *image, NSError *error) {
+    BOOL isLocalImage = [item.URL.absoluteString rangeOfString:MHAssetLibrary].location != NSNotFound;
+    if (isLocalImage) {
+        [[MHGallerySharedManager sharedManager] getImageFromAssetLibraryWithURL:item.URL assetType:MHAssetImageTypeFull success:^(UIImage *image, NSError *error) {
             cell.thumbnail.image = image;
             [weakSelf pushToImageViewerForIndexPath:indexPath];
         }];
     }
-    else{
+    else {
         [self pushToImageViewerForIndexPath:indexPath];
     }
 }
@@ -263,7 +263,7 @@
             if (image) {
                 UIPasteboard *pasteboard = UIPasteboard.generalPasteboard;
                 if (image.images) {
-                    NSData *data = [NSData dataWithContentsOfFile:[SDImageCache.sharedImageCache defaultCachePathForKey:item.URLString]];
+                    NSData *data = [NSData dataWithContentsOfFile:[SDImageCache.sharedImageCache defaultCachePathForKey:item.URL.absoluteString]];
                     [pasteboard setData:data forPasteboardType:(__bridge NSString *)kUTTypeGIF];
                 }
                 else {
@@ -297,14 +297,11 @@
 
 - (void)getImageForItem:(MHGalleryItem *)item
              completion:(void(^)(UIImage *image))completion {
-    [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:item.URLString]
-                                                options:SDWebImageContinueInBackground
-                                               progress:nil
-                                              completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-                                                  if (completion) {
-                                                      completion(image);
-                                                  }
-                                              }];
+    [[SDWebImageManager sharedManager] loadImageWithURL:item.URL options:SDWebImageContinueInBackground progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+        if (completion) {
+            completion(image);
+        }
+    }];
 }
 
 - (void)makeMHGalleryOverViewCell:(MHMediaPreviewCollectionViewCell *)cell

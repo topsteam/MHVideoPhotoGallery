@@ -85,21 +85,21 @@ typedef NS_ENUM(NSUInteger, MHYoutubeThumbQuality) {
 + (MHGallerySharedManager *)sharedManager;
 
 /**
- *  You can create a Thumbnail from a Video, you can create it from Videos from a Webserver, Youtube and Vimeo
- *  @param urlString    URL as a string
- *  @param duration     the position on whicht the Thumbnail should be created
- *  @param succeedBlock returns the image the duration of the video and an error
+ Method generates thumbnail image from a local video, or from videos on a Webserver, Youtube and Vimeo
+ @param URL video file URL
+ @param succeedBlock returns the image the duration of the video and an error
  */
-- (void)startDownloadingThumbImage:(NSString *)urlString
-                           success:(MHImageVideoDurationErrorCompletionBlock)success;
+- (void)startDownloadingThumbImageURL:(NSURL *)URL
+                              success:(MHImageVideoDurationErrorCompletionBlock)success;
+
 
 /**
  *  To get the absolute URL for Vimeo Videos. To change the Quality check vimeoVideoQuality
- *  @param URL          The URL as a String
+ *  @param URL object URL
  *  @param succeedBlock you will get the absolute URL
  */
-- (void)getURLForMediaPlayer:(NSString*)URLString
-                     success:(MHURLErrorCompletionBlock)success;
+- (void)getURLForMediaPlayerWithURL:(NSURL *)URL
+                            success:(MHURLErrorCompletionBlock)success;
 
 /**
  To get the absolute URL for Youtube Videos. To change the Quality check youtubeVideoQuality
@@ -124,8 +124,8 @@ typedef NS_ENUM(NSUInteger, MHYoutubeThumbQuality) {
 
 - (BOOL)isUIViewControllerBasedStatusBarAppearance;
 
-- (void)getImageFromAssetLibrary:(NSString*)urlString
-                       assetType:(MHAssetImageType)type
-                         success:(MHImageErrorCompletionBlock)success;
+- (void)getImageFromAssetLibraryWithURL:(NSURL *)URL
+                              assetType:(MHAssetImageType)type
+                                success:(MHImageErrorCompletionBlock)success;
 
 @end

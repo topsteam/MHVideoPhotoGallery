@@ -201,7 +201,7 @@
             return;
         }
         __weak typeof(self) weakSelf = self;
-        [[MHGallerySharedManager sharedManager] getURLForMediaPlayer:self.item.URLString success:^(NSURL *URL, NSError *error) {
+        [[MHGallerySharedManager sharedManager] getURLForMediaPlayerWithURL:self.item.URL success:^(NSURL *URL, NSError *error) {
             if (error || URL == nil) {
                 [weakSelf changePlayButtonToUnPlay];
             }
@@ -422,13 +422,13 @@
         }
             break;
         case MHGalleryTypeVideo: {
-            [[MHGallerySharedManager sharedManager] startDownloadingThumbImage:self.item.URLString success:^(UIImage *image, NSUInteger videoDuration, NSError *error) {
+            [[MHGallerySharedManager sharedManager] startDownloadingThumbImageURL:self.item.URL success:^(UIImage *image, NSUInteger videoDuration, NSError *error) {
                 BOOL success = error == nil;
                 __weak typeof(weakSelf) strongSelf = weakSelf;
                 if (success) {
                     [strongSelf handleGeneratedThumb:image
                                        videoDuration:videoDuration
-                                           urlString:self.item.URLString];
+                                           urlString:self.item.URL.absoluteString];
                 }
                 else {
                     [strongSelf changeToErrorImage];

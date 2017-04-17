@@ -18,29 +18,31 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
 
 @property (nonatomic) UIImage *image;
 @property (nonatomic) UIImage *thumbnailImage;
-@property (nonatomic) NSString *URLString;
+
+@property (nonatomic) NSURL *URL;
 /**
  Thumb images are automatically generated for Videos.
  But you can set Thumb Images for GalleryTypeImage.
  */
-@property (nonatomic) NSString *thumbnailURLString;
+@property (nonatomic) NSURL *thumbnailURL;
 
 @property (nonatomic) NSString *titleString;
 @property (nonatomic) NSAttributedString *attributedTitle;
 @property (nonatomic) NSString *descriptionString;
 @property (nonatomic) NSAttributedString *attributedString;
+
 @property (nonatomic) MHGalleryType galleryType;
 
+
++ (instancetype)itemWithURL:(NSURL *)URL
+               thumbnailURL:(NSURL *)thumbnailURL;
 /**
- MHGalleryItem itemWithURL:galleryType
- @param urlString   the URL of the image or Video as a String
+ @param URL the URL of the image or Video as a String
  @param galleryType select to Type, video or image
  */
-+ (instancetype)itemWithURL:(NSString *)URLString
-               thumbnailURL:(NSString *)thumbnailURL;
-
-+ (instancetype)itemWithURL:(NSString *)URLString
++ (instancetype)itemWithURL:(NSURL *)URL
                 galleryType:(MHGalleryType)galleryType;
+
 
 /**
  MHGalleryItem itemWithYoutubeVideoID:
@@ -55,13 +57,9 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
 + (instancetype)itemWithVimeoVideoID:(NSString *)ID;
 
 /**
- *  MHGalleryItem initWithImage
- *
- *  @param image to Display
- *
+ MHGalleryItem initWithImage
+ @param image to Display
  */
-- (instancetype)initWithImage:(UIImage *)image;
-
 + (instancetype)itemWithImage:(UIImage *)image;
 
 @end

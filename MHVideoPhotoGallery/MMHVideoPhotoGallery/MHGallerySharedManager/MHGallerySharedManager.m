@@ -21,8 +21,14 @@
     return sharedManagerInstance;
 }
 
+- (void)startDownloadingThumbImageURL:(NSURL *)URL
+                              success:(MHImageVideoDurationErrorCompletionBlock)success {
+    [self startDownloadingThumbImage:URL.absoluteString success:success];
+}
+
 - (void)startDownloadingThumbImage:(NSString*)urlString
                            success:(MHImageVideoDurationErrorCompletionBlock)success {
+    
     BOOL isVimeoVideo = [urlString rangeOfString:@"vimeo.com"].location != NSNotFound;
     BOOL isYouTubeVideo = [urlString rangeOfString:@"youtube.com"].location != NSNotFound;
     
@@ -44,6 +50,11 @@
                          success(image,videoDuration,error);
                      }];
     }
+}
+
+- (void)getURLForMediaPlayerWithURL:(NSURL *)URL
+                            success:(MHURLErrorCompletionBlock)success {
+    [self getURLForMediaPlayer:URL.absoluteString success:success];
 }
 
 - (void)getURLForMediaPlayer:(NSString *)URLString
@@ -138,13 +149,13 @@
     }];
 }
 
-- (void)getImageFromAssetLibrary:(NSString *)urlString
-                       assetType:(MHAssetImageType)type
-                         success:(MHImageErrorCompletionBlock)success {
-    
+
+- (void)getImageFromAssetLibraryWithURL:(NSURL *)URL
+                              assetType:(MHAssetImageType)type
+                                success:(MHImageErrorCompletionBlock)success {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         ALAssetsLibrary *assetslibrary = ALAssetsLibrary.new;
-        [assetslibrary assetForURL:[NSURL URLWithString:urlString] resultBlock:^(ALAsset *asset){
+        [assetslibrary assetForURL:URL resultBlock:^(ALAsset *asset){
             
             if (type == MHAssetImageTypeThumb) {
                 dispatch_sync(dispatch_get_main_queue(), ^(void){
@@ -164,7 +175,7 @@
             }
         } failureBlock:^(NSError *error) {
             dispatch_sync(dispatch_get_main_queue(), ^(void){
-                success(nil,error);
+                success(nil, error);
             });
         }];
     });
@@ -191,7 +202,9 @@
                         NSString *string = [dictionary[@"link"] firstObject][@"href"];
                         
                         string = [string stringByReplacingOccurrencesOfString:@"&feature=youtube_gdata" withString:@""];
-                        MHGalleryItem *item = [MHGalleryItem itemWithURL:string galleryType:MHGalleryTypeVideo];
+                        NSURL *url = [NSURL URLWithString:string];
+                        MHGalleryItem *item = [MHGalleryItem itemWithURL:url
+                                                             galleryType:MHGalleryTypeVideo];
                         if (withTitle) {
                             item.descriptionString = dictionary[@"title"][@"$t"];
                         }

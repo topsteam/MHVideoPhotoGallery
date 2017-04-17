@@ -11,10 +11,10 @@
 
 
 @interface ImageTableViewCell : UITableViewCell
-@property(nonatomic,strong) IBOutlet UIImageView  *iv;
-@property(nonatomic,strong) IBOutlet UILabel *labelText;
+@property(nonatomic) IBOutlet UIImageView *cellImageView;
+@property(nonatomic) IBOutlet UILabel *labelText;
 @end
 
 @interface ExampleViewControllerTableView : UIViewController<UITableViewDataSource,UITableViewDelegate>
-@property(nonatomic,strong) IBOutlet UITableView *tableView;
+@property(nonatomic) IBOutlet UITableView *tableView;
 @end

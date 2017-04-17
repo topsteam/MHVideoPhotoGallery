@@ -57,12 +57,22 @@
     
     self.title = @"CollectionView";
     
-    MHGalleryItem *tailored = [MHGalleryItem itemWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"
+    NSURL *tailored1URL = [NSURL URLWithString:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"];
+    NSURL *tailored2URL = [NSURL URLWithString:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/hannes.jpg"];
+    
+    MHGalleryItem *tailored = [MHGalleryItem itemWithURL:tailored1URL
                                              galleryType:MHGalleryTypeImage];
-    MHGalleryItem *tailored2 = [MHGalleryItem itemWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/hannes.jpg"
+    MHGalleryItem *tailored2 = [MHGalleryItem itemWithURL:tailored2URL
                                               galleryType:MHGalleryTypeImage];
-    MHGalleryItem *tailored3 = [MHGalleryItem itemWithURL:@"https://instagram.fhen1-1.fna.fbcdn.net/t50.2886-16/17582534_211662269318529_2144443442514624512_n.mp4"
+    NSURL *videoURL = [NSURL URLWithString:@"https://instagram.fhen1-1.fna.fbcdn.net/t50.2886-16/17582534_211662269318529_2144443442514624512_n.mp4"];
+    
+    MHGalleryItem *tailored3 = [MHGalleryItem itemWithURL:videoURL
                                               galleryType:MHGalleryTypeVideo];
+    
+    NSURL *youtubeVideoURL = [NSURL URLWithString:@"https://www.youtube.com/watch?v=xn0Ah0J5p5Y"];
+    MHGalleryItem *youTubeItem = [MHGalleryItem itemWithURL:youtubeVideoURL galleryType:MHGalleryTypeVideo];
+    NSURL *vimeoVideoURL = [NSURL URLWithString:@"https://vimeo.com/70546700"];
+    MHGalleryItem *vimeoItem = [MHGalleryItem itemWithURL:vimeoVideoURL galleryType:MHGalleryTypeVideo];
     
     NSShadow *shadow = [[NSShadow alloc] init];
     shadow.shadowColor = [UIColor blackColor];
@@ -94,7 +104,11 @@
     //    tailored.attributedTitle = title;
     //    tailored2.attributedString = string2;
     
-    self.galleryDataSource = @[@[tailored, tailored2],@[tailored3]];
+    self.galleryDataSource = @[
+                               @[tailored, tailored2],
+                               @[tailored3],
+                               @[youTubeItem, vimeoItem]
+                               ];
     self.tableView.backgroundColor = [UIColor colorWithRed:0.83 green:0.84 blue:0.86 alpha:1];
     [self.tableView reloadData];
     [self setNeedsStatusBarAppearanceUpdate];

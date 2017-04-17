@@ -14,21 +14,20 @@
 
 @implementation SubclassMHImageviewerViewController
 
--(NSInteger)numberOfGalleryItems{
+- (NSInteger)numberOfGalleryItems {
     return 10;
 }
 
--(MHGalleryItem *)itemForIndex:(NSInteger)index{    
-   return [MHGalleryItem itemWithURL:@"http://alles-bilder.de/landschaften/HD%20Landschaftsbilder%20(47).jpg" galleryType:MHGalleryTypeImage];
+- (MHGalleryItem *)itemForIndex:(NSInteger)index {
+    NSURL *itemURL = [NSURL URLWithString: @"http://alles-bilder.de/landschaften/HD%20Landschaftsbilder%20(47).jpg"];
+   return [MHGalleryItem itemWithURL:itemURL
+                         galleryType:MHGalleryTypeImage];
 }
 
--(void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.UICustomization = MHUICustomization.new;
-    
     self.navigationItem.rightBarButtonItem = nil;
-        
 }
 
 @end

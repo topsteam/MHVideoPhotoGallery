@@ -20,10 +20,12 @@
     
     self.title = @"ImageView";
     
-    MHGalleryItem *tailored = [MHGalleryItem itemWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"
+    NSURL *tailoredItemURL = [NSURL URLWithString:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/wien_cropped-350x300.jpg"];
+    MHGalleryItem *tailored = [MHGalleryItem itemWithURL:tailoredItemURL
                                              galleryType:MHGalleryTypeImage];
     
-    MHGalleryItem *hannes = [MHGalleryItem itemWithURL:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/hannes.jpg"
+    NSURL *hannesItemURL = [NSURL URLWithString:@"http://www.tailored-apps.com/wp-content/uploads/2014/01/hannes.jpg"];
+    MHGalleryItem *hannes = [MHGalleryItem itemWithURL:hannesItemURL
                                            galleryType:MHGalleryTypeImage];
     
     NSArray *galleryItems = @[tailored,hannes];
@@ -41,7 +43,7 @@
     }];
     
     
-    [self.iv sd_setImageWithURL:[NSURL URLWithString:tailored.URLString]];
+    [self.iv sd_setImageWithURL:tailored.URL];
     [self.iv setUserInteractionEnabled:YES];
     
     self.iv.shoudlUsePanGestureReconizer = YES;

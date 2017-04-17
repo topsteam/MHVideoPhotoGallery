@@ -10,8 +10,72 @@
 
 @implementation MHGalleryItem
 
+
++ (instancetype)itemWithURL:(NSURL *)URL
+                galleryType:(MHGalleryType)galleryType {
+    return [[self.class alloc] initWithURL:URL
+                               galleryType:galleryType];
+}
+
++ (instancetype)itemWithURL:(NSURL *)URL
+               thumbnailURL:(NSURL *)thumbnailURL {
+    return [[self.class alloc] initWithURL:URL
+                              thumbnailURL:thumbnailURL];
+}
+
 + (instancetype)itemWithImage:(UIImage *)image {
     return [self.class.alloc initWithImage:image];
+}
+
++ (instancetype)itemWithVimeoVideoID:(NSString *)ID {
+    NSURL *vimeoVideoURL = [NSURL URLWithString:[NSString stringWithFormat:MHVimeoBaseURL, ID]];
+    return [[self.class alloc] initWithURL:vimeoVideoURL
+                               galleryType:MHGalleryTypeVideo];
+}
+
++ (instancetype)itemWithYoutubeVideoID:(NSString *)ID {
+    NSURL *youTubeVideoURL = [NSURL URLWithString:[NSString stringWithFormat:MHYoutubeBaseURL, ID]];
+    return [[self.class alloc] initWithURL:youTubeVideoURL
+                               galleryType:MHGalleryTypeVideo];
+}
+
+#pragma mark - Private methods
+
+- (instancetype)initWithURL:(NSURL *)URL
+               thumbnailURL:(NSURL *)thumbnailURL {
+    self = [super init];
+    if (self) {
+        self.URL = URL;
+        self.thumbnailURL = thumbnailURL;
+        self.galleryType = MHGalleryTypeImage;
+        
+        self.attributedString = nil;
+        self.attributedTitle = nil;
+        self.descriptionString = nil;
+        self.descriptionString = nil;
+        
+        self.thumbnailImage = nil;
+    }
+    return self;
+}
+
+- (instancetype)initWithURL:(NSURL *)URL
+                galleryType:(MHGalleryType)galleryType {
+    self = [super init];
+    if (self) {
+        self.URL = URL;
+        self.thumbnailURL = URL; //this case thumbURL is the same as the whole image URL
+        self.galleryType = galleryType;
+        
+        self.titleString = nil;
+        self.attributedTitle = nil;
+        self.descriptionString = nil;
+        self.attributedString = nil;
+        
+        self.thumbnailImage = nil;
+        self.image = nil;
+    }
+    return self;
 }
 
 - (instancetype)initWithImage:(UIImage *)image {
@@ -19,60 +83,6 @@
     if (self) {
         self.galleryType = MHGalleryTypeImage;
         self.image = image;
-    }
-    return self;
-}
-
-+ (instancetype)itemWithVimeoVideoID:(NSString *)ID {
-    return [[self.class alloc] initWithURL:[NSString stringWithFormat:MHVimeoBaseURL, ID]
-                               galleryType:MHGalleryTypeVideo];
-}
-
-+ (instancetype)itemWithYoutubeVideoID:(NSString *)ID {
-    return [[self.class alloc] initWithURL:[NSString stringWithFormat:MHYoutubeBaseURL, ID]
-                               galleryType:MHGalleryTypeVideo];
-}
-
-+ (instancetype)itemWithURL:(NSString *)URLString
-                galleryType:(MHGalleryType)galleryType {
-    return [[self.class alloc] initWithURL:URLString
-                               galleryType:galleryType];
-}
-
-- (instancetype)initWithURL:(NSString *)URLString
-                galleryType:(MHGalleryType)galleryType {
-    self = [super init];
-    if (self) {
-        self.URLString = URLString;
-        self.thumbnailURLString = URLString;
-        self.titleString = nil;
-        self.attributedTitle = nil;
-        self.descriptionString = nil;
-        self.galleryType = galleryType;
-        self.attributedString = nil;
-        self.thumbnailImage = nil;
-    }
-    return self;
-}
-
-+ (instancetype)itemWithURL:(NSString *)URLString
-               thumbnailURL:(NSString *)thumbnailURLString {
-    return [[self.class alloc] initWithURL:URLString
-                              thumbnailURL:thumbnailURLString];
-}
-
-- (instancetype)initWithURL:(NSString *)URLString
-               thumbnailURL:(NSString *)thumbnailURLString {
-    self = [super init];
-    if (self) {
-        self.URLString = URLString;
-        self.thumbnailURLString = thumbnailURLString;
-        self.attributedTitle = nil;
-        self.descriptionString = nil;
-        self.descriptionString = nil;
-        self.galleryType = MHGalleryTypeImage;
-        self.attributedString = nil;
-        self.thumbnailImage = nil;
     }
     return self;
 }

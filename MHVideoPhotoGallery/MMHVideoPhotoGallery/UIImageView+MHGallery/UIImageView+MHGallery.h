@@ -20,9 +20,6 @@ typedef void (^MHImageSetupCompletionBlock)(UIImage *image, NSError *error);
 
 @interface UIImageView (MHGallery)
 
-- (void)setThumbWithURL:(NSString*)URL
-                success:(MHVideoThumbnailCompletionBlock)success;
-
 - (void)setImageForMHGalleryItem:(MHGalleryItem *)item
                        imageType:(MHImageType)imageType
                          success:(MHImageSetupCompletionBlock)success;

@@ -12,18 +12,20 @@
 
 @interface MHTransitionDismissMHGallery()
 
-@property (nonatomic,assign) CGFloat toTransform;
-@property (nonatomic,assign) CGFloat startTransform;
-@property (nonatomic,assign) CGRect startFrame;
-@property (nonatomic,assign) CGPoint startCenter;
+@property (nonatomic, assign) CGFloat toTransform;
+@property (nonatomic, assign) CGFloat startTransform;
+@property (nonatomic, assign) CGPoint startCenter;
+@property (nonatomic, assign) CGRect startFrame;
+@property (nonatomic, assign) CGRect navFrame;
 
-@property (nonatomic,assign) CGRect navFrame;
-@property (nonatomic,assign) BOOL wrongTransform;
+@property (nonatomic, assign) BOOL wrongTransform;
+@property (nonatomic, assign) BOOL hasActiveVideo;
 
-@property (nonatomic,assign) BOOL hasActiveVideo;
-@property (nonatomic,strong) UIView *backView;
-@property (nonatomic,strong) UIView *containerView;
-@property (nonatomic,strong) MHUIImageViewContentViewAnimation *cellImageSnapshot;
+@property (nonatomic) UIView *backView;
+@property (nonatomic) UIView *containerView;
+
+@property (nonatomic) MHUIImageViewContentViewAnimation *cellImageSnapshot;
+
 @end
 
 @implementation MHTransitionDismissMHGallery
@@ -123,7 +125,7 @@
     
 }
 
--(void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext{
+- (void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     
     self.context = transitionContext;
     
@@ -215,7 +217,7 @@
     }
 }
 
--(void)updateInteractiveTransition:(CGFloat)percentComplete{
+- (void)updateInteractiveTransition:(CGFloat)percentComplete {
     [super updateInteractiveTransition:percentComplete];
     self.backView.alpha = 1.1-percentComplete;
     if (self.moviePlayer.playbackState != MPMoviePlaybackStateStopped && self.moviePlayer.playbackState != MPMoviePlaybackStatePaused) {
@@ -241,7 +243,7 @@
     }
 }
 
--(void)finishInteractiveTransition{
+- (void)finishInteractiveTransition {
     [super finishInteractiveTransition];
     
     CGFloat delayTime  = 0.0;
@@ -313,8 +315,7 @@
     
 }
 
-
--(void)cancelInteractiveTransition{
+- (void)cancelInteractiveTransition {
     [super cancelInteractiveTransition];
     
     [UIView animateWithDuration:0.3 animations:^{
@@ -380,8 +381,7 @@
     }];
 }
 
-
--(void)doOrientationwithFromViewController:(UINavigationController*)fromViewController{
+- (void)doOrientationwithFromViewController:(UINavigationController *)fromViewController {
     
     if (MHGalleryOSVersion < 8.0) {
         fromViewController.view.transform = CGAffineTransformMakeRotation(self.startTransform);
@@ -410,10 +410,8 @@
     }
 }
 
-
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
     return 0.25;
 }
-
 
 @end
