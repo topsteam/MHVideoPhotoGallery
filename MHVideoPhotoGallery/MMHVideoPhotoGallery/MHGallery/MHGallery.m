@@ -106,7 +106,8 @@ UIImage *MHImageFromView(UIView *view) {
     }
     if (scale > 1.5) {
         UIGraphicsBeginImageContextWithOptions([view bounds].size, NO, scale);
-    } else {
+    }
+    else {
         UIGraphicsBeginImageContext([view bounds].size);
     }
     [[view layer] renderInContext:UIGraphicsGetCurrentContext()];

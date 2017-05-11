@@ -143,7 +143,8 @@
             [self.moviePlayer play];
             [self.galleryViewerViewController changeToPauseButton];
             
-        }else{
+        }
+        else {
             UIActivityIndicatorView *act = [UIActivityIndicatorView.alloc initWithFrame:self.view.bounds];
             act.tag = 304;
             [self.view addSubview:act];
@@ -179,11 +180,13 @@
         
         if (frameToCenter.size.width < boundsSize.width) {
             frameToCenter.origin.x = (boundsSize.width - frameToCenter.size.width) / 2;
-        }else{
+        }
+        else {
             frameToCenter.origin.x = 0;
         }if (frameToCenter.size.height < boundsSize.height) {
             frameToCenter.origin.y = (boundsSize.height - frameToCenter.size.height) / 2;
-        }else{
+        }
+        else {
             frameToCenter.origin.y = 0;
         }
         self.imageView.frame = frameToCenter;
@@ -262,14 +265,17 @@
     if (self.interactiveOverView) {
         if ([gestureRecognizer isKindOfClass:MHPinchGestureRecognizer.class]) {
             return YES;
-        }else{
+        }
+        else {
             return NO;
         }
-    }else{
+    }
+    else {
         if ([gestureRecognizer isKindOfClass:MHPinchGestureRecognizer.class]) {
             if ([gestureRecognizer isKindOfClass:MHPinchGestureRecognizer.class] && self.scrollView.zoomScale ==1) {
                 return YES;
-            }else{
+            }
+            else {
                 return NO;
             }
         }
@@ -534,19 +540,25 @@
         
         if (recognizer.state == UIGestureRecognizerStateBegan) {
             self.startPoint = [recognizer translationInView:self.view];
-        }else if (recognizer.state == UIGestureRecognizerStateChanged) {
-            if (!self.interactiveTransition ) {
+        }
+        else if (recognizer.state == UIGestureRecognizerStateChanged) {
+            if (!self.interactiveTransition) {
                 self.startPoint = [recognizer translationInView:self.view];
                 self.lastPoint = [recognizer translationInView:self.view];
                 self.interactiveTransition = [MHGalleryDismissTransition new];
                 
-                if (UIApplication.sharedApplication.statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
-                    self.interactiveTransition.orientationTransformBeforeDismiss = -M_PI/2;
-                }else if (UIApplication.sharedApplication.statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
-                    self.interactiveTransition.orientationTransformBeforeDismiss = M_PI/2;
-                }else{
-                    self.interactiveTransition.orientationTransformBeforeDismiss = 0;
+                switch (UIApplication.sharedApplication.statusBarOrientation) {
+                    case UIInterfaceOrientationLandscapeLeft:
+                        self.interactiveTransition.orientationBeforeDismissAngle = -M_PI/2;
+                        break;
+                    case UIInterfaceOrientationLandscapeRight:
+                        break;
+                        self.interactiveTransition.orientationBeforeDismissAngle = M_PI/2;
+                    default:
+                        self.interactiveTransition.orientationBeforeDismissAngle = 0;
+                        break;
                 }
+                
                 self.interactiveTransition.interactive = YES;
                 self.interactiveTransition.moviePlayer = self.moviePlayer;
                 
@@ -723,7 +735,8 @@
         self.leftSliderLabel.text =@"00:00";
         
         self.rightSliderLabel.text = [MHGallerySharedManager stringForMinutesAndSeconds:self.wholeTimeMovie addMinus:YES];
-    }else{
+    }
+    else {
         self.leftSliderLabel.text = [MHGallerySharedManager stringForMinutesAndSeconds:self.currentTimeMovie addMinus:NO];
         self.rightSliderLabel.text = [MHGallerySharedManager stringForMinutesAndSeconds:self.wholeTimeMovie-self.currentTimeMovie addMinus:YES];
     }
@@ -846,7 +859,8 @@
     if (self.galleryViewerViewController.isHiddingToolBarAndNavigationBar) {
         self.act.color = [UIColor whiteColor];
         self.moviePlayerToolBarTop.alpha =0;
-    }else{
+    }
+    else {
         if (self.moviePlayerToolBarTop) {
             if (self.item.galleryType == MHGalleryTypeVideo) {
                 if (self.videoWasPlayable && self.wholeTimeMovie >0) {
@@ -931,7 +945,8 @@
             self.navigationController.navigationBar.hidden  =YES;
             self.galleryViewerViewController.toolbar.hidden =YES;
         }];
-    }else{
+    }
+    else {
         self.navigationController.navigationBar.hidden = NO;
         self.galleryViewerViewController.toolbar.hidden = NO;
         

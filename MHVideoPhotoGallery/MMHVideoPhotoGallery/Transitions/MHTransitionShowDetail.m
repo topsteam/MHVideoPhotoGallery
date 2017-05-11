@@ -82,7 +82,8 @@
                 }
                 if ([transitionContext transitionWasCancelled]) {
                     [transitionContext completeTransition:NO];
-                }else{
+                }
+                else {
                     [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
                 }
                 [cellImageSnapshot removeFromSuperview];
@@ -121,7 +122,7 @@
     
     self.titleLabel.alpha = 0;
     
- //   self.descriptionLabel = toViewController.descriptionView;
+    //   self.descriptionLabel = toViewController.descriptionView;
     self.descriptionLabel.alpha =0;
     
     self.toolbar = toViewController.toolbar;
@@ -152,7 +153,8 @@
     if (!imageIsLand) {
         CGFloat value = self.cellImageSnapshot.frame.size.width / self.cellImageSnapshot.imageMH.size.width;
         changedFrame = CGRectMake(self.cellImageSnapshot.frame.origin.x, self.cellImageSnapshot.frame.origin.y-((self.cellImageSnapshot.imageMH.size.height*value-self.cellImageSnapshot.frame.size.width)/2), self.cellImageSnapshot.frame.size.width,self.cellImageSnapshot.imageMH.size.height*value);
-    }else{
+    }
+    else {
         CGFloat value = self.cellImageSnapshot.frame.size.height / self.cellImageSnapshot.imageMH.size.height;
         changedFrame = CGRectMake(self.cellImageSnapshot.frame.origin.x-((self.cellImageSnapshot.imageMH.size.width*value-self.cellImageSnapshot.frame.size.height)/2),self.cellImageSnapshot.frame.origin.y, self.cellImageSnapshot.imageMH.size.width*value,self.cellImageSnapshot.frame.size.height);
     }
@@ -258,7 +260,7 @@
 
 -(void)updateInteractiveTransition:(CGFloat)percentComplete{
     [super updateInteractiveTransition:percentComplete];
-   
+    
     self.backView.alpha = percentComplete;
     self.titleViewBackgroundToolbar.alpha = percentComplete;
     self.descriptionViewBackgroundToolbar.alpha = percentComplete;

@@ -70,7 +70,7 @@
                 if (finishedBlock) {
                     finishedBlock(YES);
                 }
-                    
+                
                 
             }];
         }
@@ -95,7 +95,8 @@
     
     if ([self choiseFunctionWithRationImg:ratioImage forFrame:self.frame]) {
         self.imageView.frame = CGRectMake( - (self.frame.size.height * ratioImage - self.frame.size.width) / 2.0f, 0, self.frame.size.height * ratioImage, self.frame.size.height);
-    }else{
+    }
+    else {
         self.imageView.frame = CGRectMake(0, - (self.frame.size.width / ratioImage - self.frame.size.height) / 2.0f, self.frame.size.width, self.frame.size.width / ratioImage);
     }
     
@@ -111,7 +112,8 @@
     float ratioImg = (self.imageView.image.size.width) / (self.imageView.image.size.height);
     if ([self choiseFunctionWithRationImg:ratioImg forFrame:newFrame]) {
         self.changedFrameImage = CGRectMake( - (newFrame.size.height * ratioImg - newFrame.size.width) / 2.0f, 0, newFrame.size.height * ratioImg, newFrame.size.height);
-    }else{
+    }
+    else {
         self.changedFrameImage = CGRectMake(0, - (newFrame.size.width / ratioImg - newFrame.size.height) / 2.0f, newFrame.size.width, newFrame.size.width / ratioImg);
     }
     self.changedFrameWrapper = newFrame;
@@ -162,7 +164,8 @@
     float ratioSelf = (newFrame.size.width)/(newFrame.size.height);
     if (ratioImage < 1) {
         if (ratioImage > ratioSelf ) resultat = true;
-    }else{
+    }
+    else {
         if (ratioImage > ratioSelf ) resultat = true;
     }
     return resultat;

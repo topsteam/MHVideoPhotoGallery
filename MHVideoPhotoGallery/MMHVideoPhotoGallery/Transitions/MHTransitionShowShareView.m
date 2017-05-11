@@ -43,7 +43,8 @@
         
         if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) {
             toViewController.collectionView.frame =  CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height-240);
-        }else{
+        }
+        else {
             toViewController.collectionView.frame =  CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height);
         }
         
@@ -55,17 +56,17 @@
         
         [containerView addSubview:toViewController.view];
         [containerView addSubview:whiteView];
-
+        
         [containerView addSubview:cellImageSnapshot];
         
         UIView *snapShot = [imageViewController.view snapshotViewAfterScreenUpdates:NO];
         [containerView addSubview:snapShot];
         
         
-
+        
         [toViewController.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:toViewController.pageIndex inSection:0]
-                                    atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-                                            animated:NO];
+                                                atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                                        animated:NO];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -76,11 +77,12 @@
             [UIView animateWithDuration:duration animations:^{
                 
                 toViewController.collectionView.alpha =1;
-               
+                
                 if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) {
                     toViewController.gradientView.frame = CGRectMake(0, toViewController.view.frame.size.height-240, toViewController.view.frame.size.width,240);
                     toViewController.tableViewShare.frame = CGRectMake(0, toViewController.view.frame.size.height-230, toViewController.view.frame.size.width, 240);
-                }else{
+                }
+                else {
                     toViewController.gradientView.frame = CGRectMake(0, toViewController.view.frame.size.height, toViewController.view.frame.size.width,240);
                     toViewController.tableViewShare.frame = CGRectMake(0, toViewController.view.frame.size.height, toViewController.view.frame.size.width, 240);
                 }
@@ -98,7 +100,8 @@
             }];
         });
         
-    }else{
+    }
+    else {
         MHShareViewController *fromViewController = (MHShareViewController*)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
         MHGalleryImageViewerViewController *toViewController = (MHGalleryImageViewerViewController*)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
         UIView *containerView = [transitionContext containerView];
@@ -106,25 +109,28 @@
         
         MHMediaPreviewCollectionViewCell *cell;
         NSArray *visible = fromViewController.collectionView.visibleCells;
-
+        
         NSArray *cellsSorted =[self sortObjectsWithFrame:visible];
-
+        
         if (fromViewController.collectionView.visibleCells.count ==3) {
             cell = cellsSorted[1];
-        }else{
+        }
+        else {
             if (MHISIPAD) {
                 cell = cellsSorted[cellsSorted.count/2];
-            }else{
+            }
+            else {
                 if ([fromViewController.collectionView numberOfItemsInSection:0]-1 == [[self sortObjectsWithFrame:visible].lastObject tag]) {
                     cell =  cellsSorted.lastObject;
-                }else{
+                }
+                else {
                     cell =  cellsSorted.firstObject;
                 }
             }
         }
         
         toViewController.pageIndex = cell.tag;
-
+        
         [containerView addSubview:toViewController.view];
         
         
@@ -134,14 +140,14 @@
         MHGalleryController *galleryController = (MHGalleryController*)fromViewController.navigationController;
         MHGalleryItem *item = [galleryController.dataSource itemForIndex:toViewController.pageIndex];
         [toViewController updateToolBarForItem:item];
-
+        
         MHImageViewController *ivC =[MHImageViewController imageViewControllerForMHMediaItem:item viewController:toViewController];
         ivC.pageIndex = toViewController.pageIndex;
         
         [toViewController.pageViewController setViewControllers:@[ivC]
-                           direction:UIPageViewControllerNavigationDirectionForward
-                            animated:NO
-                          completion:nil];        
+                                                      direction:UIPageViewControllerNavigationDirectionForward
+                                                       animated:NO
+                                                     completion:nil];
         cell.thumbnail.hidden = YES;
         
         MHUIImageViewContentViewAnimation *cellImageSnapshot = [[MHUIImageViewContentViewAnimation alloc] initWithFrame:[containerView convertRect:cell.thumbnail.frame fromView:cell.thumbnail.superview]];
@@ -164,8 +170,8 @@
                                 withDuration:duration
                                   afterDelay:0
                                     finished:^(BOOL finished) {
-                                    
-                                }];
+                                        
+                                    }];
         
         [UIView animateWithDuration:duration animations:^{
             backWhite.alpha =1;

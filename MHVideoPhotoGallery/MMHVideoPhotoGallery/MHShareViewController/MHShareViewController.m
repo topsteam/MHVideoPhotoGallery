@@ -273,12 +273,14 @@
     MHMediaPreviewCollectionViewCell *cell;
     if ((self.startPointScroll <  targetContentOffset->x) && (visibleCells.count >1)) {
         cell = visibleCells[1];
-    }else{
+    }
+    else {
         cell = visibleCells.firstObject;
     }
     if (MHISIPAD) {
         *targetContentOffset = CGPointMake((cell.tag * 330+20), targetContentOffset->y);
-    }else{
+    }
+    else {
         *targetContentOffset = CGPointMake((cell.tag * 250+20), targetContentOffset->y);
     }
 }
@@ -501,7 +503,8 @@
         NSString *cellIdentifier = NSStringFromClass(MHMediaPreviewCollectionViewCell.class);
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         [self makeOverViewDetailCell:(MHMediaPreviewCollectionViewCell*)cell atIndexPath:indexPath];
-    }else{
+    }
+    else {
         NSString *cellIdentifier = NSStringFromClass(MHShareCell.class);
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         NSIndexPath *indexPathNew = [NSIndexPath indexPathForRow:indexPath.row inSection:collectionView.tag];
@@ -574,7 +577,8 @@
         for (MHMediaPreviewCollectionViewCell *cellOther in visibleCells) {
             if (!cellOther.videoIcon.isHidden) {
                 cellOther.selectionImageView.frame = CGRectMake(cellOther.bounds.size.width-30,  cellOther.bounds.size.height-50, 22, 22);
-            }else{
+            }
+            else {
                 cellOther.selectionImageView.frame = CGRectMake(cellOther.bounds.size.width-30,  cellOther.bounds.size.height-30, 22, 22);
             }
         }
@@ -613,7 +617,8 @@
             if (self.selectedRows.count <= item.maxNumberOfItems) {
                 if (![storedData[index] containsObject:item]) {
                     [newObjects addObject:item];
-                }else{
+                }
+                else {
                     [newObjects addObject:item];
                 }
             }
@@ -641,7 +646,8 @@
         for (MHImageURL *dataURL in images) {
             if ([dataURL.image isKindOfClass:UIImage.class] && !dataURL.image.images) {
                 [shareconntroller addImage:dataURL.image];
-            }else{
+            }
+            else {
                 videoURLS = [videoURLS stringByAppendingString:[NSString stringWithFormat: @"%@ \n",dataURL.URL]];
             }
         }
@@ -673,12 +679,14 @@
                     [picker addAttachmentData:[NSData dataWithContentsOfFile:[SDImageCache.sharedImageCache defaultCachePathForKey:dataURL.URL]]
                                typeIdentifier:(__bridge NSString *)kUTTypeGIF
                                      filename:@"animated.gif"];
-                }else{
+                }
+                else {
                     [picker addAttachmentData:UIImageJPEGRepresentation(dataURL.image, 1.0)
                                typeIdentifier:@"public.image"
                                      filename:@"image.JPG"];
                 }
-            }else{
+            }
+            else {
                 videoURLS = [videoURLS stringByAppendingString:[NSString stringWithFormat: @"%@ \n",dataURL.URL]];
             }
         }
@@ -704,13 +712,15 @@
                     [picker addAttachmentData:[NSData dataWithContentsOfFile:[[SDImageCache sharedImageCache] defaultCachePathForKey:dataURL.URL]]
                                      mimeType:@"image/gif"
                                      fileName:@"pic.gif"];
-                }else{
+                }
+                else {
                     [picker addAttachmentData:UIImageJPEGRepresentation(dataURL.image, 1.0)
                                      mimeType:@"image/jpeg"
                                      fileName:@"image"];
                 }
                 
-            }else{
+            }
+            else {
                 videoURLS = [videoURLS stringByAppendingString:[NSString stringWithFormat: @"%@ \n",dataURL.URL]];
             }
         }
@@ -753,7 +763,8 @@
                         self.finishedCallbackDownloadData(self.dataDownload);
                     });
                 }];
-            }else{
+            }
+            else {
                 self.finishedCallbackDownloadData(self.dataDownload);
             }
         }
@@ -900,7 +911,8 @@
                                                                                             target:self
                                                                                             action:@selector(cancelPressed)];
         self.navigationItem.rightBarButtonItem = nil;
-    }else{
+    }
+    else {
         self.navigationItem.rightBarButtonItem = [self nextBarButtonItem];
     }
     [self.collectionView.collectionViewLayout invalidateLayout];
@@ -972,7 +984,8 @@
                 
                 if (imageToStore.images) {
                     data = [NSData dataWithContentsOfFile:[[SDImageCache sharedImageCache] defaultCachePathForKey:dataURL.URL]];
-                }else{
+                }
+                else {
                     data = UIImageJPEGRepresentation(imageToStore, 1.0);
                 }
                 
@@ -993,7 +1006,8 @@
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
         if ([self.selectedRows containsObject:indexPath]) {
             [self.selectedRows removeObject:indexPath];
-        }else{
+        }
+        else {
             [self.selectedRows addObject:indexPath];
         }
         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
@@ -1009,7 +1023,8 @@
         
         [self updateCollectionView];
         [self updateTitle];
-    }else{
+    }
+    else {
         MHShareItem *item = self.shareDataSource[collectionView.tag][indexPath.row];
         
         SEL selector = NSSelectorFromString(item.selectorName);

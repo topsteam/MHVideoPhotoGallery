@@ -176,10 +176,10 @@
     }
     else {
         barItem = [[MHBarButtonItem alloc] initWithImage:MHGalleryImage(@"share_icon")
-                                                     style:UIBarButtonItemStylePlain
-                                                    target:self
-                                                      type:MHBarButtonItemTypeShare
-                                                    action:@selector(sharePressed)];
+                                                   style:UIBarButtonItemStylePlain
+                                                  target:self
+                                                    type:MHBarButtonItemTypeShare
+                                                  action:@selector(sharePressed)];
     }
     self.shareBarButton = barItem;
     if (self.UICustomization.hideShare) {
@@ -513,7 +513,7 @@
         [self.currentImageVC removeAllMoviePlayerViewsAndNotifications];
     }
     MHGalleryDismissTransition *dismissTransiton = [MHGalleryDismissTransition new];
-    dismissTransiton.orientationTransformBeforeDismiss = [(NSNumber *)[self.navigationController.view valueForKeyPath:@"layer.transform.rotation.z"] floatValue];
+    dismissTransiton.orientationBeforeDismissAngle = [(NSNumber *)[self.navigationController.view valueForKeyPath:@"layer.transform.rotation.z"] floatValue];
     dismissTransiton.finishButtonAction = YES;
     self.currentImageVC.interactiveTransition = dismissTransiton;
     MHGalleryController *galleryViewController = [self galleryViewController];

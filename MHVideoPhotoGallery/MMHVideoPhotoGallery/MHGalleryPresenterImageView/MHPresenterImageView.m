@@ -139,7 +139,8 @@
             [self presentMHGallery];
             self.lastPoint = [recognizer locationInView:self.viewController.view];
             self.startScale = recognizer.scale/8;
-        }else{
+        }
+        else {
             recognizer.cancelsTouchesInView =YES;
         }
     }else if (recognizer.state == UIGestureRecognizerStateChanged) {

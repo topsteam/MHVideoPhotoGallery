@@ -90,7 +90,8 @@
                                    NSURL *playURL = [self getYoutubeURLWithData:data];
                                    if (playURL) {
                                        success(playURL,nil);
-                                   }else{
+                                   }
+                                   else {
                                        success(nil,nil);
                                    }
                                });
@@ -211,7 +212,8 @@
                         [galleryData addObject:item];
                     }
                     success(galleryData,nil);
-                }else{
+                }
+                else {
                     success(nil,error);
                 }
             });
@@ -423,7 +425,7 @@
     
     NSString *thumbnailImageKey = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:urlString]];
     UIImage *thumbnailImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:thumbnailImageKey];
-
+    
     NSMutableDictionary *dict = [self durationDict];
     if (!dict) {
         dict = NSMutableDictionary.new;

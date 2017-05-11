@@ -101,7 +101,8 @@
     if (galleryController.transitionCustomization.interactiveDismiss) {
         galleryController.transitioningDelegate = self;
         galleryController.modalPresentationStyle = UIModalPresentationFullScreen;
-    }else{
+    }
+        else {
         galleryController.transitionCustomization.interactiveDismiss = NO;
         galleryController.transitionCustomization.dismissWithScrollGestureOnFirstAndLastImage = NO;
     }

@@ -35,7 +35,7 @@
     
     UIImageView *imageView =  (UIImageView*)[[[fromViewController.pageViewController.viewControllers firstObject] view]viewWithTag:506];
     toViewController.currentPage =  [[fromViewController.pageViewController.viewControllers firstObject] pageIndex];
-   
+    
     MHUIImageViewContentViewAnimation *cellImageSnapshot = [MHUIImageViewContentViewAnimation.alloc initWithFrame:CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height)];
     cellImageSnapshot.image = imageView.image;
     imageView.hidden = YES;
@@ -59,13 +59,13 @@
     
     
     CGRect cellFrame  = [toViewController.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForRow:toViewController.currentPage inSection:0]].frame;
-
+    
     [toViewController.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:toViewController.currentPage inSection:0]
-                                atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-                                        animated:NO];
+                                            atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                                    animated:NO];
     
     [toViewController.collectionView scrollRectToVisible:cellFrame
-                                    animated:NO];
+                                                animated:NO];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         MHMediaPreviewCollectionViewCell *cellNew = (MHMediaPreviewCollectionViewCell*)[toViewController.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:toViewController.currentPage inSection:0]];
@@ -140,7 +140,7 @@
     
     MHGalleryController *galleryViewController = (MHGalleryController*)fromViewController.navigationController;
     
-
+    
     
     self.backView = [UIView.alloc initWithFrame:self.toViewController.view.frame];
     self.backView.backgroundColor = [galleryViewController.UICustomization MHGalleryBackgroundColorForViewMode:MHGalleryViewModeImageViewerNavigationBarShown];
@@ -152,7 +152,7 @@
     if (!fromViewController.isHiddingToolBarAndNavigationBar) {
         self.titleLabel.alpha = 1;
         
-       // self.descriptionLabel = fromViewController.descriptionView;
+        // self.descriptionLabel = fromViewController.descriptionView;
         self.descriptionLabel.alpha =1;
         
         self.toolbar = fromViewController.toolbar;
@@ -167,7 +167,8 @@
         [containerView addSubview:self.toolbar];
         [containerView addSubview:self.titleLabel];
         [containerView addSubview:self.descriptionLabel];
-    }else{
+    }
+    else {
         self.backView.backgroundColor = [galleryViewController.UICustomization MHGalleryBackgroundColorForViewMode:MHGalleryViewModeImageViewerNavigationBarHidden];
         self.toViewController.navigationController.navigationBar.hidden = NO;
         self.toViewController.navigationController.navigationBar.alpha = 0;
@@ -176,11 +177,11 @@
     CGRect cellFrame  = [self.toViewController.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForRow:self.toViewController.currentPage inSection:0]].frame;
     
     [self.toViewController.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.toViewController.currentPage inSection:0]
-                                atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-                                        animated:NO];
+                                                 atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                                         animated:NO];
     
     [self.toViewController.collectionView scrollRectToVisible:cellFrame
-                                    animated:NO];
+                                                     animated:NO];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         self.cellInteractive = (MHMediaPreviewCollectionViewCell*)[self.toViewController.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:self.toViewController.currentPage inSection:0]];
@@ -200,7 +201,7 @@
     CGRect frame = self.transitionImageView.frame;
     self.transitionImageView.transform = CGAffineTransformIdentity;
     self.transitionImageView.frame = frame;
-
+    
     [UIView animateWithDuration:0.3 animations:^{
         if (self.isHiddingToolBarAndNavigationBar) {
             self.toViewController.navigationController.navigationBar.alpha = 1;
@@ -265,22 +266,23 @@
 
 -(void)updateInteractiveTransition:(CGFloat)percentComplete{
     [super updateInteractiveTransition:percentComplete];
-
+    
     if (!self.isHiddingToolBarAndNavigationBar) {
         self.toolbar.alpha = 1-percentComplete;
         self.titleLabel.alpha = 1-percentComplete;
         self.titleViewBackgroundToolbar.alpha = 1-percentComplete;
         self.descriptionLabel.alpha = 1-percentComplete;
         self.descriptionViewBackgroundToolbar.alpha = 1-percentComplete;
-    }else{
+    }
+    else {
         self.toViewController.navigationController.navigationBar.alpha = percentComplete;
     }
     
     self.backView.alpha = 1-percentComplete;
-
+    
     self.transitionImageView.transform = CGAffineTransformMakeScale(self.scale, self.scale);
     self.transitionImageView.center = CGPointMake(self.transitionImageView.center.x-self.changedPoint.x, self.transitionImageView.center.y-self.changedPoint.y);
-
-
+    
+    
 }
 @end
