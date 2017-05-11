@@ -16,9 +16,6 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
 
 @interface MHGalleryItem : NSObject
 
-@property (nonatomic) UIImage *image;
-@property (nonatomic) UIImage *thumbnailImage;
-
 @property (nonatomic) NSURL *URL;
 /**
  Thumb images are automatically generated for Videos.
@@ -26,13 +23,15 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
  */
 @property (nonatomic) NSURL *thumbnailURL;
 
+@property (nonatomic) MHGalleryType galleryType;
+
+@property (nonatomic) UIImage *image;
+@property (nonatomic) UIImage *thumbnailImage;
+
 @property (nonatomic) NSString *titleString;
 @property (nonatomic) NSAttributedString *attributedTitle;
 @property (nonatomic) NSString *descriptionString;
 @property (nonatomic) NSAttributedString *attributedString;
-
-@property (nonatomic) MHGalleryType galleryType;
-
 
 + (instancetype)itemWithURL:(NSURL *)URL
                thumbnailURL:(NSURL *)thumbnailURL;
@@ -42,7 +41,6 @@ typedef NS_ENUM(NSUInteger, MHGalleryType) {
  */
 + (instancetype)itemWithURL:(NSURL *)URL
                 galleryType:(MHGalleryType)galleryType;
-
 
 /**
  MHGalleryItem itemWithYoutubeVideoID:

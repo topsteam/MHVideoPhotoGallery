@@ -149,7 +149,7 @@
     
     TestCell *cell = (TestCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if (!cell){
+    if (!cell) {
         cell = [[TestCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
@@ -226,7 +226,7 @@
     __weak MHGalleryController *blockGallery = galleryViewController;
     [galleryViewController setFinishedCallback:^(NSInteger currentIndex,
                                                  UIImage *image,
-                                                 MHTransitionDismissMHGallery *interactiveTransition,
+                                                 MHGalleryDismissTransition *interactiveTransition,
                                                  MHGalleryViewMode viewMode) {
         if (viewMode == MHGalleryViewModeOverView) {
             [blockGallery dismissViewControllerAnimated:YES

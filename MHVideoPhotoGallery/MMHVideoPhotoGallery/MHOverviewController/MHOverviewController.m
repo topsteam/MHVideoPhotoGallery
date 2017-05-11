@@ -142,10 +142,12 @@
             self.startScale = recognizer.scale/8;
             [self.navigationController pushViewController:detail
                                                  animated:YES];
-        }else{
+        }
+        else {
             recognizer.cancelsTouchesInView = YES;
         }
-    }else if (recognizer.state == UIGestureRecognizerStateChanged) {
+    }
+    else if (recognizer.state == UIGestureRecognizerStateChanged) {
         
         if (recognizer.numberOfTouches <2) {
             recognizer.enabled = NO;
@@ -157,15 +159,16 @@
         self.interactivePushTransition.changedPoint = CGPointMake(self.lastPoint.x - point.x, self.lastPoint.y - point.y) ;
         [self.interactivePushTransition updateInteractiveTransition:scale];
         self.lastPoint = point;
-    }else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         if (scale > 0.5) {
             [self.interactivePushTransition finishInteractiveTransition];
-        }else {
+        }
+        else {
             [self.interactivePushTransition cancelInteractiveTransition];
         }
         self.interactivePushTransition = nil;
     }
-    
 }
 
 #pragma mark - UINavigationControllerDelegate methods
@@ -243,7 +246,7 @@
             withSender:(id)sender {
     MHGalleryItem *item =  [self itemForIndex:indexPath.row];
     if (item.galleryType == MHGalleryTypeImage) {
-        if ([NSStringFromSelector(action) isEqualToString:@"copy:"] || [NSStringFromSelector(action) isEqualToString:@"saveImage:"]){
+        if ([NSStringFromSelector(action) isEqualToString:@"copy:"] || [NSStringFromSelector(action) isEqualToString:@"saveImage:"]) {
             return YES;
         }
     }

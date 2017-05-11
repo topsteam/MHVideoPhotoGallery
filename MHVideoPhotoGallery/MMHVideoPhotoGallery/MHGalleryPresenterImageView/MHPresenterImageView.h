@@ -7,37 +7,37 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MHTransitionPresentMHGallery.h"
-#import "MHTransitionDismissMHGallery.h"
+#import "MHGalleryPresentationTransition.h"
+#import "MHGalleryDismissTransition.h"
 #import "MHUICustomization.h"
 #import "MHTransitionCustomization.h"
 
-@class MHTransitionPresentMHGallery;
-@class MHTransitionDismissMHGallery;
+@class MHGalleryPresentationTransition;
+@class MHGalleryDismissTransition;
+
+typedef void (^MHPresenterImageViewCompletionBlock)(NSInteger currentIndex, UIImage *image, MHGalleryDismissTransition *interactiveTransition, MHGalleryViewMode viewMode);
 
 @interface MHPresenterImageView : UIImageView <UIGestureRecognizerDelegate>
 
-@property (nonatomic)       BOOL shoudlUsePanGestureReconizer;
+@property (nonatomic) BOOL shoudlUsePanGestureReconizer;
 /**
  *  set your Current ViewController
  */
-@property (nonatomic,strong) UIViewController *viewController;
+@property (nonatomic) UIViewController *viewController;
 /**
  *  set your the Data Source
  */
-@property (nonatomic,strong) NSArray *galleryItems;
+@property (nonatomic) NSArray *galleryItems;
 /**
  *  set the currentIndex
  */
-@property (nonatomic)        NSInteger currentImageIndex;
+@property (nonatomic) NSInteger currentImageIndex;
+@property (nonatomic) MHGalleryPresentationTransition *presenter;
+@property (nonatomic, copy) MHPresenterImageViewCompletionBlock finishedCallback;
 
-@property (nonatomic, copy) void (^finishedCallback)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode);
+- (void)setInseractiveGalleryPresentionWithItems:(NSArray *)galleryItems
+                               currentImageIndex:(NSInteger)currentImageIndex
+                           currentViewController:(UIViewController *)viewController
+                                      completion:(MHPresenterImageViewCompletionBlock)completion;
 
-@property (nonatomic,strong) MHTransitionPresentMHGallery *presenter;
-
--(void)setInseractiveGalleryPresentionWithItems:(NSArray*)galleryItems
-                              currentImageIndex:(NSInteger)currentImageIndex
-                          currentViewController:(UIViewController*)viewController
-                                 finishCallback:(void(^)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode)
-                                                 )FinishBlock;
 @end

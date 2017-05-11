@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 Mario Hahn. All rights reserved.
 //
 
-#import "MHTransitionDismissMHGallery.h"
-#import "MHOverviewController.h"
-#import "MHGallerySharedManagerPrivate.h"
+#import "MHGalleryDismissTransition.h"
 
-@interface MHTransitionDismissMHGallery()
+#import "MHUIImageViewContentViewAnimation.h"
+#import "MHGallerySharedManagerPrivate.h"
+#import "MHOverviewController.h"
+
+@interface MHGalleryDismissTransition()
 
 @property (nonatomic, assign) CGFloat toTransform;
 @property (nonatomic, assign) CGFloat startTransform;
@@ -28,7 +30,7 @@
 
 @end
 
-@implementation MHTransitionDismissMHGallery
+@implementation MHGalleryDismissTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     
@@ -51,7 +53,7 @@
             image = imageViewerIndex.imageView.image;
         }
     }
-    if(!image){
+    if (!image) {
         image = MHDefaultImageForFrame(fromViewController.view.frame);
     }
     
@@ -98,7 +100,7 @@
     }
     double delayInSeconds = delayTime;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.transitionImageView.hidden = YES;
@@ -150,7 +152,7 @@
     self.cellImageSnapshot = [MHUIImageViewContentViewAnimation.alloc initWithFrame:fromViewController.view.bounds];
     self.cellImageSnapshot.contentMode = UIViewContentModeScaleAspectFit;
     
-    if(!image){
+    if (!image) {
         image = MHDefaultImageForFrame(fromViewController.view.frame);
     }
     
@@ -259,7 +261,7 @@
     }
     double delayInSeconds = delayTime;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
         
         
         
@@ -282,21 +284,26 @@
             
             if (self.moviePlayer) {
                 self.moviePlayer.view.frame = [self.containerView convertRect:self.transitionImageView.frame fromView:self.transitionImageView.superview];
-            }else{
+            }
+            else {
                 if (!self.transitionImageView) {
                     CGPoint newPoint = self.startCenter;
                     if (self.cellImageSnapshot.center.x > self.startCenter.x) {
                         newPoint.x = self.cellImageSnapshot.center.x + fabs(self.cellImageSnapshot.center.x -self.startCenter.x)*4;
-                    }else{
+                    }
+                    else{
                         newPoint.x = self.cellImageSnapshot.center.x - fabs(self.cellImageSnapshot.center.x -self.startCenter.x)*4;
                     }
+                    
                     if (self.cellImageSnapshot.center.y > self.startCenter.y) {
                         newPoint.y = self.cellImageSnapshot.center.y + fabs(self.cellImageSnapshot.center.y -self.startCenter.y)*4;
-                    }else{
+                    }
+                    else{
                         newPoint.y = self.cellImageSnapshot.center.y - fabs(self.cellImageSnapshot.center.y -self.startCenter.y)*4;
                     }
                     self.cellImageSnapshot.center = newPoint;
-                }else{
+                }
+                else {
                     if (self.transitionImageView.contentMode == UIViewContentModeScaleAspectFit) {
                         self.cellImageSnapshot.frame = [self.containerView convertRect:self.transitionImageView.frame fromView:self.transitionImageView.superview];
                     }
@@ -312,7 +319,6 @@
             self.context = nil;
         }];
     });
-    
 }
 
 - (void)cancelInteractiveTransition {

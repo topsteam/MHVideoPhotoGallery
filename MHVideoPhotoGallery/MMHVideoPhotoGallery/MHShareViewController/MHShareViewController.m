@@ -390,10 +390,10 @@
                                                                             self.faceBookObject]];
     
     
-    if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]){
+    if (![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         [shareObjectAvailable removeObject:self.faceBookObject];
     }
-    if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
+    if (![SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         [shareObjectAvailable removeObject:self.twitterObject];
     }
     
@@ -402,7 +402,7 @@
                                                             ]];
     
     self.shareDataSourceStart = [NSArray arrayWithArray:self.shareDataSource];
-    if(UIApplication.sharedApplication.statusBarOrientation != UIInterfaceOrientationPortrait){
+    if (UIApplication.sharedApplication.statusBarOrientation != UIInterfaceOrientationPortrait) {
         self.navigationItem.rightBarButtonItem = [self nextBarButtonItem];
     }
     self.startPointScroll = self.collectionView.contentOffset.x;
@@ -572,7 +572,7 @@
     if ([scrollView isEqual:self.collectionView]) {
         NSArray *visibleCells = [self sortObjectsWithFrame:self.collectionView.visibleCells];
         for (MHMediaPreviewCollectionViewCell *cellOther in visibleCells) {
-            if (!cellOther.videoIcon.isHidden){
+            if (!cellOther.videoIcon.isHidden) {
                 cellOther.selectionImageView.frame = CGRectMake(cellOther.bounds.size.width-30,  cellOther.bounds.size.height-50, 22, 22);
             }else{
                 cellOther.selectionImageView.frame = CGRectMake(cellOther.bounds.size.width-30,  cellOther.bounds.size.height-30, 22, 22);
@@ -584,7 +584,7 @@
                                     fromView:cell.thumbnail.superview];
         
         NSInteger valueToAddYForVideoType =0;
-        if (!cell.videoIcon.isHidden){
+        if (!cell.videoIcon.isHidden) {
             valueToAddYForVideoType+=20;
         }
         
@@ -628,9 +628,9 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [self getAllImagesForSelectedRows:^(NSArray *images){
+    [self getAllImagesForSelectedRows:^(NSArray *images) {
         SLComposeViewController *shareconntroller = [SLComposeViewController composeViewControllerForServiceType:serviceType];
-        SLComposeViewControllerCompletionHandler completionHandler=^(SLComposeViewControllerResult result){
+        SLComposeViewControllerCompletionHandler completionHandler=^(SLComposeViewControllerResult result) {
             
             [shareconntroller dismissViewControllerAnimated:YES
                                                  completion:^{
@@ -716,7 +716,7 @@
         }
         [picker setMessageBody:videoURLS isHTML:NO];
         
-        if([MFMailComposeViewController canSendMail]){
+        if ([MFMailComposeViewController canSendMail]) {
             [self presentViewController:picker
                                animated:YES
                              completion:nil];
@@ -796,7 +796,7 @@
         self.downloadView = [MHDownloadView.alloc initWithFrame:self.view.bounds];
         self.downloadView.blurBackgroundToolbar.alpha =0;
         __weak typeof(self) weakSelf = self;
-        self.downloadView.cancelCallbackDownloadData = ^(BOOL cancel){
+        self.downloadView.cancelCallbackDownloadData = ^(BOOL cancel) {
             UIApplication.sharedApplication.networkActivityIndicatorVisible = NO;
             for (NSURLSession *session in weakSelf.sessions) {
                 [session invalidateAndCancel];
@@ -835,7 +835,7 @@
                     
                     [self.sessions addObject:session];
                     [[session downloadTaskWithURL:URL completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                        if (error){
+                        if (error) {
                             weakSelf.saveCounter++;
                             return;
                         }
@@ -851,7 +851,7 @@
                         }
                         ALAssetsLibrary* library = ALAssetsLibrary.new;
                         [library writeVideoAtPathToSavedPhotosAlbum:tempURL
-                                                    completionBlock:^(NSURL *assetURL, NSError *error){
+                                                    completionBlock:^(NSURL *assetURL, NSError *error) {
                                                         NSError *removeError =nil;
                                                         [NSFileManager.defaultManager removeItemAtURL:tempURL error:&removeError];
                                                         

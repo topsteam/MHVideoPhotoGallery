@@ -13,7 +13,7 @@
 @class MHOverviewController;
 @class MHGalleryImageViewerViewController;
 @class MHGalleryItem;
-@class MHTransitionDismissMHGallery;
+@class MHGalleryDismissTransition;
 @class MHBarButtonItem;
 
 @protocol MHGalleryDelegate<NSObject>
@@ -49,7 +49,7 @@
 
 @end
 
-typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode);
+typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,MHGalleryDismissTransition *interactiveTransition,MHGalleryViewMode viewMode);
 
 @interface MHGalleryController : UINavigationController <MHGalleryDataSource>
 
@@ -58,7 +58,7 @@ typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,
 @property (nonatomic) UIImageView *presentingFromImageView;
 @property (nonatomic) MHGalleryImageViewerViewController *imageViewerViewController;
 @property (nonatomic) MHOverviewController *overViewViewController;
-@property (nonatomic) MHTransitionPresentMHGallery *interactivePresentationTransition;
+@property (nonatomic) MHGalleryPresentationTransition *interactivePresentationTransition;
 @property (nonatomic, assign) MHGalleryViewMode presentationStyle;
 @property (nonatomic, assign) UIStatusBarStyle preferredStatusBarStyleMH;
 @property (nonatomic, copy) MHGalleryFinishedCallback finishedCallback;

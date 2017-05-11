@@ -14,8 +14,7 @@
 
 @implementation ExampleViewControllerImageView
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.title = @"ImageView";
@@ -32,7 +31,7 @@
     
     __weak ExampleViewControllerImageView *blockSelf = self;
     
-    [self.iv setInseractiveGalleryPresentionWithItems:galleryItems currentImageIndex:0 currentViewController:self finishCallback:^(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode) {
+    [self.iv setInseractiveGalleryPresentionWithItems:galleryItems currentImageIndex:0 currentViewController:self completion:^(NSInteger currentIndex,UIImage *image,MHGalleryDismissTransition *interactiveTransition,MHGalleryViewMode viewMode) {
         if (viewMode == MHGalleryViewModeOverView) {
             [blockSelf dismissViewControllerAnimated:YES completion:nil];
         }else{

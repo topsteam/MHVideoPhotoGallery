@@ -76,8 +76,8 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    if (self.numberOfLines == 0 ){
-        if (self.preferredMaxLayoutWidth != self.frame.size.width){
+    if (self.numberOfLines == 0 ) {
+        if (self.preferredMaxLayoutWidth != self.frame.size.width) {
             self.preferredMaxLayoutWidth = self.frame.size.width;
             [self setNeedsUpdateConstraints];
         }

@@ -13,7 +13,7 @@
 
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
-    if(self){
+    if (self) {
         
         self.textLabel = MHGalleryLabel.new;
         [self addSubview:self.textLabel];

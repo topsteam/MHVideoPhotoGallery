@@ -7,8 +7,8 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "UIImageView+MHGallery.h"
-#import "MHTransitionDismissMHGallery.h"
-#import "MHTransitionPresentMHGallery.h"
+#import "MHGalleryPresentationTransition.h"
+#import "MHGalleryDismissTransition.h"
 #import "MHPresenterImageView.h"
 #import "MHUICustomization.h"
 #import "MHTransitionCustomization.h"

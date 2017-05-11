@@ -28,7 +28,7 @@
 @interface ExampleViewControllerLocal ()
 @property (nonatomic,strong)NSMutableArray *allData;
 @property(nonatomic,strong) UIImageView *imageViewForPresentingMHGallery;
-@property(nonatomic,strong) MHTransitionDismissMHGallery *interactive;
+@property(nonatomic,strong) MHGalleryDismissTransition *interactive;
 @end
 
 @implementation ExampleViewControllerLocal
@@ -49,7 +49,7 @@
                 [items addObject:item];
             }
         }];
-        if(group){
+        if (group) {
             MHGallerySectionItem *section = [[MHGallerySectionItem alloc]initWithSectionName:[group valueForProperty:ALAssetsGroupPropertyName]
                                                                                        items:items];
             [self.allData addObject:section];
@@ -73,7 +73,7 @@
     cellIdentifier = @"ImageTableViewCell";
     
     ImageTableViewCell *cell = (ImageTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell){
+    if (!cell) {
         cell = [[ImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     MHGallerySectionItem *section = self.allData[indexPath.row];
@@ -105,7 +105,7 @@
             
             __weak MHGalleryController *blockGallery = gallery;
             
-            gallery.finishedCallback = ^(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode){
+            gallery.finishedCallback = ^(NSInteger currentIndex,UIImage *image,MHGalleryDismissTransition *interactiveTransition,MHGalleryViewMode viewMode) {
                 [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
             };
             

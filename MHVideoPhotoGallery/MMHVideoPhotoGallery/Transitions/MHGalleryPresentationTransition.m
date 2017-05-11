@@ -6,19 +6,21 @@
 //  Copyright (c) 2013 Mario Hahn. All rights reserved.
 //
 
-#import "MHTransitionPresentMHGallery.h"
+#import "MHGalleryPresentationTransition.h"
+
+#import "MHUIImageViewContentViewAnimation.h"
 #import "MHOverviewController.h"
 #import "MHGallery.h"
 
-@interface MHTransitionPresentMHGallery()
-@property (nonatomic, strong) MHGalleryController    *interactiveToViewController;
-@property (nonatomic, strong) UIView                 *backView;
-@property (nonatomic)         CGRect                 startFrame;
+@interface MHGalleryPresentationTransition()
+
+@property (nonatomic) MHGalleryController *interactiveToViewController;
+@property (nonatomic) UIView *backView;
+@property (nonatomic) CGRect startFrame;
+
 @end
 
-
-@implementation MHTransitionPresentMHGallery
-
+@implementation MHGalleryPresentationTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     
@@ -31,7 +33,6 @@
         MHStatusBar().alpha =0;
         imageViewer.view.backgroundColor = [toViewController.UICustomization MHGalleryBackgroundColorForViewMode:toViewController.presentationStyle];
     }
-    
     
     UIView *containerView = [transitionContext containerView];
     NSTimeInterval duration = [self transitionDuration:transitionContext];
@@ -47,10 +48,9 @@
     toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
     toViewController.view.alpha = 0;
     
-    
-    UIView *backView = [[UIView alloc]initWithFrame:toViewController.view.frame];
+    UIView *backView = [[UIView alloc] initWithFrame:toViewController.view.frame];
     backView.backgroundColor = [toViewController.UICustomization MHGalleryBackgroundColorForViewMode:toViewController.presentationStyle];
-    backView.alpha =0;
+    backView.alpha = 0;
     
     [containerView addSubview:backView];
     [containerView addSubview:cellImageSnapshot];
@@ -65,42 +65,47 @@
                                     }];
     }
     
-    if(self.presentingImageView.contentMode == UIViewContentModeScaleAspectFit){
+    if (self.presentingImageView.contentMode == UIViewContentModeScaleAspectFit) {
         cellImageSnapshot.contentMode = UIViewContentModeScaleAspectFit;
     }
     
     [UIView animateWithDuration:duration animations:^{
         cellImageSnapshot.layer.cornerRadius = 0;
-        
-        if(self.presentingImageView.contentMode == UIViewContentModeScaleAspectFit){
+        if (self.presentingImageView.contentMode == UIViewContentModeScaleAspectFit) {
             cellImageSnapshot.frame = toViewController.view.bounds;
         }
-        backView.alpha =1;
-    } completion:^(BOOL finished) {        
+        backView.alpha = 1;
+    } completion:^(BOOL finished) {
+        
         [UIView animateWithDuration:0.1 animations:^{
             cellImageSnapshot.transform = CGAffineTransformScale(CGAffineTransformIdentity,1.02,1.02);
         } completion:^(BOOL finished) {
+            
             [UIView animateWithDuration:0.1 animations:^{
                 cellImageSnapshot.transform = CGAffineTransformScale(CGAffineTransformIdentity,1.00,1.00);
             } completion:^(BOOL finished) {
+            
                 [UIView animateWithDuration:0.35 animations:^{
+                
                     toViewController.view.alpha = 1.0;
                     
                 } completion:^(BOOL finished) {
+                
                     self.presentingImageView.hidden = NO;
                     [cellImageSnapshot removeFromSuperview];
                     [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+                
                 }];
             }];
         }];
     }];
 }
+
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
     return 0.3;
 }
 
-
--(void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext{
+- (void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     self.context = transitionContext;
     
     self.interactiveToViewController = (MHGalleryController*)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
@@ -126,10 +131,9 @@
     [containerView addSubview:self.backView];
     [containerView addSubview:self.interactiveToViewController.view];
     [containerView addSubview:self.transitionImageView];
-    
 }
 
--(void)updateInteractiveTransition:(CGFloat)percentComplete{
+- (void)updateInteractiveTransition:(CGFloat)percentComplete {
     [super updateInteractiveTransition:percentComplete];
     
     self.backView.alpha = percentComplete;
@@ -137,62 +141,55 @@
     self.transitionImageView.transform = CGAffineTransformMakeScale(1+self.scale*3, 1+self.scale*3);
     self.transitionImageView.transform = CGAffineTransformRotate(self.transitionImageView.transform, self.angle);
 }
--(CGAffineTransform)rotateToZeroAffineTranform{
+
+- (CGAffineTransform)rotateToZeroAffineTranform {
     
     CGAffineTransform transform = CGAffineTransformIdentity;
     transform = CGAffineTransformMakeScale(1+self.scale*3, 1+self.scale*3);
     transform = CGAffineTransformRotate(transform, 0);
     return transform;
 }
--(void)cancelInteractiveTransition{
+
+- (void)cancelInteractiveTransition {
     [super cancelInteractiveTransition];
-    
-    
-    [UIView animateWithDuration:[self timeForUnrotet] animations:^{
-        self.transitionImageView.transform  = [self rotateToZeroAffineTranform];
+    [UIView animateWithDuration:self.rotateDuration animations:^{
+        self.transitionImageView.transform  = self.rotateToZeroAffineTranform;
     } completion:^(BOOL finished) {
         CGRect currentFrame = self.transitionImageView.frame;
         self.transitionImageView.transform = CGAffineTransformIdentity;
         self.transitionImageView.frame = currentFrame;
-        
         [UIView animateWithDuration:0.3 animations:^{
             self.backView.alpha = 0;
             self.transitionImageView.frame = self.startFrame;
         } completion:^(BOOL finished) {
             self.presentingImageView.hidden = NO;
-            
             [self.transitionImageView removeFromSuperview];
             [self.backView removeFromSuperview];
             [self.context completeTransition:NO];
         }];
-        
     }];
 }
 
--(CGFloat)timeForUnrotet{
-    CGFloat isRotateTime = 0.2;
-    if (self.angle ==0) {
-        isRotateTime =0;
+- (CGFloat)rotateDuration {
+    CGFloat rotateTime = 0.2;
+    if (self.angle == 0) {
+        rotateTime = 0;
     }
-    return isRotateTime;
+    return rotateTime;
 }
 
--(void)finishInteractiveTransition{
+- (void)finishInteractiveTransition {
     [super finishInteractiveTransition];
     
     MHGalleryImageViewerViewController *imageViewer = self.interactiveToViewController.viewControllers.lastObject;
     
-    [UIView animateWithDuration:[self timeForUnrotet] animations:^{
-        self.transitionImageView.transform  = [self rotateToZeroAffineTranform];
-        
+    [UIView animateWithDuration:self.rotateDuration animations:^{
+        self.transitionImageView.transform  = self.rotateToZeroAffineTranform;
     } completion:^(BOOL finished) {
-        
         CGRect currentFrame = self.transitionImageView.frame;
-        
         self.transitionImageView.transform = CGAffineTransformIdentity;
         self.transitionImageView.frame = currentFrame;
         self.transitionImageView.contentMode = UIViewContentModeScaleAspectFit;
-        
         [UIView animateWithDuration:0.3 animations:^{
             self.backView.alpha = 1;
         }];

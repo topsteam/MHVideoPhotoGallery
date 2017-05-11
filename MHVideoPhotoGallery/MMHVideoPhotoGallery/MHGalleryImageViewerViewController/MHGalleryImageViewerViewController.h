@@ -11,7 +11,7 @@
 
 @class MHScrollViewLabel;
 @class MHTransitionShowOverView;
-@class MHTransitionDismissMHGallery;
+@class MHGalleryDismissTransition;
 @class MHGalleryController;
 
 @interface MHGalleryImageViewerViewController : UIViewController<UIPageViewControllerDelegate,
@@ -21,7 +21,7 @@
                                                                 UIGestureRecognizerDelegate,
                                                                 UITextViewDelegate>
 
-@property (nonatomic) MHTransitionPresentMHGallery *interactivePresentationTranstion;
+@property (nonatomic) MHGalleryPresentationTransition *interactivePresentationTranstion;
 @property (nonatomic) MHTransitionCustomization *transitionCustomization;
 @property (nonatomic) MHUICustomization *UICustomization;
 @property (nonatomic) MHScrollViewLabel *titleLabel;

@@ -62,7 +62,7 @@
     _presentingFromImageView = presentingFromImageView;
 }
 
-- (void)setInteractivePresentationTransition:(MHTransitionPresentMHGallery *)interactivePresentationTranstion {
+- (void)setInteractivePresentationTransition:(MHGalleryPresentationTransition *)interactivePresentationTranstion {
     self.imageViewerViewController.interactivePresentationTranstion = interactivePresentationTranstion;
     _interactivePresentationTransition = interactivePresentationTranstion;
 }
@@ -89,7 +89,7 @@
                           animated:(BOOL)animated
                         completion:(void (^)(void))completion {
     
-    if(galleryController.UICustomization.useCustomBackButtonImageOnImageViewer){
+    if (galleryController.UICustomization.useCustomBackButtonImageOnImageViewer) {
         UIBarButtonItem *backBarButton = [UIBarButtonItem.alloc initWithImage:MHTemplateImage(@"ic_square")
                                                                         style:UIBarButtonItemStylePlain
                                                                        target:self
@@ -128,8 +128,8 @@
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator{
-    if ([animator isKindOfClass:MHTransitionPresentMHGallery.class]) {
-        MHTransitionPresentMHGallery *animatorPresent = (MHTransitionPresentMHGallery*)animator;
+    if ([animator isKindOfClass:MHGalleryPresentationTransition.class]) {
+        MHGalleryPresentationTransition *animatorPresent = (MHGalleryPresentationTransition*)animator;
         if (animatorPresent.interactive) {
             return animatorPresent;
         }
@@ -140,8 +140,8 @@
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator {
-    if ([animator isKindOfClass:MHTransitionDismissMHGallery.class]) {
-        MHTransitionDismissMHGallery *animatorDismiss = (MHTransitionDismissMHGallery*)animator;
+    if ([animator isKindOfClass:MHGalleryDismissTransition.class]) {
+        MHGalleryDismissTransition *animatorDismiss = (MHGalleryDismissTransition*)animator;
         if (animatorDismiss.interactive) {
             return animatorDismiss;
         }
@@ -161,12 +161,12 @@
         }
         
         if (viewer.interactiveTransition) {
-            MHTransitionDismissMHGallery *detail = viewer.interactiveTransition;
+            MHGalleryDismissTransition *detail = viewer.interactiveTransition;
             detail.transitionImageView = imageViewer.dismissFromImageView;
             return detail;
         }
         
-        MHTransitionDismissMHGallery *detail = MHTransitionDismissMHGallery.new;
+        MHGalleryDismissTransition *detail = MHGalleryDismissTransition.new;
         detail.transitionImageView = imageViewer.dismissFromImageView;
         return detail;
     }
@@ -180,11 +180,11 @@
     if ([nav isKindOfClass:[UINavigationController class]] && [nav.viewControllers.lastObject  isKindOfClass:MHGalleryImageViewerViewController.class]) {
         MHGalleryImageViewerViewController *imageViewer = nav.viewControllers.lastObject;
         if (imageViewer.interactivePresentationTranstion) {
-            MHTransitionPresentMHGallery *detail = imageViewer.interactivePresentationTranstion;
+            MHGalleryPresentationTransition *detail = imageViewer.interactivePresentationTranstion;
             detail.presentingImageView = imageViewer.presentingFromImageView;
             return detail;
         }
-        MHTransitionPresentMHGallery *detail = MHTransitionPresentMHGallery.new;
+        MHGalleryPresentationTransition *detail = MHGalleryPresentationTransition.new;
         detail.presentingImageView = imageViewer.presentingFromImageView;
         return detail;
     }

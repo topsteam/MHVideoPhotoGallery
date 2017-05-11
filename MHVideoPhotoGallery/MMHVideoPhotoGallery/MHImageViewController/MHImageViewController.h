@@ -12,7 +12,7 @@
 #import "MHScrollViewLabel.h"
 
 @class MHTransitionShowOverView;
-@class MHTransitionDismissMHGallery;
+@class MHGalleryDismissTransition;
 @class MHPinchGestureRecognizer;
 @class MHGalleryImageViewerViewController;
 
@@ -22,7 +22,7 @@
 
 @property (nonatomic, readonly, weak) MHGalleryImageViewerViewController *galleryViewerViewController;
 
-@property (nonatomic) MHTransitionDismissMHGallery *interactiveTransition;
+@property (nonatomic) MHGalleryDismissTransition *interactiveTransition;
 @property (nonatomic) MHTransitionShowOverView *interactiveOverView;
 
 @property (nonatomic) UIScrollView *scrollView;

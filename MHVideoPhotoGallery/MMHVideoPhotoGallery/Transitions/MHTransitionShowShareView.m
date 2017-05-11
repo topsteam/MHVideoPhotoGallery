@@ -15,7 +15,7 @@
     
     self.context = transitionContext;
     
-    if(self.present){
+    if (self.present) {
         MHGalleryImageViewerViewController *fromViewController = (MHGalleryImageViewerViewController*)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
         MHShareViewController *toViewController = (MHShareViewController*)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
         
@@ -41,7 +41,7 @@
         toViewController.collectionView.alpha =0;
         toViewController.collectionView.frame =  CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height-240);
         
-        if([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait){
+        if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) {
             toViewController.collectionView.frame =  CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height-240);
         }else{
             toViewController.collectionView.frame =  CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height);
@@ -77,7 +77,7 @@
                 
                 toViewController.collectionView.alpha =1;
                
-                if([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait){
+                if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) {
                     toViewController.gradientView.frame = CGRectMake(0, toViewController.view.frame.size.height-240, toViewController.view.frame.size.width,240);
                     toViewController.tableViewShare.frame = CGRectMake(0, toViewController.view.frame.size.height-230, toViewController.view.frame.size.width, 240);
                 }else{

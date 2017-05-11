@@ -512,7 +512,7 @@
     if (self.currentImageVC.moviePlayer) {
         [self.currentImageVC removeAllMoviePlayerViewsAndNotifications];
     }
-    MHTransitionDismissMHGallery *dismissTransiton = [MHTransitionDismissMHGallery new];
+    MHGalleryDismissTransition *dismissTransiton = [MHGalleryDismissTransition new];
     dismissTransiton.orientationTransformBeforeDismiss = [(NSNumber *)[self.navigationController.view valueForKeyPath:@"layer.transform.rotation.z"] floatValue];
     dismissTransiton.finishButtonAction = YES;
     self.currentImageVC.interactiveTransition = dismissTransiton;
@@ -616,7 +616,7 @@
     if (self.pageIndex == 0) {
         self.leftBarButton.enabled =NO;
     }
-    if(self.pageIndex == self.numberOfGalleryItems-1){
+    if (self.pageIndex == self.numberOfGalleryItems-1) {
         self.rightBarButton.enabled =NO;
     }
 }

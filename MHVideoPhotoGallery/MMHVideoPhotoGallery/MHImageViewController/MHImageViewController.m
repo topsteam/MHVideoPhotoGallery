@@ -166,7 +166,7 @@
 }
 
 - (void)centerImageView {
-    if (self.imageView.image){
+    if (self.imageView.image) {
         CGRect frame  = AVMakeRectWithAspectRatioInsideRect(self.imageView.image.size,CGRectMake(0, 0, self.scrollView.contentSize.width, self.scrollView.contentSize.height));
         
         if (self.scrollView.contentSize.width==0 && self.scrollView.contentSize.height==0) {
@@ -177,11 +177,11 @@
         
         CGRect frameToCenter = CGRectMake(0,0 , frame.size.width, frame.size.height);
         
-        if (frameToCenter.size.width < boundsSize.width){
+        if (frameToCenter.size.width < boundsSize.width) {
             frameToCenter.origin.x = (boundsSize.width - frameToCenter.size.width) / 2;
         }else{
             frameToCenter.origin.x = 0;
-        }if (frameToCenter.size.height < boundsSize.height){
+        }if (frameToCenter.size.height < boundsSize.height) {
             frameToCenter.origin.y = (boundsSize.height - frameToCenter.size.height) / 2;
         }else{
             frameToCenter.origin.y = 0;
@@ -211,7 +211,6 @@
             }
         }];
     }
-    
 }
 
 #pragma mark - UIGestureRecognizerDelegate methods
@@ -539,11 +538,11 @@
             if (!self.interactiveTransition ) {
                 self.startPoint = [recognizer translationInView:self.view];
                 self.lastPoint = [recognizer translationInView:self.view];
-                self.interactiveTransition = [MHTransitionDismissMHGallery new];
+                self.interactiveTransition = [MHGalleryDismissTransition new];
                 
-                if (UIApplication.sharedApplication.statusBarOrientation == UIInterfaceOrientationLandscapeLeft){
+                if (UIApplication.sharedApplication.statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
                     self.interactiveTransition.orientationTransformBeforeDismiss = -M_PI/2;
-                }else if (UIApplication.sharedApplication.statusBarOrientation == UIInterfaceOrientationLandscapeRight){
+                }else if (UIApplication.sharedApplication.statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
                     self.interactiveTransition.orientationTransformBeforeDismiss = M_PI/2;
                 }else{
                     self.interactiveTransition.orientationTransformBeforeDismiss = 0;
@@ -627,7 +626,7 @@
 }
 
 - (void)autoPlayVideo {
-    if (self.galleryViewerViewController.galleryViewController.autoplayVideos){
+    if (self.galleryViewerViewController.galleryViewController.autoplayVideos) {
         [self playButtonPressed];
     }
 }
@@ -664,7 +663,7 @@
 
 - (void)changeToPlayable {
     self.videoWasPlayable = YES;
-    if (!self.galleryViewerViewController.isHiddingToolBarAndNavigationBar){
+    if (!self.galleryViewerViewController.isHiddingToolBarAndNavigationBar) {
         self.moviePlayerToolBarTop.alpha = 1;
     }
     
@@ -680,11 +679,11 @@
     [self.view bringSubviewToFront:self.moviePlayerToolBarTop];
     [self.view bringSubviewToFront:self.playButton];
     
-    if (self.galleryViewerViewController.transitionCustomization.interactiveDismiss){
+    if (self.galleryViewerViewController.transitionCustomization.interactiveDismiss) {
         [self.moviewPlayerButtonBehinde addGestureRecognizer:self.pan];
     }
     
-    if (self.playingVideo){
+    if (self.playingVideo) {
         [self bringMoviePlayerToFront];
     }
     if (self.shouldPlayVideo) {
@@ -698,7 +697,7 @@
 - (void)loadStateDidChange:(NSNotification *)notification {
     MPMoviePlayerController *player = notification.object;
     MPMovieLoadState loadState = player.loadState;
-    if (loadState & MPMovieLoadStatePlayable){
+    if (loadState & MPMovieLoadStatePlayable) {
         if (!self.videoWasPlayable) {
             [self performSelectorOnMainThread:@selector(changeToPlayable)
                                    withObject:nil
@@ -706,11 +705,11 @@
         }
         
     }
-    if (loadState & MPMovieLoadStatePlaythroughOK){
+    if (loadState & MPMovieLoadStatePlaythroughOK) {
         self.videoDownloaded = YES;
     }
     
-    if (loadState & MPMovieLoadStateStalled){
+    if (loadState & MPMovieLoadStateStalled) {
         
         [self performSelectorOnMainThread:@selector(stopMovie)
                                withObject:nil
@@ -869,7 +868,7 @@
         self.leftSliderLabel.frame = CGRectMake(8, 0, 40, 43);
         self.rightSliderLabel.frame =CGRectMake(self.galleryViewerViewController.view.bounds.size.width-50, 0, 50, 43);
         
-        if (UIApplication.sharedApplication.statusBarOrientation != UIInterfaceOrientationPortrait){
+        if (UIApplication.sharedApplication.statusBarOrientation != UIInterfaceOrientationPortrait) {
             if (self.view.bounds.size.width < self.view.bounds.size.height) {
                 self.rightSliderLabel.frame =CGRectMake(self.view.bounds.size.height-50, 0, 50, 43);
                 if (self.imageView.image) {

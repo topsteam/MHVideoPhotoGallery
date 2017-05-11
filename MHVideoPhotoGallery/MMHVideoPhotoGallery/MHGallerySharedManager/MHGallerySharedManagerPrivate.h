@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Mario Hahn. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "MHGallerySharedManager.h"
 
 @interface MHGallerySharedManager ()
 

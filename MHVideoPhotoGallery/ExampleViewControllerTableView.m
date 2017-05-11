@@ -46,7 +46,7 @@
     
     __weak MHGalleryController *blockGallery = gallery;
     
-    gallery.finishedCallback = ^(NSInteger currentIndex, UIImage *image, MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode){
+    gallery.finishedCallback = ^(NSInteger currentIndex, UIImage *image, MHGalleryDismissTransition *interactiveTransition,MHGalleryViewMode viewMode) {
         
         NSIndexPath *newIndex = [NSIndexPath indexPathForRow:currentIndex inSection:0];
         
@@ -79,11 +79,11 @@
     cellIdentifier = @"ImageTableViewCell";
     
     ImageTableViewCell *cell = (ImageTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell){
+    if (!cell) {
         cell = [[ImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     MHGalleryItem *item = self.galleryDataSource[indexPath.row];
-    if(item.galleryType == MHGalleryTypeImage){
+    if (item.galleryType == MHGalleryTypeImage) {
         [cell.cellImageView sd_setImageWithURL:item.URL];
     }
     else {

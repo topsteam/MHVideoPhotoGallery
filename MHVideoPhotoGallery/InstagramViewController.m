@@ -56,7 +56,7 @@
                                        
                                    }
                                    
-                                   if(![dictionary[@"caption"] isKindOfClass:NSNull.class]){
+                                   if (![dictionary[@"caption"] isKindOfClass:NSNull.class]) {
                                        item.descriptionString = dictionary[@"caption"][@"text"];
                                        
                                    }
@@ -92,7 +92,7 @@
     
     __weak MHGalleryController *blockGallery = gallery;
     
-    gallery.finishedCallback = ^(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition,MHGalleryViewMode viewMode){
+    gallery.finishedCallback = ^(NSInteger currentIndex,UIImage *image,MHGalleryDismissTransition *interactiveTransition,MHGalleryViewMode viewMode) {
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:currentIndex inSection:0];
         CGRect cellFrame  = [[weakSelf.collectionView collectionViewLayout] layoutAttributesForItemAtIndexPath:newIndexPath].frame;
         
