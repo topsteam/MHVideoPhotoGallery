@@ -22,7 +22,6 @@
 
 @property (nonatomic) MPMoviePlayerController *moviePlayer;
 @property (nonatomic, assign) CGFloat orientationBeforeDismissAngle;
-//@property (nonatomic, assign) CGFloat orientationTransformBeforeDismiss;
 @property (nonatomic, assign) BOOL finishButtonAction;
 
 @end

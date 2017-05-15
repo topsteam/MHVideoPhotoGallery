@@ -559,7 +559,8 @@
                         break;
                 }
                 
-                self.interactiveTransition.interactive = YES;
+                BOOL isInterfaceLandscape = UIInterfaceOrientationIsPortrait((UIInterfaceOrientation)UIDevice.currentDevice.orientation);
+                self.interactiveTransition.interactive = isInterfaceLandscape;//FIXME: temporary fix until landscape to portrait interactive transition implelmented
                 self.interactiveTransition.moviePlayer = self.moviePlayer;
                 
                 MHGalleryController *galleryViewController = [self.galleryViewerViewController galleryViewController];
