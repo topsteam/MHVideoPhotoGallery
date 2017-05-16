@@ -495,6 +495,11 @@
 }
 
 - (void)userDidPan:(UIPanGestureRecognizer *)recognizer {
+    BOOL isInterfaceLandscape = UIInterfaceOrientationIsLandscape((UIInterfaceOrientation)UIDevice.currentDevice.orientation);
+    if (isInterfaceLandscape) {
+        //FIXME: temporary condition, implement interactive transition for landscape.
+        return;
+    }
     BOOL userScrolls = self.galleryViewerViewController.userScrolls;
     if (self.galleryViewerViewController.transitionCustomization.dismissWithScrollGestureOnFirstAndLastImage) {
         if (!self.interactiveTransition) {
@@ -559,8 +564,7 @@
                         break;
                 }
                 
-                BOOL isInterfaceLandscape = UIInterfaceOrientationIsPortrait((UIInterfaceOrientation)UIDevice.currentDevice.orientation);
-                self.interactiveTransition.interactive = isInterfaceLandscape;//FIXME: temporary fix until landscape to portrait interactive transition implelmented
+                self.interactiveTransition.interactive = YES;
                 self.interactiveTransition.moviePlayer = self.moviePlayer;
                 
                 MHGalleryController *galleryViewController = [self.galleryViewerViewController galleryViewController];
