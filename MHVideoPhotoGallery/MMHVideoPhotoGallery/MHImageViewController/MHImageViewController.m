@@ -232,8 +232,9 @@
         return NO;
     }
     if (self.galleryViewerViewController.transitionCustomization.dismissWithScrollGestureOnFirstAndLastImage) {
-        if ((self.pageIndex ==0 || self.pageIndex == self.galleryViewerViewController.numberOfGalleryItems -1)) {
-            if ([gestureRecognizer isKindOfClass:UIPanGestureRecognizer.class]|| [otherGestureRecognizer isKindOfClass:NSClassFromString(@"UIScrollViewDelayedTouchesBeganGestureRecognizer")] ) {
+        if (self.edgeImageShown) {
+            BOOL isInterfacePortrait = UIInterfaceOrientationIsPortrait((UIInterfaceOrientation)UIDevice.currentDevice.orientation);
+            if (isInterfacePortrait && ([gestureRecognizer isKindOfClass:UIPanGestureRecognizer.class] || [otherGestureRecognizer isKindOfClass:NSClassFromString(@"UIScrollViewDelayedTouchesBeganGestureRecognizer")])) {
                 return YES;
             }
         }
@@ -253,7 +254,7 @@
         return YES;
     }
     if (self.galleryViewerViewController.transitionCustomization.dismissWithScrollGestureOnFirstAndLastImage) {
-        if ((self.pageIndex ==0 || self.pageIndex == self.galleryViewerViewController.numberOfGalleryItems -1) && [gestureRecognizer isKindOfClass:UIPanGestureRecognizer.class]) {
+        if (self.edgeImageShown && [gestureRecognizer isKindOfClass:UIPanGestureRecognizer.class]) {
             return YES;
         }
     }
@@ -295,7 +296,7 @@
         return NO;
     }
     if (self.galleryViewerViewController.transitionCustomization.dismissWithScrollGestureOnFirstAndLastImage) {
-        if ((self.pageIndex ==0 || self.pageIndex == self.galleryViewerViewController.numberOfGalleryItems -1) && [gestureRecognizer isKindOfClass:UIPanGestureRecognizer.class]) {
+        if (self.edgeImageShown && [gestureRecognizer isKindOfClass:UIPanGestureRecognizer.class]) {
             return YES;
         }
     }
@@ -1048,6 +1049,10 @@
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
     [self centerImageView];
+}
+
+- (BOOL)edgeImageShown {
+    return self.pageIndex == 0 || self.pageIndex == self.galleryViewerViewController.numberOfGalleryItems - 1;
 }
 
 @end
