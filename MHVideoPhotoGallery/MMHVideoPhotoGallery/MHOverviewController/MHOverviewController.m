@@ -280,7 +280,8 @@
 
 #pragma mark - UIViewControllerRotation methods
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration{
     self.collectionView.collectionViewLayout = [self layoutForOrientation:toInterfaceOrientation];
     [self.collectionView.collectionViewLayout invalidateLayout];
 }

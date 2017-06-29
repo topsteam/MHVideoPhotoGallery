@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MHUIImageViewContentViewAnimation;
+@class MHContentViewAnimationImageView;
 @class MPMoviePlayerController;
 
 @interface MHGalleryDismissTransition : UIPercentDrivenInteractiveTransition<UIViewControllerAnimatedTransitioning>

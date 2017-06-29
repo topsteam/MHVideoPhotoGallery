@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Mario Hahn. All rights reserved.
 //
 
-#import "MHGradientView.h"
-
 typedef NS_ENUM(NSUInteger, MHGalleryViewMode) {
     MHGalleryViewModeImageViewerNavigationBarHidden = 0,
     MHGalleryViewModeImageViewerNavigationBarShown = 1,
@@ -51,10 +49,6 @@ typedef NS_ENUM(NSUInteger, MHBackButtonState) {
  */
 @property (nonatomic) UIColor *videoProgressTintColor;
 /**
- Default YES
- */
-@property (nonatomic) BOOL showMHShareViewInsteadOfActivityViewController;
-/**
  Default NO
  */
 @property (nonatomic) BOOL hideShare;
@@ -79,13 +73,8 @@ typedef NS_ENUM(NSUInteger, MHBackButtonState) {
  */
 @property (nonatomic) UIBarButtonItem *customBarButtonItem;
 
+- (void)setMHGalleryBackgroundColor:(UIColor *)color forViewMode:(MHGalleryViewMode)viewMode;
 
-- (void)setMHGradients:(NSArray<UIColor *> *)colors
-          forDirection:(MHGradientDirection)direction;
-- (NSArray<UIColor *> *)MHGradientColorsForDirection:(MHGradientDirection)direction;
-
-- (void)setMHGalleryBackgroundColor:(UIColor *)color
-                       forViewMode:(MHGalleryViewMode)viewMode;
 - (UIColor *)MHGalleryBackgroundColorForViewMode:(MHGalleryViewMode)viewMode;
 
 @end

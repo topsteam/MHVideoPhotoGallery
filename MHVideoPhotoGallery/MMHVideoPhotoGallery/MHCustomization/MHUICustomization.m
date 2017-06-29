@@ -29,7 +29,6 @@
         self.barButtonsTintColor = nil;
         self.barStyle = UIBarStyleDefault;
         self.barTintColor = nil;
-        self.showMHShareViewInsteadOfActivityViewController = YES;
         self.useCustomBackButtonImageOnImageViewer = YES;
         self.showOverView = YES;
         self.showArrows = YES;
@@ -85,16 +84,6 @@
                                  NSForegroundColorAttributeName : keyColor};
     [truncation setAttributes:attributes range:NSMakeRange(points.length, more.length)];
     return truncation;
-}
-
-- (void)setMHGradients:(NSArray<UIColor *> *)colors
-          forDirection:(MHGradientDirection)direction {
-    [self.gradientColorsForDirection setObject:colors
-                                        forKey:[NSString stringWithFormat:@"%@",@(direction)]];
-}
-
-- (NSArray<UIColor* > *)MHGradientColorsForDirection:(MHGradientDirection)direction {
-    return self.gradientColorsForDirection[[NSString stringWithFormat:@"%@",@(direction)]];
 }
 
 - (void)setMHGalleryBackgroundColor:(UIColor *)color

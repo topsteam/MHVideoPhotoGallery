@@ -1,24 +1,67 @@
 //
-//  MHUIImageViewContentViewAnimation.m
+//  MHContentViewAnimationImageView.m
 //  MHVideoPhotoGallery
 //
 //  Created by Mario Hahn on 30.12.13.
 //  Copyright (c) 2013 Mario Hahn. All rights reserved.
 //
 
-#import "MHUIImageViewContentViewAnimation.h"
+#import "MHContentViewAnimationImageView.h"
 #import "MHGallery.h"
 #import "MHGallerySharedManagerPrivate.h"
 
-@interface MHUIImageViewContentViewAnimation ()
+@interface MHContentViewAnimationImageView ()
 
-@property (nonatomic,readwrite) CGRect      changedFrameWrapper;
-@property (nonatomic,readwrite) CGRect      changedFrameImage;
-@property (nonatomic,strong)    UIImageView *imageView;
+@property (nonatomic) CGRect changedFrameWrapper;
+@property (nonatomic) CGRect changedFrameImage;
+@property (nonatomic) UIImageView *imageView;
 
 @end
 
-@implementation MHUIImageViewContentViewAnimation
+@implementation MHContentViewAnimationImageView
+
+#pragma mark - Public methods
+
+- (void)animateToViewMode:(UIViewContentMode)contenMode
+                 forFrame:(CGRect)frame
+             withDuration:(float)duration
+               afterDelay:(float)delay
+                 completion:(MHContentViewAnimationCompletionBlock)completion {
+    [self checkImageViewHasImage];
+    switch (contenMode) {
+        case UIViewContentModeScaleAspectFill: {
+            [self initToScaleAspectFillToFrame:frame];
+            [UIView animateWithDuration:duration animations:^{
+                [self animateToScaleAspectFill];
+            } completion:^(BOOL finished) {
+                [self animateFinishToScaleAspectFill];
+                if (completion) {
+                    completion(YES);
+                }
+            }];
+        }
+            break;
+        case UIViewContentModeScaleAspectFit: {
+            [self initToScaleAspectFitToFrame:frame];
+            [UIView animateWithDuration:duration animations:^{
+                [self animateToScaleAspectFit];
+            } completion:^(BOOL finished) {
+                if (completion) {
+                    completion(YES);
+                }
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (UIImage *)imageMH {
+    return self.imageView.image;
+}
+
+#pragma mark - Private methods
 
 - (id)init {
     self = [super init];
@@ -31,7 +74,7 @@
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.imageView = [UIImageView.alloc initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
@@ -42,46 +85,7 @@
     return self;
 }
 
--(void)animateToViewMode:(UIViewContentMode)contenMode
-                forFrame:(CGRect)frame
-            withDuration:(float)duration
-              afterDelay:(float)delay
-                finished:(void (^)(BOOL finished))finishedBlock{
-    [self checkImageViewHasImage];
-    
-    switch (contenMode) {
-        case UIViewContentModeScaleAspectFill:{
-            [self initToScaleAspectFillToFrame:frame];
-            [UIView animateWithDuration:duration animations:^{
-                [self animateToScaleAspectFill];
-            } completion:^(BOOL finished) {
-                [self animateFinishToScaleAspectFill];
-                if (finishedBlock) {
-                    finishedBlock(YES);
-                }
-            }];
-        }
-            break;
-        case UIViewContentModeScaleAspectFit:{
-            [self initToScaleAspectFitToFrame:frame];
-            [UIView animateWithDuration:duration animations:^{
-                [self animateToScaleAspectFit];
-            } completion:^(BOOL finished) {
-                if (finishedBlock) {
-                    finishedBlock(YES);
-                }
-                
-                
-            }];
-        }
-            break;
-            
-        default:
-            break;
-    }
-    
-}
--(void)checkImageViewHasImage{
+- (void)checkImageViewHasImage {
     if (!self.imageView.image) {
         UIView *view = [UIView.alloc initWithFrame:self.imageView.frame];
         view.backgroundColor = [UIColor whiteColor];
@@ -89,7 +93,7 @@
     }
 }
 
-- (void)initToScaleAspectFitToFrame:(CGRect)newFrame{
+- (void)initToScaleAspectFitToFrame:(CGRect)newFrame {
     [self checkImageViewHasImage];
     float ratioImage = (self.imageView.image.size.width)/(self.imageView.image.size.height);
     
@@ -106,7 +110,7 @@
     
 }
 
-- (void)initToScaleAspectFillToFrame:(CGRect)newFrame{
+- (void)initToScaleAspectFillToFrame:(CGRect)newFrame {
     [self checkImageViewHasImage];
     
     float ratioImg = (self.imageView.image.size.width) / (self.imageView.image.size.height);
@@ -119,55 +123,46 @@
     self.changedFrameWrapper = newFrame;
     
 }
-- (void)animateToScaleAspectFit{
+
+- (void)animateToScaleAspectFit {
     self.imageView.frame = _changedFrameImage;
     [super setFrame:_changedFrameWrapper];
 }
 
-- (void)animateToScaleAspectFill{
+- (void)animateToScaleAspectFill {
     self.imageView.frame = _changedFrameImage;
     [super setFrame:_changedFrameWrapper];
 }
 
-- (void)animateFinishToScaleAspectFill{
+- (void)animateFinishToScaleAspectFill {
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.frame  = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
 }
 
--(UIImage*)imageMH{
-    return self.imageView.image;
-}
-
-- (void)setImage:(UIImage *)image{
+- (void)setImage:(UIImage *)image {
     self.imageView.image = image;
 }
 
-- (UIImage *)image{
+- (UIImage *)image {
     return nil;
 }
 
-- (void)setContentMode:(UIViewContentMode)contentMode{
+- (void)setContentMode:(UIViewContentMode)contentMode {
     self.imageView.contentMode = contentMode;
 }
 
-- (UIViewContentMode)contentMode{
+- (UIViewContentMode)contentMode {
     return self.imageView.contentMode;
 }
 
-- (void)setFrame:(CGRect)frame{
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     self.imageView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
 }
 
-- (BOOL)choiseFunctionWithRationImg:(float)ratioImage forFrame:(CGRect)newFrame{
-    BOOL resultat = NO;
+- (BOOL)choiseFunctionWithRationImg:(float)ratioImage
+                           forFrame:(CGRect)newFrame {
     float ratioSelf = (newFrame.size.width)/(newFrame.size.height);
-    if (ratioImage < 1) {
-        if (ratioImage > ratioSelf ) resultat = true;
-    }
-    else {
-        if (ratioImage > ratioSelf ) resultat = true;
-    }
-    return resultat;
+    return ratioImage > ratioSelf;
 }
 @end

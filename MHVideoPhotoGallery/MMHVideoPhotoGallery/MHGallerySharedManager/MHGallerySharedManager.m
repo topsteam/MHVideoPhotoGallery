@@ -295,11 +295,15 @@
 
 - (void)getYoutubeThumbImage:(NSString *)URLString
                      success:(MHImageVideoDurationErrorCompletionBlock)success {
-    NSString *thumbnailImageKey = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:URLString]];
+    NSURL *youtubeImageURL = [NSURL URLWithString:URLString];
+    NSString *thumbnailImageKey = [[SDWebImageManager sharedManager] cacheKeyForURL:youtubeImageURL];
     UIImage *thumbnailImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:thumbnailImageKey];
     if (thumbnailImage) {
         NSMutableDictionary *dict = [self durationDict];
-        success(thumbnailImage, [dict[URLString] integerValue],nil);
+        if (success) {
+            NSUInteger videoDuration = [dict[URLString] unsignedIntegerValue];
+            success(thumbnailImage, videoDuration, nil);
+        }
     }
     else {
         NSString *videoID = [[URLString componentsSeparatedByString:@"?v="] lastObject];
@@ -317,32 +321,43 @@
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
                     if (jsonData.count) {
                         NSMutableDictionary *dictToSave = [self durationDict];
-                        dictToSave[URLString] = @([jsonData[@"data"][@"duration"] integerValue]);
-                        
+                        NSDictionary *dataDict = jsonData[@"data"];
+                        dictToSave[URLString] = @([dataDict[@"duration"] integerValue]);
                         [self setObjectToUserDefaults:dictToSave];
-                        NSString *thumbURLString = [NSString string];
                         
-                        if (self.youtubeThumbQuality == MHYoutubeThumbQualityHQ) {
-                            thumbURLString = jsonData[@"data"][@"thumbnail"][@"hqDefault"];
-                        }
-                        else if (self.youtubeThumbQuality == MHYoutubeThumbQualitySQ) {
-                            thumbURLString = jsonData[@"data"][@"thumbnail"][@"sqDefault"];
+                        NSString *thumbURLString = [NSString string];
+                        NSDictionary *thumbnailDict = dataDict[@"thumbnail"];
+                        switch (self.youtubeThumbQuality) {
+                            case MHYoutubeThumbQualityHQ:
+                                thumbURLString = thumbnailDict[@"hqDefault"];
+                                break;
+                            case MHYoutubeThumbQualitySQ:
+                                thumbURLString = thumbnailDict[@"sqDefault"];
+                                break;
+                            default:
+                                break;
                         }
                         
                         NSURL *thumbURL = [NSURL URLWithString:thumbURLString];
                         [SDWebImageManager.sharedManager loadImageWithURL:thumbURL options:SDWebImageContinueInBackground progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
                             
-                            [SDImageCache.sharedImageCache removeImageForKey:thumbnailImageKey withCompletion:nil];
+                            [SDImageCache.sharedImageCache removeImageForKey:thumbnailImageKey
+                                                              withCompletion:nil];
                             [SDImageCache.sharedImageCache storeImage:image
-                                                               forKey:thumbnailImageKey completion:nil];
-                            NSInteger videoDuration = [jsonData[@"data"][@"duration"] integerValue];
-                            success(image, videoDuration, nil);
+                                                               forKey:thumbnailImageKey
+                                                           completion:nil];
+                            NSUInteger videoDuration = [dataDict[@"duration"] unsignedIntegerValue];
+                            if (success) {
+                                success(image, videoDuration, nil);
+                            }
                         }];
                     }
                 });
             }
-            else{
-                success(nil, 0, connectionError);
+            else {
+                if (success) {
+                    success(nil, 0, connectionError);
+                }
             }
         }];
     }

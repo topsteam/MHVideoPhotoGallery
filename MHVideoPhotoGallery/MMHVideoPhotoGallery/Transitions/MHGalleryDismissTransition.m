@@ -8,7 +8,7 @@
 
 #import "MHGalleryDismissTransition.h"
 
-#import "MHUIImageViewContentViewAnimation.h"
+#import "MHContentViewAnimationImageView.h"
 #import "MHGallerySharedManagerPrivate.h"
 #import "MHOverviewController.h"
 
@@ -26,7 +26,7 @@
 @property (nonatomic) UIView *backView;
 @property (nonatomic) UIView *containerView;
 
-@property (nonatomic) MHUIImageViewContentViewAnimation *cellImageSnapshot;
+@property (nonatomic) MHContentViewAnimationImageView *cellImageSnapshot;
 
 @end
 
@@ -57,7 +57,7 @@
         image = MHDefaultImageForFrame(fromViewController.view.frame);
     }
     
-    MHUIImageViewContentViewAnimation *cellImageSnapshot = [MHUIImageViewContentViewAnimation.alloc initWithFrame:fromViewController.view.bounds];
+    MHContentViewAnimationImageView *cellImageSnapshot = [MHContentViewAnimationImageView.alloc initWithFrame:fromViewController.view.bounds];
     cellImageSnapshot.image = image;
     [cellImageSnapshot setFrame:AVMakeRectWithAspectRatioInsideRect(cellImageSnapshot.imageMH.size,fromViewController.view.bounds)];
     cellImageSnapshot.contentMode = UIViewContentModeScaleAspectFit;
@@ -151,7 +151,7 @@
         }
     }
     
-    self.cellImageSnapshot = [MHUIImageViewContentViewAnimation.alloc initWithFrame:fromViewController.view.bounds];
+    self.cellImageSnapshot = [MHContentViewAnimationImageView.alloc initWithFrame:fromViewController.view.bounds];
     self.cellImageSnapshot.contentMode = UIViewContentModeScaleAspectFit;
     
     if (!image) {
@@ -289,9 +289,7 @@
                                                                              fromView:self.transitionImageView.superview]
                                          withDuration:0.3
                                            afterDelay:0
-                                             finished:^(BOOL finished) {
-                                                 
-                                             }];
+                                             completion:nil];
         }
         
         [UIView animateWithDuration:0.3 animations:^{
@@ -309,14 +307,14 @@
                     if (self.cellImageSnapshot.center.x > self.startCenter.x) {
                         newPoint.x = self.cellImageSnapshot.center.x + fabs(self.cellImageSnapshot.center.x -self.startCenter.x)*4;
                     }
-                    else{
+                    else {
                         newPoint.x = self.cellImageSnapshot.center.x - fabs(self.cellImageSnapshot.center.x -self.startCenter.x)*4;
                     }
                     
                     if (self.cellImageSnapshot.center.y > self.startCenter.y) {
                         newPoint.y = self.cellImageSnapshot.center.y + fabs(self.cellImageSnapshot.center.y -self.startCenter.y)*4;
                     }
-                    else{
+                    else {
                         newPoint.y = self.cellImageSnapshot.center.y - fabs(self.cellImageSnapshot.center.y -self.startCenter.y)*4;
                     }
                     self.cellImageSnapshot.center = newPoint;
@@ -367,7 +365,7 @@
         [self.cellImageSnapshot removeFromSuperview];
         [self.backView removeFromSuperview];
         
-        UINavigationController *fromViewController = (UINavigationController*)[self.context viewControllerForKey:UITransitionContextFromViewControllerKey];
+        UINavigationController *fromViewController = (UINavigationController *)[self.context viewControllerForKey:UITransitionContextFromViewControllerKey];
         if (self.moviePlayer) {
             if (needsRotate) {
                 self.moviePlayer.view.transform = CGAffineTransformMakeRotation(self.toTransform);

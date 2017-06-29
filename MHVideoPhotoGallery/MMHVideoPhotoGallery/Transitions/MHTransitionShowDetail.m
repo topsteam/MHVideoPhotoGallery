@@ -11,7 +11,7 @@
 #import "MHGalleryLabel.h"
 
 @interface MHTransitionShowDetail()
-@property (nonatomic, strong) MHUIImageViewContentViewAnimation *cellImageSnapshot;
+@property (nonatomic, strong) MHContentViewAnimationImageView *cellImageSnapshot;
 @property (nonatomic, strong) UITextView *titleLabel;
 @property (nonatomic, strong) UIToolbar *titleViewBackgroundToolbar;
 @property (nonatomic, strong) MHGalleryLabel *descriptionLabel;
@@ -36,7 +36,7 @@
     MHMediaPreviewCollectionViewCell *cell = (MHMediaPreviewCollectionViewCell*)[fromViewController.collectionView cellForItemAtIndexPath:[[fromViewController.collectionView indexPathsForSelectedItems] firstObject]];
     
     
-    MHUIImageViewContentViewAnimation *cellImageSnapshot = [[MHUIImageViewContentViewAnimation alloc] initWithFrame:[containerView convertRect:cell.thumbnail.frame fromView:cell.thumbnail.superview]];
+    MHContentViewAnimationImageView *cellImageSnapshot = [[MHContentViewAnimationImageView alloc] initWithFrame:[containerView convertRect:cell.thumbnail.frame fromView:cell.thumbnail.superview]];
     cellImageSnapshot.image = cell.thumbnail.image;
     cell.thumbnail.hidden = YES;
     
@@ -62,7 +62,7 @@
                                 forFrame:CGRectMake(0, 0, toViewController.view.frame.size.width, toViewController.view.frame.size.height)
                             withDuration:duration
                               afterDelay:0
-                                finished:nil];
+                                completion:nil];
     
     [UIView animateWithDuration:duration animations:^{
         toViewController.view.alpha = 1.0;
@@ -104,7 +104,7 @@
     
     self.cell = (MHMediaPreviewCollectionViewCell*)[fromViewController.collectionView cellForItemAtIndexPath:self.indexPath];
     
-    self.cellImageSnapshot = [[MHUIImageViewContentViewAnimation alloc] initWithFrame:[containerView convertRect:self.cell.thumbnail.frame fromView:self.cell.thumbnail.superview]];
+    self.cellImageSnapshot = [[MHContentViewAnimationImageView alloc] initWithFrame:[containerView convertRect:self.cell.thumbnail.frame fromView:self.cell.thumbnail.superview]];
     self.cellImageSnapshot.image = self.cell.thumbnail.image;
     
     self.startFrame = self.cellImageSnapshot.frame;
@@ -160,14 +160,11 @@
     }
     
     self.changedFrame = changedFrame;
-    
     [self.cellImageSnapshot animateToViewMode:UIViewContentModeScaleAspectFit
                                      forFrame:changedFrame
                                  withDuration:0.2
                                    afterDelay:0
-                                     finished:^(BOOL finished) {
-                                         
-                                     }];
+                                     completion:nil];
 }
 
 -(void)finishInteractiveTransition{

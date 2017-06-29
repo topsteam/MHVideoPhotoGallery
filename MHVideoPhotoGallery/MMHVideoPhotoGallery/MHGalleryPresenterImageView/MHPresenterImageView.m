@@ -121,42 +121,47 @@
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         [self presentMHGallery];
         self.lastPoint = [recognizer locationInView:self.viewController.view];
-    }else if (recognizer.state == UIGestureRecognizerStateChanged) {
+    }
+    else if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint point = [recognizer locationInView:self.viewController.view];
         self.presenter.changedPoint = CGPointMake(self.lastPoint.x - point.x, self.lastPoint.y - point.y) ;
         [self.presenter updateInteractiveTransition:0.4];
         self.lastPoint = point;
-    }else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         [self.presenter finishInteractiveTransition];
         self.presenter = nil;
     }
 }
 
 - (void)presentMHGalleryPinch:(UIPinchGestureRecognizer *)recognizer {
-    CGFloat scale = recognizer.scale/5;
+    CGFloat scale = recognizer.scale / 5;
     if (recognizer.state == UIGestureRecognizerStateBegan) {
-        if (recognizer.scale>1) {
+        if (recognizer.scale > 1) {
             [self presentMHGallery];
             self.lastPoint = [recognizer locationInView:self.viewController.view];
-            self.startScale = recognizer.scale/8;
+            self.startScale = recognizer.scale / 8;
         }
         else {
-            recognizer.cancelsTouchesInView =YES;
+            recognizer.cancelsTouchesInView = YES;
         }
-    }else if (recognizer.state == UIGestureRecognizerStateChanged) {
-        if (recognizer.numberOfTouches <2) {
+    }
+    else if (recognizer.state == UIGestureRecognizerStateChanged) {
+        if (recognizer.numberOfTouches < 2) {
             recognizer.enabled = NO;
             recognizer.enabled = YES;
         }
         CGPoint point = [recognizer locationInView:self.viewController.view];
-        self.presenter.scale = recognizer.scale/8-self.startScale;
+        self.presenter.scale = recognizer.scale / 8 - self.startScale;
         self.presenter.changedPoint = CGPointMake(self.lastPoint.x - point.x, self.lastPoint.y - point.y) ;
         [self.presenter updateInteractiveTransition:scale];
         self.lastPoint = point;
-    }else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         if ((self.presenter.transitionImageView.frame.size.width > self.viewController.view.frame.size.width)||(self.presenter.transitionImageView.frame.size.height > self.viewController.view.frame.size.height)) {
             [self.presenter finishInteractiveTransition];
-        }else {
+        }
+        else {
             [self.presenter cancelInteractiveTransition];
         }
         self.presenter = nil;

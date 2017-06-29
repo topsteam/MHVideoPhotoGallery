@@ -10,11 +10,10 @@
 
 #import "MHGalleryImageViewerViewController.h"
 #import "MHOverviewController.h"
-#import "MHTransitionShowShareView.h"
+
 #import "MHTransitionShowOverView.h"
 #import "MHGallerySharedManagerPrivate.h"
 #import "Masonry.h"
-#import "MHGradientView.h"
 #import "MHBarButtonItem.h"
 #import "MHPinchGestureRecognizer.h"
 
@@ -919,11 +918,8 @@
     
     self.navigationController.navigationBar.alpha = alpha;
     self.galleryViewerViewController.toolbar.alpha = alpha;
-    
-    self.galleryViewerViewController.topSuperView.alpha = alpha;
     self.galleryViewerViewController.descriptionLabel.alpha = alpha;
-    self.galleryViewerViewController.bottomSuperView.alpha = alpha;
-    
+
     if (!MHShouldShowStatusBar()) {
         alpha = 0;
     }

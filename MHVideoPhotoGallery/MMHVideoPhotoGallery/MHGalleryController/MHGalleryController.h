@@ -55,23 +55,23 @@ typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,
 
 @property (nonatomic, assign) id<MHGalleryDelegate> galleryDelegate;
 @property (nonatomic, assign) id<MHGalleryDataSource> dataSource;
+@property (nonatomic, assign) MHGalleryViewMode presentationStyle;
+@property (nonatomic, assign) UIStatusBarStyle preferredStatusBarStyleMH;
 @property (nonatomic) UIImageView *presentingFromImageView;
 @property (nonatomic) MHGalleryImageViewerViewController *imageViewerViewController;
 @property (nonatomic) MHOverviewController *overViewViewController;
 @property (nonatomic) MHGalleryPresentationTransition *interactivePresentationTransition;
-@property (nonatomic, assign) MHGalleryViewMode presentationStyle;
-@property (nonatomic, assign) UIStatusBarStyle preferredStatusBarStyleMH;
 @property (nonatomic, copy) MHGalleryFinishedCallback finishedCallback;
 
 /**
  Default NO
  */
-@property (nonatomic,assign) BOOL autoplayVideos;
+@property (nonatomic, assign) BOOL autoplayVideos;
 
 /**
  From which index you want to present the Gallery.
  */
-@property (nonatomic,assign) NSInteger presentationIndex;
+@property (nonatomic, assign) NSInteger presentationIndex;
 
 /**
  You can set an Array of GalleryItems or you can use the dataSource.
@@ -107,13 +107,15 @@ typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,
 
 @end
 
+typedef void MHGalleryControllerPresentation;
+
 @interface UIViewController(MHGalleryViewController)<UIViewControllerTransitioningDelegate>
 
 /**
  For presenting MHGalleryController.
- @param galleryController your created GalleryController
- @param animated          animated or nonanimated
- @param completion        complitionBlock
+ @param galleryController - instance of MHGalleryController to present.
+ @param animated - animated or not
+ @param completion - completion block
  */
 - (void)presentMHGalleryController:(MHGalleryController *)galleryController
                           animated:(BOOL)animated
@@ -121,7 +123,7 @@ typedef void (^MHGalleryFinishedCallback)(NSInteger currentIndex,UIImage *image,
 
 /**
  For dismissing MHGalleryController
- @param flag             animated
+ @param flag - animated
  @param dismissImageView if you use Custom transitions set your imageView for the Transition. For example if you use a tableView with imageViews in your cells. If you present MHGallery with an imageView on the first Index and dismiss it on the 4 Index, you have to return the imageView from your cell on the 4 index.
  @param completion       completionBlock
  */

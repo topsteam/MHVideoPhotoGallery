@@ -135,7 +135,8 @@
             return animatorPresent;
         }
         return nil;
-    }else {
+    }
+    else {
         return nil;
     }
 }
@@ -147,7 +148,8 @@
             return animatorDismiss;
         }
         return nil;
-    }else {
+    }
+    else {
         return nil;
     }
 }

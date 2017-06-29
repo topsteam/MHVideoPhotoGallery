@@ -1,5 +1,5 @@
 //
-//  MHUIImageViewContentViewAnimation.h
+//  MHContentViewAnimationImageView.h
 //  MHVideoPhotoGallery
 //
 //  Created by Mario Hahn on 30.12.13.
@@ -8,15 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^MHContentViewAnimationCompletionBlock)(BOOL finished);
 
+@interface MHContentViewAnimationImageView : UIImageView
 
-@interface MHUIImageViewContentViewAnimation : UIImageView
-
-- (UIImage*)imageMH;
+- (UIImage *)imageMH;
 
 - (void)animateToViewMode:(UIViewContentMode)contenMode
                  forFrame:(CGRect)frame
              withDuration:(float)duration
                afterDelay:(float)delay
-                 finished:(void (^)(BOOL finished))finishedBlock;
+               completion:(MHContentViewAnimationCompletionBlock)completion;
+
 @end

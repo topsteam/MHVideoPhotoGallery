@@ -33,8 +33,6 @@
 @property (nonatomic) UIImageView *presentingFromImageView;
 @property (nonatomic) UIImageView *dismissFromImageView;
 @property (nonatomic, readonly) NSInteger numberOfGalleryItems;
-@property (nonatomic, readonly) MHGradientView *bottomSuperView;
-@property (nonatomic, readonly) MHGradientView *topSuperView;
 @property (nonatomic, readonly) MHGalleryViewMode viewModeForBarStyle;
 @property (nonatomic, getter = isUserScrolling) BOOL userScrolls;
 @property (nonatomic, getter = isHiddingToolBarAndNavigationBar) BOOL hiddingToolBarAndNavigationBar;

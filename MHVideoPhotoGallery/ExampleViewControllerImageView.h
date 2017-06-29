@@ -11,5 +11,7 @@
 #import "MHPresenterImageView.h"
 
 @interface ExampleViewControllerImageView : UIViewController
+
 @property(nonatomic,strong)IBOutlet MHPresenterImageView *iv;
+
 @end

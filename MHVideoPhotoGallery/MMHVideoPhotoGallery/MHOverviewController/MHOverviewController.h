@@ -18,7 +18,13 @@
 
 @end
 
-@interface MHOverviewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate>
+@protocol MHOverviewViewControllerProtocol <UICollectionViewDataSource,
+                                            UICollectionViewDelegate,
+                                            UINavigationControllerDelegate,
+                                            UIGestureRecognizerDelegate>
+@end
+
+@interface MHOverviewController : UIViewController <MHOverviewViewControllerProtocol>
 
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) MHMediaPreviewCollectionViewCell *clickedCell;
@@ -27,7 +33,7 @@
 
 - (UICollectionViewFlowLayout *)layoutForOrientation:(UIInterfaceOrientation)orientation;
 
-- (MHGalleryItem*)itemForIndex:(NSInteger)index;
+- (MHGalleryItem *)itemForIndex:(NSInteger)index;
 
 - (void)pushToImageViewerForIndexPath:(NSIndexPath *)indexPath;
 

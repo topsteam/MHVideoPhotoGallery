@@ -50,7 +50,8 @@
                                        item = [MHGalleryItem itemWithURL:dictionary[@"videos"][@"standard_resolution"][@"url"]
                                                              galleryType:MHGalleryTypeVideo];
                                        
-                                   }else{
+                                   }
+                                   else {
                                        item = [MHGalleryItem itemWithURL:dictionary[@"images"][@"standard_resolution"][@"url"]
                                                              galleryType:MHGalleryTypeImage];
                                        

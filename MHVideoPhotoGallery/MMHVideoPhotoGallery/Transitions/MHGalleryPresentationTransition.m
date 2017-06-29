@@ -8,7 +8,7 @@
 
 #import "MHGalleryPresentationTransition.h"
 
-#import "MHUIImageViewContentViewAnimation.h"
+#import "MHContentViewAnimationImageView.h"
 #import "MHOverviewController.h"
 #import "MHGallery.h"
 
@@ -37,7 +37,7 @@
     UIView *containerView = [transitionContext containerView];
     NSTimeInterval duration = [self transitionDuration:transitionContext];
     
-    MHUIImageViewContentViewAnimation *cellImageSnapshot = [[MHUIImageViewContentViewAnimation alloc] initWithFrame:[containerView convertRect:self.presentingImageView.frame fromView:self.presentingImageView.superview]];
+    MHContentViewAnimationImageView *cellImageSnapshot = [[MHContentViewAnimationImageView alloc] initWithFrame:[containerView convertRect:self.presentingImageView.frame fromView:self.presentingImageView.superview]];
     cellImageSnapshot.image = self.presentingImageView.image;
     
     cellImageSnapshot.clipsToBounds = self.presentingImageView.clipsToBounds;
@@ -61,8 +61,7 @@
                                     forFrame:toViewController.view.bounds
                                 withDuration:duration
                                   afterDelay:0
-                                    finished:^(BOOL finished) {
-                                    }];
+                                    completion:nil];
     }
     
     if (self.presentingImageView.contentMode == UIViewContentModeScaleAspectFit) {
@@ -112,7 +111,7 @@
     
     UIView *containerView = [transitionContext containerView];
     
-    self.transitionImageView = [[MHUIImageViewContentViewAnimation alloc] initWithFrame:[containerView convertRect:self.presentingImageView.frame fromView:self.presentingImageView.superview]];
+    self.transitionImageView = [[MHContentViewAnimationImageView alloc] initWithFrame:[containerView convertRect:self.presentingImageView.frame fromView:self.presentingImageView.superview]];
     self.transitionImageView.image = self.presentingImageView.image;
     self.transitionImageView.contentMode = self.presentingImageView.contentMode;
     self.presentingImageView.hidden = YES;
@@ -194,7 +193,7 @@
             self.backView.alpha = 1;
         }];
         
-        [self.transitionImageView animateToViewMode:UIViewContentModeScaleAspectFit forFrame:imageViewer.view.bounds withDuration:0.3 afterDelay:0 finished:^(BOOL finished) {
+        [self.transitionImageView animateToViewMode:UIViewContentModeScaleAspectFit forFrame:imageViewer.view.bounds withDuration:0.3 afterDelay:0 completion:^(BOOL finished) {
             [UIView animateWithDuration:0.2 animations:^{
                 self.interactiveToViewController.view.alpha = 1;
             } completion:^(BOOL finished) {

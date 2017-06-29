@@ -11,10 +11,8 @@
 #import "Masonry.h"
 
 #import "MHOverviewController.h"
-#import "MHTransitionShowShareView.h"
 #import "MHTransitionShowOverView.h"
 #import "MHGallerySharedManagerPrivate.h"
-#import "MHGradientView.h"
 #import "MHBarButtonItem.h"
 #import "MHImageViewController.h"
 
@@ -26,8 +24,6 @@
 
 @interface MHGalleryImageViewerViewController() <MHGalleryLabelDelegate,TTTAttributedLabelDelegate>
 
-@property (nonatomic, readwrite) MHGradientView *bottomSuperView;
-@property (nonatomic, readwrite) MHGradientView *topSuperView;
 @property (nonatomic) MHBarButtonItem *shareBarButton;
 @property (nonatomic) MHBarButtonItem *leftBarButton;
 @property (nonatomic) MHBarButtonItem *rightBarButton;
@@ -73,8 +69,6 @@
     [self setupPageViewController];
     [self setupToolBar];
     [self setupToolBarItems];
-    [self setupTopSuperView];
-    [self setupBottomSuperView];
     [self reloadData];
 }
 
@@ -187,45 +181,16 @@
     }
 }
 
-- (void)setupTopSuperView {
-    MHGradientView *topSuperView = [[MHGradientView alloc] initWithDirection:MHGradientDirectionBottomToTop
-                                                            andCustomization:self.UICustomization];
-    self.topSuperView = topSuperView;
-    [self.view addSubview:self.topSuperView];
-    [self.topSuperView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view.mas_left);
-        make.right.mas_equalTo(self.view.mas_right);
-    }];
-    [self setupTitleLabel];
-}
-
 - (void)setupTitleLabel {
     MHScrollViewLabel *titleLabel = [[MHScrollViewLabel alloc] init];
     titleLabel.textLabel.labelDelegate = self;
     titleLabel.textLabel.delegate = self;
     titleLabel.textLabel.UICustomization = self.UICustomization;
     self.titleLabel = titleLabel;
-    [self.topSuperView addSubview:self.titleLabel];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.topSuperView.mas_left).with.offset(10);
-        make.right.mas_equalTo(self.topSuperView.mas_right).with.offset(-10);
-        make.bottom.mas_equalTo(self.topSuperView.mas_bottom).with.offset(-20);
-        make.top.mas_equalTo(self.topSuperView.mas_top).with.offset(5);
+        
     }];
-}
-
-- (void)setupBottomSuperView {
-    MHGradientView *bottomSuperView = [[MHGradientView alloc] initWithDirection:MHGradientDirectionTopToBottom
-                                                               andCustomization:self.UICustomization];
-    self.bottomSuperView = bottomSuperView;
-    [self.view addSubview:self.bottomSuperView];
-    [self.bottomSuperView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view.mas_left);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.bottom.mas_equalTo(self.toolbar.mas_top);
-    }];
-    [self setupDescriptionLabel];
 }
 
 - (void)setupDescriptionLabel {
@@ -234,12 +199,8 @@
     descriptionLabel.textLabel.delegate = self;
     descriptionLabel.textLabel.UICustomization = self.UICustomization;
     descriptionLabel = descriptionLabel;
-    [self.bottomSuperView addSubview:self.descriptionLabel];
+
     [self.descriptionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.bottomSuperView.mas_left).with.offset(10);
-        make.right.mas_equalTo(self.bottomSuperView.mas_right).with.offset(-10);
-        make.bottom.mas_equalTo(self.bottomSuperView.mas_bottom).with.offset(-5);
-        make.top.mas_equalTo(self.bottomSuperView.mas_top).with.offset(20);
     }];
 }
 
@@ -382,11 +343,6 @@
     if (self.currentImageVC.moviePlayer) {
         [self.currentImageVC removeAllMoviePlayerViewsAndNotifications];
     }
-    if ([toVC isKindOfClass:MHShareViewController.class]) {
-        MHTransitionShowShareView *present = MHTransitionShowShareView.new;
-        present.present = YES;
-        return present;
-    }
     if ([toVC isKindOfClass:MHOverviewController.class]) {
         return MHTransitionShowOverView.new;
     }
@@ -489,21 +445,12 @@
 }
 
 - (void)sharePressed {
-    if (self.UICustomization.showMHShareViewInsteadOfActivityViewController) {
-        MHShareViewController *share = [MHShareViewController new];
-        share.pageIndex = self.pageIndex;
-        share.galleryItems = self.galleryItems;
-        [self.navigationController pushViewController:share
-                                             animated:YES];
-    }
-    else {
-        if (self.currentImageVC.imageView.image != nil) {
-            UIActivityViewController *act = [UIActivityViewController.alloc initWithActivityItems:@[self.currentImageVC.imageView.image] applicationActivities:nil];
-            [self presentViewController:act animated:YES completion:nil];
-            
-            if ([act respondsToSelector:@selector(popoverPresentationController)]) {
-                act.popoverPresentationController.barButtonItem = self.shareBarButton;
-            }
+    if (self.currentImageVC.imageView.image != nil) {
+        UIActivityViewController *act = [UIActivityViewController.alloc initWithActivityItems:@[self.currentImageVC.imageView.image] applicationActivities:nil];
+        [self presentViewController:act animated:YES completion:nil];
+        
+        if ([act respondsToSelector:@selector(popoverPresentationController)]) {
+            act.popoverPresentationController.barButtonItem = self.shareBarButton;
         }
     }
 }
@@ -595,16 +542,10 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [self.topSuperView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.mas_topLayoutGuideBottom);
-    }];
     [self.toolbar mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left);
         make.right.mas_equalTo(self.view.mas_right);
         make.bottom.mas_equalTo(self.view.mas_bottom);
-    }];
-    [self.bottomSuperView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(self.toolbar.mas_top);
     }];
 }
 
@@ -671,7 +612,6 @@
                 self.titleLabel.textLabel.text = item.attributedTitle;
             }
         }
-        self.topSuperView.hidden = item.titleString || item.attributedTitle ? NO : YES;
     }
 }
 
@@ -696,7 +636,6 @@
                 self.descriptionLabel.textLabel.text = item.attributedString;
             }
         }
-        self.bottomSuperView.hidden = item.descriptionString || item.attributedString ? NO : YES;
     }
 }
 

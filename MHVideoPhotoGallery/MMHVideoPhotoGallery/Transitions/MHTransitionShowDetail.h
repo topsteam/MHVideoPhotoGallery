@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MHGalleryImageViewerViewController.h"
 #import "MHOverviewController.h"
-#import "MHUIImageViewContentViewAnimation.h"
+#import "MHContentViewAnimationImageView.h"
 
 @interface MHTransitionShowDetail : UIPercentDrivenInteractiveTransition<UIViewControllerAnimatedTransitioning>
 @property (nonatomic,assign)    CGFloat angle;

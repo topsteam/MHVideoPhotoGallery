@@ -60,27 +60,27 @@ typedef NS_ENUM(NSUInteger, MHYoutubeThumbQuality) {
 /**
  *  default is MHYoutubeThumbQualityHQ
  */
-@property (nonatomic,assign) MHYoutubeThumbQuality youtubeThumbQuality;
+@property (nonatomic, assign) MHYoutubeThumbQuality youtubeThumbQuality;
 /**
  *  Default is MHVimeoThumbQualityLarge
  */
-@property (nonatomic,assign) MHVimeoThumbQuality vimeoThumbQuality;
+@property (nonatomic, assign) MHVimeoThumbQuality vimeoThumbQuality;
 /**
  *  default is MHWebThumbQualityHD720
  */
-@property (nonatomic,assign) MHWebThumbQuality webThumbQuality;
+@property (nonatomic, assign) MHWebThumbQuality webThumbQuality;
 /**
  *  default is MHWebPointForThumbStart
  */
-@property (nonatomic,assign) MHWebPointForThumb webPointForThumb;
+@property (nonatomic, assign) MHWebPointForThumb webPointForThumb;
 /**
  *  default is MHVimeoVideoQualityHD
  */
-@property (nonatomic,assign) MHVimeoVideoQuality vimeoVideoQuality;
+@property (nonatomic, assign) MHVimeoVideoQuality vimeoVideoQuality;
 /**
  *  default is MHYoutubeVideoQualityHD720
  */
-@property (nonatomic,assign) MHYoutubeVideoQuality youtubeVideoQuality;
+@property (nonatomic, assign) MHYoutubeVideoQuality youtubeVideoQuality;
 
 + (MHGallerySharedManager *)sharedManager;
 

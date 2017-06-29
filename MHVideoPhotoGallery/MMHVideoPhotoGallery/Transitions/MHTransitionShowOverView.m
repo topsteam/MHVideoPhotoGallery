@@ -18,7 +18,7 @@
 @property (nonatomic,strong) UIToolbar *descriptionViewBackgroundToolbar;
 @property (nonatomic,strong) MHOverviewController *toViewController;
 @property (nonatomic,strong) MHMediaPreviewCollectionViewCell *cellInteractive;
-@property (nonatomic,strong) MHUIImageViewContentViewAnimation *transitionImageView;
+@property (nonatomic,strong) MHContentViewAnimationImageView *transitionImageView;
 @property (nonatomic,strong) UIView *backView;
 @property (nonatomic)        CGRect startFrame;
 @property (nonatomic)        BOOL isHiddingToolBarAndNavigationBar;
@@ -36,7 +36,7 @@
     UIImageView *imageView =  (UIImageView*)[[[fromViewController.pageViewController.viewControllers firstObject] view]viewWithTag:506];
     toViewController.currentPage =  [[fromViewController.pageViewController.viewControllers firstObject] pageIndex];
     
-    MHUIImageViewContentViewAnimation *cellImageSnapshot = [MHUIImageViewContentViewAnimation.alloc initWithFrame:CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height)];
+    MHContentViewAnimationImageView *cellImageSnapshot = [MHContentViewAnimationImageView.alloc initWithFrame:CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height)];
     cellImageSnapshot.image = imageView.image;
     imageView.hidden = YES;
     
@@ -121,7 +121,7 @@
     UIImageView *iv =  (UIImageView*)[[[fromViewController.pageViewController.viewControllers firstObject] view]viewWithTag:506];
     self.toViewController.currentPage =  [[fromViewController.pageViewController.viewControllers firstObject] pageIndex];
     
-    self.transitionImageView = [MHUIImageViewContentViewAnimation.alloc initWithFrame:CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height)];
+    self.transitionImageView = [MHContentViewAnimationImageView.alloc initWithFrame:CGRectMake(0, 0, fromViewController.view.frame.size.width, fromViewController.view.frame.size.height)];
     self.transitionImageView.image = iv.image;
     self.transitionImageView.contentMode = UIViewContentModeScaleAspectFit;
     iv.hidden = YES;

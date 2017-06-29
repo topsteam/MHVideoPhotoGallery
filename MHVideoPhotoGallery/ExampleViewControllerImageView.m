@@ -10,6 +10,7 @@
 #import "UIImageView+WebCache.h"
 
 @interface ExampleViewControllerImageView ()
+
 @end
 
 @implementation ExampleViewControllerImageView
@@ -34,7 +35,8 @@
     [self.iv setInseractiveGalleryPresentionWithItems:galleryItems currentImageIndex:0 currentViewController:self completion:^(NSInteger currentIndex,UIImage *image,MHGalleryDismissTransition *interactiveTransition,MHGalleryViewMode viewMode) {
         if (viewMode == MHGalleryViewModeOverView) {
             [blockSelf dismissViewControllerAnimated:YES completion:nil];
-        }else{
+        }
+        else {
             blockSelf.iv.image = image;
             blockSelf.iv.currentImageIndex = currentIndex;
             [blockSelf.presentedViewController dismissViewControllerAnimated:YES dismissImageView:blockSelf.iv completion:nil];
